@@ -1,0 +1,2541 @@
+<!doctype html>
+<html lang="en-US" class="no-js">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head>
+	<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+	<title>TBRR</title>
+	
+	<link rel="stylesheet" id="combined-css"
+		href="tbrr public/Main/tbrr/css/combined.min662c.css?ver=2024.22.02.01" media="all" />
+	<link rel="stylesheet" id="kmain/tbrr-style-css"
+		href="tbrr public/Main/tbrr/style8a54.css?ver=1.0.0" media="all" />
+
+		<link
+	rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
+  />
+
+	  <link rel="stylesheet" href="./tbrr public/Main/tbrr/css/tbrr custom.css">
+	  	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="./tbrr public/Main/tbrr/css/bootstrap.min.css">
+	<!-- Fontawesome -->
+	<link rel="stylesheet" href="tbrr public/Main/tbrr/css/fontawesome.css">
+	<!-- Flaticon -->
+	<link rel="stylesheet" href="tbrr public/Main/tbrr/css/flaticon.css">
+	<!-- optico Icons -->
+	<link rel="stylesheet" href="tbrr public/Main/tbrr/css/pbminfotech-base-icons.css">
+	<!-- Themify Icons -->
+	<link rel="stylesheet" href="tbrr public/Main/tbrr/css/themify-icons.css">
+	<!-- Slick -->
+	<link rel="stylesheet" href="tbrr public/Main/tbrr/css/swiper.min.css">
+	<!-- Magnific -->
+	<link rel="stylesheet" href="tbrr public/Main/tbrr/css/magnific-popup.css">
+	<!-- AOS -->
+	<link rel="stylesheet" href="tbrr public/Main/tbrr/css/aos.css">
+	<!-- Shortcode CSS -->
+	<link rel="stylesheet" href="tbrr public/Main/tbrr/css/shortcode.css">
+	<!-- Base CSS -->
+	<link rel="stylesheet" href="tbrr public/Main/tbrr/css/base.css">
+	<!-- Style CSS -->
+	<link rel="stylesheet" href="tbrr public/Main/tbrr/css/style.css">
+	<!-- Responsive CSS -->
+	<link rel="stylesheet" href="tbrr public/Main/tbrr/css/responsive.css">
+
+
+
+    <!-- hhh -->
+
+    <link rel="shortcut icon" type="image/x-icon" href="images/homepage-1/favicon.png">
+	
+    <style>
+	
+      #map {
+        height: 900px;
+      }
+      
+      .leaflet-popup-content {
+        max-height: 300px;
+        overflow-y: auto;
+      }
+    
+      .list-container{
+        font-size: 10px;
+        font-weight: bold;
+        font-family: PPNeueMontreal-Medium,san-serif;
+    
+      }
+      .pbmit-all-post-list{
+        font-size: 10px;
+        font-weight: bold;
+        font-family: PPNeueMontreal-Medium,san-serif;
+    
+      }
+    
+      /* .s-content{
+        margin-top: 3px;
+        border: 1px solid rgb(133, 200, 33);
+      } */
+    
+      /* .active .s-content{
+        display: block;
+      } */
+    
+      /* .arrow i {
+        transition: transform 0.4s linear;
+      }
+    
+      .active .arrow i{
+        transform: rotate(-180deg);
+      } */
+    
+      .s-lists {
+        border: 1px solid rgb(206, 210, 200);
+        border-radius: 5px;
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+      }
+    
+      .s-content .s-search{
+        position: relative;
+      }
+    
+      .s-search i{
+        position: absolute;
+        line-height: 30px;
+        color: #999;
+        /* top: 11px; */
+        left: 10px;
+      }
+    
+      .s-search input{
+        width: 100%;
+        outline: none;
+        font-size: 11px;
+        font-weight:  400;
+        padding: 5px 15px 5px 40px;
+        border: solid 1px rgb(133, 200, 33);
+        border-radius: 5px;
+    
+      }
+    
+      .s-content ul{
+        margin-top: 10px;
+        max-height: 200px;
+        overflow-y: auto;
+    
+      }
+    
+      .s-content ul::-webkit-scrollbar{
+        width: 5px;
+      }
+      .s-content ul::-webkit-scrollbar-track{
+        background-color: #f1f1f1;
+        border-radius: 20px;
+        margin: 5px 3px;
+       
+      }
+      .s-content ul::-webkit-scrollbar-thumb{
+        background-color: #ccc;
+        border-radius: 20px;
+      }
+    
+      .s-content ul li:hover{
+         background-color: #f2f2f2; 
+      }
+    
+      .s-hide {
+        display: none;
+      }
+    .Nav {
+      display:flex;
+      align-items: center;
+    }
+    .logo {
+      margin-right: 5%;
+    }
+    .navigation {
+      display: flex;
+      padding-left: 5px;
+      padding-right: 5px;
+      flex-wrap: wrap;
+      
+    }
+    .mini-nav {
+      padding-left: 10px;
+      padding-right: 5px;
+      width: fit-content;
+      margin: 10px;
+    }
+
+.accordion-content {
+  display: none;
+  background-color: white;
+  position: absolute;
+  width: 150px;
+}
+
+.accordion-active {
+  display: block;
+}
+
+
+      </style>
+      
+    
+
+</head>
+
+
+<body class="home page-template-default page page-id-9 header-over-content no-sidebar">
+
+
+	<header>
+		<div class="container-fluid native-padding">
+			<div class="row">
+				<div class="Nav">
+					<a href="index.html" class="logo">
+						<div class=" row">
+						
+							Tree based Restoration Registry
+
+						</div>
+					</a>
+
+          <div class="navigation">
+            <a href="index.html" class="mini-nav">
+              <div class=" ">
+              
+                About
+  
+              </div>
+            </a>
+
+            <a href="index.html" class="mini-nav">
+              <div class=" ">
+              
+                Registry
+  
+              </div>
+            </a>
+
+            
+            <a href="index.html" class="mini-nav">
+              <div class=" ">
+              
+                Apply for Fund
+  
+              </div>
+            </a>
+
+            <a href="index.html" class="mini-nav">
+              <div class=" ">
+              
+                Contact
+  
+              </div>
+            </a>
+            <a href="index.html" class="mini-nav" id="faq">
+              <div class=" ">
+              
+                FAQ
+              <div class="accordion-content" id="faq-content">
+              <p>FAQ 1</p>
+              <p>FAQ 2</p>
+              <p>FAQ 3</p>
+            </div>
+
+              </div>
+            </a>
+  
+
+          </div>
+				</div>
+
+			</div>
+		</div>
+
+	</header>
+
+
+	<div class="fixed-nav-wrapper">
+		<div class="nav-trigger" id="nav-trigger"><span>Filters</span><i></i></div>
+	</div>
+
+	<div id="main-nav-overlay-wrapper" class="container-fluid px-0 is-active">
+		<div class="row mx-0 d-flex align-content-end overlay-inner">
+			<div class="col-12 h-100 px-0 d-flex flex-column flex-nowrap mobile-nav-outer">
+				<div class="top-item-wrapper mt-sidebar-5">
+			
+          
+
+          <div class="card card-body">
+    
+            <div class="row g-1">
+            <div class="col-md-3">
+              <div class="container region-container px-5 pt-2 wrapper" id="regionContainer">
+              <div class="d-flex justify-content-between align-content-center arrow" id="selectBtn">
+                <h6>Select region</h6>
+                <i class = "fa fa-caret-down pt-2"></i>
+              </div>
+              <div class="s-content">
+                <div class="s-search">
+                  <i class="fa fa-search"></i>
+                  <input type="text" placeholder="Search" id="searchInput" />
+                </div>
+              <ul class="pbmit-all-post-list container s-lists" id="regionList">
+              </ul>
+              </div>
+              </div>
+              </div>
+  
+              <div class="col-md-3">
+              <div class="container woreda-container px-5 pt-2" id="woredaContainer">
+              <div class="s-hide arrow" id="woredaBtn">
+                <h6>Select woreda</h6>
+              </div>
+              <div class="s-content s-hide" id="woredaContent">
+                <div class="s-search">
+                  <i class="fa fa-search"></i>
+                  <input type="text" placeholder="Search" id="woredaInput" />
+                </div>
+              <ul class="pbmit-all-post-list container s-lists" id="woredaList">
+              </ul>
+              </div>
+  
+              </div>
+              </div>
+              <div class="col-md-3">
+              <div
+              class="container kebele-container px-5 pt-2"
+              id="kebeleContainer"
+              style="display: none"
+              >
+              <div class="arrow">
+              <h6>Select kebele</h6>
+              </div>
+  
+              <div class="s-content " id="woredaContent">
+              <div class="s-search">
+                <i class="fa fa-search"></i>
+                <input type="text" placeholder="Search" id="kebeleInput" />
+              </div>
+            <ul class="pbmit-all-post-list container s-lists" id="kebeleList">
+            </ul>
+            </div>
+              </div>
+              </div>
+              <div class="col-md-3">
+              <div
+              class="container site-container px-5 pt-2"
+              id="siteContainer"
+              style="display: none"
+              >
+               
+              <div class="arrow">
+                <h6>Select site</h6>
+                </div>
+  
+                <div class="s-content " id="woredaContent">
+                <div class="s-search">
+                  <i class="fa fa-search"></i>
+                  <input type="text" placeholder="Search" id="siteInput" />
+                </div>
+              <ul class="pbmit-all-post-list container s-lists" id="siteList">
+              </ul>
+              </div>
+              </div>
+              
+            </div>
+    
+            </div>
+            <br />
+          </div>
+
+
+<br>
+
+          <div class="container project-container">
+            <div class="card">
+            <div class="card-header">
+              <h6 class="card-title">Detailed location Information</h6>
+            </div>
+            <div class="card-body overflow-auto projectInfo" style="height: 400px;">
+            
+Select a region and other criteria from the filters above by clicking on the filter navigation to view detailed location information.
+            </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				</div>
+				
+				
+			</div>
+		</div>
+	</div>
+</br>
+</br>
+</br>
+	<div class="content-wrapper">
+		
+
+	
+
+<br/>
+
+
+      <div class="row">
+        <div class="col-md-9">
+          <button id = "Zoom_Out"class="bg-green-500 text-black p-3">Zoom Out</button>
+      <div id="map"></div>
+      </div>
+
+      <div class="col-md-3 mt-5">
+        <div class="container project-container">
+          <div class="card">
+          <div class="card-header">
+            <h6 class="card-title">Detailed location Information</h6>
+          </div>
+          <div class="card-body overflow-auto projectInfo" style="height: 800px;">
+           
+Select a region and other criteria from the filters above by clicking on the filter navigation to view detailed location information.
+          </div>
+          </div>
+        </div>
+        </div>
+    </div>
+    </div>
+    <br/><br/><br/>
+      
+<hr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<div class="stats-callouts-wrapper stats-callouts" data-section-id="64b45be61499d">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12 col-md-6">
+						<div class="stats-callouts-headings">
+							<h2 class="unindented">
+								
+								Quick Facts
+							</h2>
+						</div>
+					</div>
+				</div>
+				<div class="row justify-content-center">
+					<div class="col-xxl-11">
+						<div class="row justify-content-center justify-content-md-start">
+							<div class="col-12 col-sm-8 col-md-3 stat-callout-outer">
+								<div class="stat-callout-wrapper h-100">
+									<div class="row mx-0 h-100">
+										<div class="col-12 h5 px-0 stat-title">
+											Region </div>
+										<div class="col-12 mt-auto">
+											<div class="row">
+												<div class="col-12 px-0 stat-wrapper text-end h1">
+													
+													<span class="countable" data-total="12" data-intervals="decimals"
+														data-speed="5"></span> 
+												</div>
+												<div class="col-12 px-0 stat-subtitle">
+													Number of  <span
+														class="color-green">Region </span> </div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-sm-8 col-md-3 stat-callout-outer">
+								<div class="stat-callout-wrapper h-100">
+									<div class="row mx-0 h-100">
+										<div class="col-12 h5 px-0 stat-title">
+											Woreda </div>
+										<div class="col-12 mt-auto">
+											<div class="row">
+												<div class="col-12 px-0 stat-wrapper text-end h1">
+													<div class="callout-icon no_icon"></div>
+													<span class="countable" data-total="27"
+														data-intervals="decimals" data-speed="5">0</span>
+												</div>
+                        <div class="col-12 px-0 stat-subtitle">
+													Number of  <span
+														class="color-green">Woredas </span> </div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+              <div class="col-12 col-sm-8 col-md-3 stat-callout-outer">
+								<div class="stat-callout-wrapper">
+									<div class="row mx-0 h-100">
+										<div class="col-12 h5 px-0 stat-title">
+											Sites </div>
+										<div class="col-12 mt-auto">
+											<div class="row">
+												<div class="col-12 px-0 stat-wrapper text-end h1">
+													<div class="callout-icon no_icon"></div>
+													<span class="countable" data-total="211"
+														data-intervals="decimals" data-speed="5">0</span>
+												</div>
+                        <div class="col-12 px-0 stat-subtitle">
+													Number of  <span
+														class="color-green">Sites </span> </div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+
+
+              <div class="col-12 col-sm-8 col-md-3 stat-callout-outer">
+								<div class="stat-callout-wrapper">
+									<div class="row mx-0">
+										<div class="col-12 h5 px-0 stat-title">
+											Registered degraded sites </div>
+										<div class="col-12 mt-auto">
+											<div class="row">
+												<div class="col-12 px-0 stat-wrapper text-end h1">
+													<div class="callout-icon no_icon"></div>
+													<span class="countable" data-total="100000"
+														data-intervals="decimals" data-speed="5">0</span>
+												</div>
+                        <div class="col-12 px-0 stat-subtitle">
+                          Total size <span class="color-green">in</span> HECTARE </div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+
+
+
+					
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="case-studies-highlight-slider-wrapper" data-section-id="64b45be617b39">
+			<div class="container-fluid padding-left case-studies-slider-heading">
+				<div class="row align-items-end">
+					<div class="col position-relative">
+				
+              <div class="stats-callouts-headings">
+                <h2 class="unindented">
+                  
+                  TBRR Projects
+                </h2>
+              </div>
+						<div class="cs-pagination">
+							<div class="pag-current">01</div>
+							<div class="pag-total">/05</div>
+						</div>
+					</div>
+					<div class="col-auto">
+						<div class="cs-controls">
+							<div class="cs-prev">Previous<svg xmlns="http://www.w3.org/2000/svg" width="18.61"
+									height="18.438" viewBox="0 0 18.61 18.438">
+									<g id="Thin_Arrow" data-name="Thin Arrow"
+										transform="translate(9.51 18.058) rotate(-135)">
+										<path id="Line_2" data-name="Line 2" d="M2,2H14.45V14.5"
+											transform="translate(-2 -2)" fill="none" stroke="#c7c7c7"
+											stroke-width="1" />
+										<line id="Line_1" data-name="Line 1" y1="12.331" x2="12.331"
+											transform="translate(0.169)" fill="none" stroke="#c7c7c7"
+											stroke-width="1" />
+									</g>
+								</svg>
+							</div>
+							<div class="cs-next">Next<svg xmlns="http://www.w3.org/2000/svg" width="18.61"
+									height="18.438" viewBox="0 0 18.61 18.438">
+									<g id="Thin_Arrow" data-name="Thin Arrow"
+										transform="translate(9.51 18.058) rotate(-135)">
+										<path id="Line_2" data-name="Line 2" d="M2,2H14.45V14.5"
+											transform="translate(-2 -2)" fill="none" stroke="#c7c7c7"
+											stroke-width="1" />
+										<line id="Line_1" data-name="Line 1" y1="12.331" x2="12.331"
+											transform="translate(0.169)" fill="none" stroke="#c7c7c7"
+											stroke-width="1" />
+									</g>
+								</svg>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container-fluid padding-right">
+				<div class="row">
+					<div class="col-12 cs-slider-outer">
+						<div class="owl-carousel case-studies-slider">
+							<a href="#Ethiopia"
+								class="listed-case-study h-100 d-flex flex-column">
+								<div class="listed-cs-hero"
+								
+                 style="background-image: url('tbrr public/Main/tbrr/img/home/1.jpg')">
+               
+                
+								</div>
+              
+								<div class="listed-cs-content d-flex flex-column flex-grow-1">
+									<div class="row flex-nowrap align-items-center d-flex">
+										<div class="col">
+											<div class="category">Projects</div>
+										</div>
+										<div class="col-auto">
+											<div class="main-btn"><span class="d-none">Read more</span></div>
+										</div>
+									</div>
+									<div class="row mt-auto d-flex">
+										<div class="col-9 h5">
+											Ethiopia Reforest360 </div>
+										<div class="col-12">
+											<div class="date-wrapper">
+												<div class="row justify-content-between">
+													<div class="col case-study-type montreal-medium">
+														Read </div>
+													<div class="col text-end">
+														March 2024 </div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</a>
+							<a href="#Ethiopia"
+								class="listed-case-study h-100 d-flex flex-column">
+								<div class="listed-cs-hero"
+                style="background-image: url('tbrr public/Main/tbrr/img/home/2.jpg')">
+								</div>
+								<div class="listed-cs-content d-flex flex-column flex-grow-1">
+									<div class="row flex-nowrap align-items-center d-flex">
+										<div class="col">
+											<div class="category">Projects</div>
+										</div>
+										<div class="col-auto">
+											<div class="main-btn"><span class="d-none">Read more</span></div>
+										</div>
+									</div>
+									<div class="row mt-auto d-flex">
+										<div class="col-9 h5">
+											Ethiopia Reforest360 </div>
+										<div class="col-12">
+											<div class="date-wrapper">
+												<div class="row justify-content-between">
+													<div class="col case-study-type montreal-medium">
+														Read </div>
+													<div class="col text-end">
+														March 2024 </div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</a>
+							<a href="#Ethiopia"
+							class="listed-case-study h-100 d-flex flex-column">
+							<div class="listed-cs-hero"
+              style="background-image: url('tbrr public/Main/tbrr/img/home/1.jpg')">
+							</div>
+							<div class="listed-cs-content d-flex flex-column flex-grow-1">
+								<div class="row flex-nowrap align-items-center d-flex">
+									<div class="col">
+										<div class="category">Projects</div>
+									</div>
+									<div class="col-auto">
+										<div class="main-btn"><span class="d-none">Read more</span></div>
+									</div>
+								</div>
+								<div class="row mt-auto d-flex">
+									<div class="col-9 h5">
+										Ethiopia Reforest360 </div>
+									<div class="col-12">
+										<div class="date-wrapper">
+											<div class="row justify-content-between">
+												<div class="col case-study-type montreal-medium">
+													Read </div>
+												<div class="col text-end">
+													March 2024 </div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
+						<a href="#Ethiopia"
+						class="listed-case-study h-100 d-flex flex-column">
+						<div class="listed-cs-hero"
+            style="background-image: url('tbrr public/Main/tbrr/img/home/2.jpg')">
+						</div>
+						<div class="listed-cs-content d-flex flex-column flex-grow-1">
+							<div class="row flex-nowrap align-items-center d-flex">
+								<div class="col">
+									<div class="category">Projects</div>
+								</div>
+								<div class="col-auto">
+									<div class="main-btn"><span class="d-none">Read more</span></div>
+								</div>
+							</div>
+							<div class="row mt-auto d-flex">
+								<div class="col-9 h5">
+									Ethiopia Reforest360 </div>
+								<div class="col-12">
+									<div class="date-wrapper">
+										<div class="row justify-content-between">
+											<div class="col case-study-type montreal-medium">
+												Read </div>
+											<div class="col text-end">
+												March 2024 </div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</a>
+					<a href="#Ethiopia"
+					class="listed-case-study h-100 d-flex flex-column">
+					<div class="listed-cs-hero"
+          style="background-image: url('tbrr public/Main/tbrr/img/home/abiy.png')">
+					</div>
+					<div class="listed-cs-content d-flex flex-column flex-grow-1">
+						<div class="row flex-nowrap align-items-center d-flex">
+							<div class="col">
+								<div class="category">Projects</div>
+							</div>
+							<div class="col-auto">
+								<div class="main-btn"><span class="d-none">Read more</span></div>
+							</div>
+						</div>
+						<div class="row mt-auto d-flex">
+							<div class="col-9 h5">
+								Ethiopia Reforest360 </div>
+							<div class="col-12">
+								<div class="date-wrapper">
+									<div class="row justify-content-between">
+										<div class="col case-study-type montreal-medium">
+											Read </div>
+										<div class="col text-end">
+											March 2024 </div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+
+		
+		
+		<footer>
+			<div class="container-fluid native-padding">
+				<div class="row">
+					<div class="col-12">
+						<div class="footer-top">
+						
+							<div class="row">
+								<div class="col-xl-9">
+									<div>
+								
+										Tree based Restoration Registry
+									</div>
+								</div>
+							</div>
+							<a href="contact-kes-dckv/index.html" target
+								class="d-inline-block d-md-none footer-cta main-btn">Get a Quote</a>
+						</div>
+					</div>
+					<div class="col-12 footer-middle">
+						<div class="row justify-content-between">
+							<div class="col-12 col-sm-6 col-lg-auto footer-col-1 omit-last-item-margin">
+								<div class="h4 color-dark-green">Tree based Restoration Registry</div>
+								Addis Ababa, Ethiopia<br />
+							
+							
+							</div>
+							<div class="col-12 col-sm-6 col-lg-auto footer-col-2">
+								<div class="h4 color-dark-green">Get in touch</div>
+								<ul class="social-links">
+									<li><a href="#"
+											target="_blank">Twitter</a></li>
+									<li><a href="#"
+											target="_blank">Linkedin</a></li>
+									<li><a href="#"
+											target="_blank">Facebook</a></li>
+								</ul>
+							</div>
+							<div class="col col-sm-6 col-lg-auto footer-col-3 pe-5 pe-md-3">
+								<div class="row align-items-center justify-content-between">
+									<div class="col-12">
+										<div class="h4 color-dark-green">Resources</div>
+									</div>
+									<div class="col-6 text-center col-xxl-auto">
+										
+									</div>
+									<div class="col-6 text-center col-xxl-auto">
+									
+									</div>
+									<div class="col-6 text-center col-xxl-auto">
+										
+									</div>
+									<div class="col-6 text-center col-xxl-auto">
+										
+									</div>
+								</div>
+							</div>
+							<div class="col-auto col-sm-6 col-lg-auto footer-col-4">
+								
+							</div>
+						</div>
+					</div>
+					<div class="col-12 footer-credits">
+						<div class="row justify-content-between d-flex align-items-end">
+							<div class="col-lg-6">
+								Tree based Restoration Registry <a
+									href="#" target="_blank">TBRR</a>
+								 &copy;&nbsp;2024. All rights reserved.
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+	
+	<script src="tbrr js/js/jquery/jquery.minf43b.js?ver=3.7.1" id="jquery-core-js"></script>
+	<script src="tbrr js/js/jquery/jquery-migrate.min5589.js?ver=3.4.1" id="jquery-migrate-js"></script>
+	<script src="tbrr public/Main/tbrr/js/combined.min662c.js?ver=2024.22.02.01"
+		id="customscripts-js"></script>
+
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+      var thirdOpacity = 0.1;
+      var secondaryOpacity = 0.4;
+      var mainOpacity = 0.0;
+      var ethiopia = { lat: 9.145, lng: 40.4897 };
+      var map = L.map("map", {
+        minZoom: 5,
+        maxBounds: [
+          [3.306, 32.897], // Southwestern corner of the bounding box
+          [15.003, 48.102], // Northeastern corner of the bounding box
+        ],
+        updateWhenIdle: false,
+      }).setView(ethiopia, 7);
+
+      L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+        attribution: "&copy; OpenStreetMap contributors",
+      }).addTo(map);
+
+      // Helper function to fetch GeoJSON data
+      function fetchData(url) {
+        return fetch(url).then((response) => response.json());
+      }
+  var faq = document.getElementById("faq");
+  var faqContent = document.getElementById("faq-content");
+    console.log("faq", faq)
+
+  faq.addEventListener("mouseenter", function() {
+    faqContent.classList.add("accordion-active");
+  });
+
+  faq.addEventListener("mouseleave", function() {
+    faqContent.classList.remove("accordion-active");
+  });
+
+      fetchData("boundary.geojson").then(function (data) {
+        L.geoJSON(data, {
+          style: {
+            fillColor: "#f8f8f8",
+            fillOpacity: 1,
+            color: "white",
+            weight: 1,
+          },
+        }).addTo(map);
+      });
+      var regionLayer,
+      allSiteLayerGroup = L.layerGroup().addTo(map); 
+      woredaLayerGroup = L.layerGroup().addTo(map);
+      var kebeleLayerGroup = L.layerGroup().addTo(map);
+      var siteLayerGroup = L.layerGroup().addTo(map);
+      var All_Regions = []
+	  var Woredas = []
+	var Kebeles = []
+	var Sites = [],
+  Woredas_List = [],
+  Kebele_List = [],
+  Site_List = []
+  //https://tbrr.echnoserve.com/api/geojson/sites
+////////////
+
+///////////
+      fetch("https://tbrr.echnoserve.com/api/geojson/regions")
+  .then(response => response.json())
+  .then(data => {
+    console.log("The Region Array is here:", data.data);
+    const Region_Array = data.data;
+    console.log("njdfbgjdf",Region_Array);
+    Region_Array.forEach(function(region) {
+      console.log("the region::::",region)
+      fetchData(`https://tbrr.echnoserve.com/${region}`).then((regionData) => {
+        console.log("regionData", regionData)
+        All_Regions.push(regionData)
+      var regionList = document.getElementById("regionList");
+        var searchInput = document.getElementById("searchInput");
+
+    var regions = []
+
+    regionData.features.forEach((feature) => {
+    feature.properties.id = parseInt(region.match(/\d+/)[0], 10)
+    console.log("khvskvgdbkhfv",feature)
+    regions.push(
+      {
+        Name: feature.properties.name,
+        id: parseInt(region.match(/\d+/)[0], 10)
+    }
+    ) 
+
+    console.log("dghvfjsd", regions)
+});
+
+regions.forEach((region) => {
+    var listItem = document.createElement("li");
+    listItem.textContent = region.Name;
+    regionList.appendChild(listItem);
+
+
+  listItem.addEventListener("click", function () {
+  Woredas = [];
+  Kebeles = [];
+  Sites = [];
+
+        var selectedRegion = region.id
+  console.log(selectedRegion, "sumeya");
+        woredaLayerGroup.clearLayers();
+        regionLayer.resetStyle();
+        var selectedLayer = getLayerByRegionName(selectedRegion);
+
+         if (selectedLayer) {
+           map.fitBounds(selectedLayer.getBounds());
+           selectedLayer.fire("click");
+         }
+       });
+   });
+
+///////////////
+searchInput.addEventListener("input", function () {
+  var filterValue = searchInput.value.toLowerCase();
+  Array.from(regionList.getElementsByTagName("li")).forEach(function (listItem) {
+    var RegionName = listItem.textContent.toLowerCase();
+    if (RegionName.indexOf(filterValue) > -1) {
+      listItem.style.display = "";
+    } else {
+      listItem.style.display = "none";
+    }
+  });
+});
+//////////////
+
+//     searchInput.addEventListener("input", function() {
+//     var searchTerm = searchInput.value.toLowerCase();
+
+//     // while (regionList.firstChild) {
+//     //     regionList.removeChild(regionList.firstChild);
+//     // }
+
+//     regions.filter((region) => {
+//     return region.toLowerCase().includes(searchTerm);
+//     }).forEach((filteredRegion) => {
+//     var listItem = document.createElement("li");
+//     listItem.textContent = filteredRegion;
+//     regionList.appendChild(listItem);
+
+// listItem.addEventListener("click", function () {
+//   Woredas = [];
+//   Kebeles = [];
+//   Sites = [];
+//         var selectedRegion = filteredRegion
+//   console.log(selectedRegion, "Assefa");
+//         woredaLayerGroup.clearLayers();
+//         regionLayer.resetStyle();
+//         var selectedLayer = getLayerByRegionName(selectedRegion);
+
+//         if (selectedLayer) {
+//           map.fitBounds(selectedLayer.getBounds());
+//           selectedLayer.fire("click");
+//         }
+//       });
+
+// });
+// });
+
+
+all_Site = []; 
+function onEachSiteLayer(feature, layer) {
+    //feature.properties.id = parseInt(region.match(/\d+/)[0], 10)
+
+console.log("Layer:", layer);
+all_Site.push(layer);
+var siteIcon = L.icon({
+   iconUrl: 'tbrr public/Main/tbrr/icons/gps.png',
+   iconSize: [32, 32],
+iconAnchor: [16, 16],
+});
+  var coordinates = layer.getBounds().getCenter();
+console.log("*********",layer)
+console.log("*********",feature)
+
+var siteMarker = L.marker(coordinates, 
+    {icon: siteIcon}
+).addTo(map);
+
+siteMarker.bindTooltip(feature.properties.Name ? feature.properties.Name : feature.properties.watershed, {
+    permanent: false,
+    direction: 'top'
+});
+
+var SITE_ID = feature.properties.id
+
+siteMarker.on('click', function() {
+                // map.setView(coordinates, 14);
+                    var THE_SITE = all_Site.find(LAYER => LAYER.feature.properties.id === SITE_ID);
+                    console.log("LAYER...",THE_SITE)
+                    console.log("The site is ==",THE_SITE)
+                    THE_SITE.setStyle({ color: "black" });
+                console.log(layer);
+                map.fitBounds(THE_SITE.getBounds());
+                console.log("njhdbjsdgvfjsd",THE_SITE.feature.properties)
+                projectInfo(THE_SITE.feature.properties, "site");
+
+            });
+            
+}
+///////////////
+fetch("https://tbrr.echnoserve.com/api/geojson/sites")
+  .then(response => response.json())
+  .then(data => {
+    const Site_array = data.data;
+    console.log("Site_array",Site_array)
+    Site_array.forEach(
+      function fetchSiteData(site_Url) {
+        console.log("site_Url",site_Url)
+return fetch(`https://tbrr.echnoserve.com${site_Url}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log("the data of the site",data)
+      data.features[0].properties.id = parseInt(site_Url.match(/\d+/)[0], 10)
+
+            var siteLayer = L.geoJSON(data.features, {
+              onEachFeature: onEachSiteLayer,
+            });
+            // all_Site.push(siteLayer);
+        
+      allSiteLayerGroup=   L.geoJSON(data, {
+      style: {
+        fillColor: "#803d00",
+        fillOpacity: 0,
+        color: "#803d00",
+        weight: 3,
+      },
+    }).addTo(map);
+  })
+    .catch(error => console.error("Error fetching site data:", error));
+}
+    )
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+//////////////
+// function fetchSiteData(site_Url) {
+// return fetch(`https://tbrr.echnoserve.com${site_Url}`)
+//     .then(response => response.json())
+//     .then(data => {
+//         data.features.forEach(feature => {
+//             var siteLayer = L.geoJSON(feature, {
+//               onEachFeature: onEachSiteLayer,
+//             });
+//             // all_Site.push(siteLayer);
+//         });
+//       allSiteLayerGroup=   L.geoJSON(data, {
+//       style: {
+//         fillColor: "#803d00",
+//         fillOpacity: 0.5,
+//         color: "#803d00",
+//         weight: 2,
+//       },
+//     }).addTo(map);
+//   })
+//     .catch(error => console.error("Error fetching site data:", error));
+// }
+// fetchSiteData();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    regionLayer = L.geoJSON(All_Regions, {
+      style: { color: "#009879", fillOpacity: mainOpacity, weight:1 
+    },
+      onEachFeature: onEachRegionFeature,
+    }).addTo(map);
+
+    function onEachRegionFeature(feature, layer) {
+      layer.on("click", function (event) {
+        projectInfo(feature.properties, "region");
+        regionLayer.resetStyle();
+        event.target.setStyle({ color: "black", fillOpacity: mainOpacity, weight:5 });
+        markSelectedRegionInList(feature.properties.name);
+        woredaLayerGroup.clearLayers();
+        drawWoredasForRegion(feature.properties.id);
+        updateWoredaList(feature.properties.id);
+      });
+
+      function drawWoredasForRegion(selectedRegion) {
+
+        fetch(`https://tbrr.echnoserve.com/api/geojson/regions/${selectedRegion}/woredas`)
+  .then(response => response.json())
+  .then(data => {
+    console.log("The Woreda Array is here:", data.data);
+    const Region_Woredas = data.data;
+    Region_Woredas.forEach(function (woro_da) {
+      fetchData(`https://tbrr.echnoserve.com/${woro_da}`).then((woredaData) => {
+        console.log("woredaData",woredaData)
+        Woredas_List.push(woredaData)
+    L.geoJSON(woredaData, {
+        onEachFeature: onEachWoredaFeature,
+    }).addTo(woredaLayerGroup);
+});
+    }
+      
+    )
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+
+
+}
+    }
+
+    function getLayerByRegionName(regionId) {
+      console.log("regionId", regionId)
+      var selectedLayer = null;
+      regionLayer.eachLayer(function (layer) {
+        if (layer.feature.properties.id === regionId) {
+          selectedLayer = layer;
+        }
+      });
+      return selectedLayer;
+    }
+
+function getLayerByWoredaName(WoredaId) {
+   //const the_ = Woredas.find(layer => layer.feature.properties.id === WoredaId)
+console.log("layer.feature.properties.id", WoredaId)
+// Woredas.forEach(woreda => {
+
+//     console.log("Woreda ID:", woreda.feature.properties.id);
+//   });
+
+  return Woredas.find(layer => layer.feature.properties.id === WoredaId);
+
+}
+
+function getLayerByKebeleName(KebeleName) {
+return Kebeles.find(layer => layer.feature.properties.name === KebeleName);
+}
+
+function getLayerBySiteName(SiteId) {
+  console.log("SuccessFull Sites...",Sites)
+return Sites.find(layer => layer.feature.properties.id === SiteId);
+}
+
+    function markSelectedRegionInList(selectedRegion) {
+      var listItems = document.querySelectorAll("li");
+      listItems.forEach(function (item) {
+        if (item.textContent === selectedRegion) {
+          item.classList.add("active-region");
+        } else {
+          item.classList.remove("active-region");
+        }
+      });
+    }
+
+function updateWoredaList(selectedRegion) {
+console.log("updateWoredaList", selectedRegion)
+var woredaList = document.getElementById("woredaList");
+var selectWoreda = document.getElementById("woredaBtn");
+var woredaContent = document.getElementById("woredaContent");
+var searchInput = document.getElementById("woredaInput");
+
+selectWoreda.classList.remove("s-hide");
+woredaContent.classList.remove("s-hide");
+woredaList.innerHTML = "<strong>Woredas:</strong>";
+console.log("the Woredas of the region",woredaLayerGroup)
+// fetchData(`https://tbrr.echnoserve.com/api/regions/${selectedRegion}/woredas?all=true`).then((woredaData) => {
+//   console.log("74y5837483ngkdhg",woredaData)}
+fetchData(`https://tbrr.echnoserve.com/api/regions/${selectedRegion}/woredas?all=true`).then((woredaData) => {
+woredaData.data
+  // .filter((feature) => feature.properties.ADM1_EN === selectedRegion)
+  .forEach((Woreda_Data) => {
+    var listItem = document.createElement("li");
+    listItem.textContent = Woreda_Data.woreda_name;
+    listItem.classList.add("woreda-item");  
+    listItem.dataset.woredaId = Woreda_Data.id;
+    woredaList.appendChild(listItem);
+
+listItem.addEventListener("click", function () {
+  // var selectedWoreda = feature.properties.ADM3_EN;
+  var selectedWoredaId = parseInt(this.dataset.woredaId);
+  console.log("74y5837483ngkdhg",selectedWoredaId)
+
+  var W_layer = getLayerByWoredaName(selectedWoredaId.toString()) 
+    if(W_layer){
+      map.fitBounds(W_layer.getBounds());
+      W_layer.setStyle({ color: "black", fillOpacity: secondaryOpacity,weight:1 });
+           W_layer.fire("click");
+
+    }
+
+    ////
+        //     var selectedLayer = getLayerByRegionName(selectedRegion);
+
+        //  if (selectedLayer) {
+        //    map.fitBounds(selectedLayer.getBounds());
+        //    selectedLayer.fire("click");
+        //  }
+    ////
+//projectInfo(W_layer.feature, "woreda");
+woredaLayerGroup.eachLayer(function (woredaLayer) {
+    woredaLayer.setStyle({
+        color: "#803d00",
+        fillOpacity: thirdOpacity,weight:1,
+    });
+});
+
+woredaLayerGroup.eachLayer(function (woredaLayer) {
+    if (
+        woredaLayer.feature &&
+        woredaLayer.feature.properties.id === W_layer.feature.properties.id
+    ) {
+        woredaLayer.setStyle({
+            color: "#803d00",
+            fillOpacity: mainOpacity, weight:1,
+        });
+        // Center map on the selected woreda
+        map.fitBounds(woredaLayer.getBounds());
+        woredaLayer.fire('click');
+    }
+});
+// console.log("W_layer.feature.properties.name",W_layer.feature.properties.name)
+markSelectedWoredaInList(W_layer.feature.properties.name);
+kebeleLayerGroup.clearLayers();
+drawKebelesForWoreda(W_layer.feature.properties.id);
+updateKebeleList(W_layer.feature.properties.id);
+});
+});
+
+// Filter/Search functionality
+searchInput.addEventListener("input", function () {
+  var filterValue = searchInput.value.toLowerCase();
+  Array.from(woredaList.getElementsByTagName("li")).forEach(function (listItem) {
+    var woredaName = listItem.textContent.toLowerCase();
+    if (woredaName.indexOf(filterValue) > -1) {
+      listItem.style.display = "";
+    } else {
+      listItem.style.display = "none";
+    }
+  });
+});
+});
+
+showContainer("woredaContainer", "woredaList");
+}
+    
+// function drawKebelesForWoreda(selectedWoreda) {
+//   console.log("drawKebelesForWoreda", selectedWoreda)
+// console.log(`Showing Kebeles for Woreda with PCODE: ${selectedWoreda}`);
+
+// fetchData(`https://tbrr.echnoserve.com/api/geojson/woredas/${selectedWoreda}/kebeles`).then((kebeleData) => {
+//   console.log("kebeleData", kebeleData.data)
+//     L.geoJSON(kebeleData, {
+        
+//         onEachFeature: onEachKebeleFeature,
+//     }).addTo(kebeleLayerGroup);
+// });
+// }
+      function drawKebelesForWoreda(selectedWoreda) {
+        fetch(`https://tbrr.echnoserve.com/api/geojson/woredas/${selectedWoreda}/kebeles`)
+  .then(response => response.json())
+  .then(data => {
+    console.log("The Kebele Array is here:", data.data,selectedWoreda);
+    const Woroda_Kebeles = data.data;
+    Woroda_Kebeles.forEach(function (KEBELE) {
+      fetchData(`https://tbrr.echnoserve.com${KEBELE}`).then((woredaData) => {
+
+        console.log("njsdvksd",woredaData)
+        woredaData.features.forEach((feature) => {
+    feature.properties.id = parseInt(KEBELE.match(/\d+/)[0], 10)
+    console.log("njsdvksd",feature)
+    
+
+});
+
+    L.geoJSON(woredaData, {
+        onEachFeature: onEachKebeleFeature,
+    }).addTo(kebeleLayerGroup);
+});
+    }
+      
+    )
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+
+
+}
+
+ 
+function onEachKebeleFeature(feature, layer) {
+Kebeles.push(layer);
+layer.on("click", function () {
+    projectInfo(feature.properties, "kebele");
+    kebeleLayerGroup.eachLayer(function (kebeleLayer) {
+        kebeleLayer.setStyle({
+            color: "#6c757d",
+            fillOpacity: mainOpacity, weight:1,
+        });
+    });
+
+    layer.setStyle({
+        color: "#4CAF50",
+        fillOpacity: secondaryOpacity,weight:1,
+    });
+
+    markSelectedKebeleInList(feature.properties.name);
+
+    // Center map on the selected kebele
+    map.fitBounds(layer.getBounds());
+
+    siteLayerGroup.clearLayers();
+  //  drawSitesForKebele(feature.properties.RK_CODE);
+    //updateSiteList(feature.properties.RK_CODE);
+});
+}
+
+
+    function markSelectedKebeleInList(selectedKebele) {
+      var kebeleItems = document.querySelectorAll("#kebeleList li");
+      kebeleItems.forEach(function (item) {
+        var kebeleName = item.textContent.trim();
+        if (kebeleName === selectedKebele) {
+          item.classList.add("active-kebele");
+        } else {
+          item.classList.remove("active-kebele");
+        }
+      });
+    }
+
+    function updateKebeleList(selectedWoreda) {
+      var kebeleList = document.getElementById("kebeleList");
+      var searchInput = document.getElementById("kebeleInput");
+
+      kebeleList.innerHTML = "<strong>Kebeles:</strong>";
+////////////
+// fetchData(`https://tbrr.echnoserve.com/api/woredas/${selectedWoreda}/kebeles?all=true`).then((woredaData) => {
+// woredaData.data
+////////////
+      fetchData(`https://tbrr.echnoserve.com/api/woredas/${selectedWoreda}/kebeles?all=true`).then((kebeleData) => {
+        kebeleData.data.forEach((feature) => {
+            var listItem = document.createElement("li");
+            listItem.textContent = feature.kebele_name;
+            kebeleList.appendChild(listItem);
+
+            listItem.dataset.kebeleName = feature.kebele_name;
+            listItem.dataset.kebeleId = feature.id;
+            console.log("feature.id",feature.id)
+            listItem.addEventListener("click", function () {
+              var selectedKebeleId = parseInt(this.dataset.kebeleId);
+             console.log("selectedKebeleId",this)
+
+      var selectedKebeleName = this.dataset.kebeleName;
+      var K_layer = getLayerByKebeleName(selectedKebeleName);
+       console.log("the selected kebele is ..." + K_layer);
+      if(K_layer) {
+        map.fitBounds(K_layer.getBounds());
+        K_layer.setStyle({ color: "green", fillOpacity: secondaryOpacity,weight:2 });
+      }
+              projectInfo(K_layer.feature.properties, "kebele");
+              kebeleLayerGroup.eachLayer(function (kebeleLayer) {
+                kebeleLayer.setStyle({
+                  color: "#6c757d",
+                  fillOpacity: mainOpacity, weight:1,
+                });
+              });
+
+              kebeleLayerGroup.eachLayer(function (kebeleLayer) {
+                if (
+                  kebeleLayer.feature &&
+                  kebeleLayer.feature.properties.name ===
+                    feature.properties.name
+                ) {
+                  kebeleLayer.setStyle({
+                    color: "#4CAF50",
+                    fillOpacity: secondaryOpacity,weight:1,
+                  });
+                }
+              });
+
+            //  markSelectedKebeleInList(feature.properties.name);
+            console.log("this.dataset.kebeleId",selectedKebeleId)
+              siteLayerGroup.clearLayers();
+              drawSitesForKebele(selectedKebeleId.toString());
+              updateSiteList(this.dataset.kebeleId);
+            });
+          });
+      });
+
+  // Filter/Search functionality
+  searchInput.addEventListener("input", function () {
+      var filterValue = searchInput.value.toLowerCase();
+      Array.from(kebeleList.getElementsByTagName("li")).forEach(function (listItem) {
+      var kebeleName = listItem.textContent.toLowerCase();
+      if (kebeleName.indexOf(filterValue) > -1) {
+        listItem.style.display = "";
+      } else {
+        listItem.style.display = "none";
+      }
+  });
+});
+
+
+      showContainer("kebeleContainer", "kebeleList");
+    }
+
+
+function onEachSiteFeature(feature, layer) {
+Sites.push(layer);
+  console.log("njsdbvfjsfdvbldvbfg",Sites);
+layer.on("click", function () {
+    projectInfo(feature.properties, "site");
+    siteLayerGroup.eachLayer(function (siteLayer) {
+        siteLayer.setStyle({
+            color: "#ffd700",
+            fillOpacity: mainOpacity, weight:1,
+        });
+    });
+
+    layer.setStyle({
+        color: "#ffd790",
+        fillOpacity: secondaryOpacity,weight:1,
+    });
+
+    markSelectedSiteInList(feature.properties.name);
+map.fitBounds(layer.getBounds());
+    // Center map on the selected site
+
+});
+}
+
+    function markSelectedSiteInList(selectedSite) {
+      var siteItems = document.querySelectorAll("#siteList li");
+      siteItems.forEach(function (item) {
+        var siteName = item.textContent.trim();
+        if (siteName === selectedSite) {
+          item.classList.add("active-site");
+        } else {
+          item.classList.remove("active-site");
+        }
+      });
+    }
+
+      function drawSitesForKebele(selectedkebele) {
+
+        fetch(`https://tbrr.echnoserve.com/api/geojson/kebeles/${selectedkebele}/sites`)
+  .then(response => response.json())
+  .then(data => {
+    console.log("The site Array is here:", data.data);
+    const Woroda_Kebeles = data.data;
+    Woroda_Kebeles.forEach(function (SITE) {
+      fetchData(`https://tbrr.echnoserve.com${SITE}`).then((siteData) => {
+        console.log("dgfsdvfg",siteData)
+
+    L.geoJSON(siteData, {
+        onEachFeature: onEachSiteFeature,
+    }).addTo(siteLayerGroup);
+});
+    }
+      
+    )
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+
+
+}
+    function updateSiteList(selectedKebele) {
+    console.log("document.getElementById",selectedKebele)
+      var siteList = document.getElementById("siteList");
+      siteList.innerHTML = "<strong>Sites:</strong>";
+
+      fetchData(`https://tbrr.echnoserve.com/api/kebeles/${selectedKebele}/sites?all=true`).then((siteData) => {
+        siteData.data.forEach((feature) => {
+        console.log("siteData.data.forEach", feature)
+            var listItem = document.createElement("li");
+            listItem.textContent = feature.site_name;
+            listItem.dataset.siteId = feature.id;
+            listItem.dataset.name = feature.site_name;
+            siteList.appendChild(listItem);
+
+            listItem.addEventListener("click", function () {
+
+      var Selected_Site = this.dataset.siteId;
+      var S_layer = getLayerBySiteName(Selected_Site);
+      console.log("the selected site is ..." + this.dataset.siteId);
+      if(S_layer) {
+        map.fitBounds(S_layer.getBounds());
+        S_layer.setStyle({ color: "blue", fillOpacity: secondaryOpacity,weight:1 });
+              console.log("the selected site is ..." + S_layer);
+              S_layer.fire("click")
+      }
+              projectInfo(feature.properties, "site");
+              siteLayerGroup.eachLayer(function (siteLayer) {
+                if (
+                  siteLayer.feature &&
+                  siteLayer.feature.properties.Name ===
+                    feature.properties.Name
+                ) {
+                  siteLayer.setStyle({
+                    color: "#ffd790",
+                    fillOpacity: secondaryOpacity,weight:1,
+                  });
+                } else {
+                  siteLayer.setStyle({
+                    color: "#ffd700",
+                    fillOpacity: mainOpacity, weight:1,
+                  });
+                }
+              });
+
+              markSelectedSiteInList(feature.properties.Name);
+            });
+          });
+      });
+      showContainer("siteContainer", "siteList");
+    }
+
+    
+function onEachWoredaFeature(feature, layer) {
+Woredas.push(layer);
+console.log("onEachWoredaFeature", feature)
+console.log("onEachWoredaFeature", layer)
+layer.bindTooltip(feature.properties.name, {
+  permanent:false,
+  direction: top,
+  fontSize: '16px'
+})
+layer.on("click", function () {
+    projectInfo(feature.properties, "woreda");
+    woredaLayerGroup.eachLayer(function (woredaLayer) {
+        woredaLayer.setStyle({
+            color: "#803d00",
+            fillOpacity: thirdOpacity,weight:1,
+        });
+    });
+
+    layer.setStyle({
+        color: "#803d00",
+        fillOpacity: mainOpacity, weight:1,
+    });
+
+    markSelectedWoredaInList(feature.properties.name);
+
+    // Center map on the selected woreda
+    map.fitBounds(layer.getBounds());
+
+    kebeleLayerGroup.clearLayers();
+    drawKebelesForWoreda(feature.properties.id);
+    updateKebeleList(feature.properties.id);
+});
+}
+
+    function markSelectedWoredaInList(selectedWoreda) {
+      var woredaItems = document.querySelectorAll("#woredaList li");
+      woredaItems.forEach(function (item) {
+        var woredaName = item.textContent.trim();
+        if (woredaName === selectedWoreda) {
+          item.classList.add("active-woreda");
+        } else {
+          item.classList.remove("active-woreda");
+        }
+      });
+    }
+  })
+    }
+    )
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+
+  var Zoom_Out = document.getElementById('Zoom_Out');
+  Zoom_Out.addEventListener("click", function(){
+    map.setView(ethiopia, 7)
+  })
+
+  async function RegionData(id) {
+    try {
+        const response = await fetch(`https://tbrr.echnoserve.com/api/regions/${id}`);
+        const data = await response.json();
+        console.log(`https://tbrr.echnoserve.com/api/regions/${id}`, data.data);
+        return data.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; // Propagate the error further if needed
+    }
+}
+
+async function Woreda_Data(id) {
+try {
+        const response = await fetch(`https://tbrr.echnoserve.com/api/woredas/${id}`);
+        const data = await response.json();
+        return data.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; 
+    }
+}
+
+
+async function Kebele_Data(id) {
+try {
+        const response = await fetch(`https://tbrr.echnoserve.com/api/kebeles/${id}`);
+        const data = await response.json();
+        return data.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; 
+    }
+}
+
+async function Site_Data(id) {
+try {
+        const response = await fetch(`https://tbrr.echnoserve.com/api/sites/${id}`);
+        const data = await response.json();
+        return data.data;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; 
+    }
+}
+
+
+
+
+
+      async function projectInfo(properties, type) {
+        var projectInfoDiv = document.getElementsByClassName("projectInfo");
+        var content = "";
+        ////////////
+        if (type == "region") {
+    try {
+        const regionData = await RegionData(properties.id);
+        console.log("vkvbgdhfvb", regionData);
+
+        const No_Kebele = regionData.kebeles.length;
+        const No_Woredas = regionData.woredas.length;
+
+        content = `
+            <h4>${regionData.region_name}</h4>
+            <hr />
+
+            <table class="table-auto w-full">
+               <thead>
+                 
+               </thead>
+               <tbody>
+                 <tr>
+                   <td className="border px-4 py-2 font-bold">Region Name</td>
+                   <td className="border px-4 py-2">${regionData.region_name}</td>
+                 </tr>
+
+                 <tr>
+                   <td className="border px-4 py-2 font-bold">Region Code</td>
+                   <td className="border px-4 py-2">${regionData.region_code}</td>
+                 </tr>
+
+                 <tr>
+                   <td className="border px-4 py-2 font-bold">Number of site</td>
+                   <td className="border px-4 py-2">${regionData.sites}</td>
+                 </tr>
+
+                 <tr>
+                   <td className="border px-4 py-2 font-bold">Number of Kebele</td>
+                   <td className="border px-4 py-2">${No_Kebele}</td>
+                 </tr>
+
+
+                 <tr>
+                   <td className="border px-4 py-2 font-bold">Number of Woredas</td>
+                   <td className="border px-4 py-2">${No_Woredas}</td>
+                 </tr>
+
+
+
+               </tbody>
+             </table>
+        `;
+    } catch (error) {
+        // Handle error if needed
+    }
+}
+
+        ////////////
+        if (type == "woreda") {
+          console.log("kjhsjdfgshdfcksd", properties)
+          try {
+        const WoredaData = await Woreda_Data(properties.id);
+        console.log("vkvbgdhfvb", WoredaData);
+
+        content = `
+            <h4>${WoredaData.woreda_name}</h4>
+            <hr />
+
+            <table class="table-auto w-full">
+               <thead>
+                 
+               </thead>
+               <tbody>
+                 <tr>
+                   <td className="border px-4 py-2 font-bold">Woreda Name</td>
+                   <td className="border px-4 py-2">${WoredaData.woreda_name}</td>
+                 </tr>
+
+                 <tr>
+                   <td className="border px-4 py-2 font-bold">Woreda Code</td>
+                   <td className="border px-4 py-2">${WoredaData.woreda_code}</td>
+                 </tr>
+
+
+                
+
+
+               </tbody>
+             </table>
+             <hr/>
+             <h6>Woreda data</h6>
+
+             <hr/>
+
+
+             <table class="table-auto w-full">
+               <thead>
+                 
+               </thead>
+               <tbody>
+                 <tr>
+                   <td className="border px-4 py-2 font-bold">Female Population</td>
+                   <td className="border px-4 py-2">${WoredaData.woreda_data.female_population}</td>
+                 </tr>
+
+                 <tr>
+                   <td className="border px-4 py-2 font-bold">Male population</td>
+                   <td className="border px-4 py-2">${WoredaData.woreda_data.male_population}</td>
+                 </tr>
+
+                 <tr>
+                   <td className="border px-4 py-2 font-bold">rural_kebeles</td>
+                   <td className="border px-4 py-2">${WoredaData.woreda_data.rural_kebeles}</td>
+                 </tr>
+
+                 <tr>
+                   <td className="border px-4 py-2 font-bold">urban_kebeles</td>
+                   <td className="border px-4 py-2">${WoredaData.woreda_data.urban_kebeles}</td>
+                 </tr>
+
+
+
+               </tbody>
+             </table>
+
+             <hr />
+
+
+
+        `;
+        content += `
+  <h4>Woreda Resource</h4>
+  <hr />
+`;
+content += `
+  <h4>LAND</h4>
+  <hr />
+  <table class="table-auto w-full">
+    <tbody>
+    ${WoredaData.woreda_resource.LAND.map((resource, index) => {
+      return `
+        <div key=${index}>
+            <tr>
+              <td class="border px-4 py-2 font-bold">${resource.value}</td>
+              <td class="border px-4 py-2">${resource.amount}</td>
+            </tr>
+          
+        </div>
+      `;
+    }).join('')} 
+  </tbody>
+  </table>
+  <hr/>
+`;
+
+// WoredaData.woreda_resource.LAND.forEach((resource, index) => {
+//   content += `
+//     <div key=${index}>
+//         <tbody>
+//           <tr>
+//             <td class="border px-4 py-2 font-bold">${resource.value}</td>
+//             <td class="border px-4 py-2">${resource.amount}</td>
+//           </tr>
+//         </tbody>
+//       </table>
+//     </div>
+//   `;
+// });
+
+content += `
+  <h4>ROAD</h4>
+  <hr />
+  <table class="table-auto w-full">
+    <tbody>
+    ${WoredaData.woreda_resource.ROAD.map((resource, index) => {
+      return `
+        <div key=${index}>
+            <tr>
+              <td class="border px-4 py-2 font-bold">${resource.value}</td>
+              <td class="border px-4 py-2">${resource.amount}</td>
+            </tr>
+          
+        </div>
+      `;
+    }).join('')} 
+  </tbody>
+  </table>
+  <hr/>
+`;
+
+
+
+content += `
+  <h4>Woreda Institution</h4>
+  <hr />
+`;
+
+
+content += `
+  <h4>School</h4>
+  <hr />
+  <table class="table-auto w-full">
+    <tbody>
+    ${WoredaData.woreda_institution.SCHOOL.map((institution, index) => {
+      return `
+        <div key=${index}>
+            <tr>
+              <td class="border px-4 py-2 font-bold">${institution.value}</td>
+              <td class="border px-4 py-2">${institution.amount}</td>
+            </tr>
+          
+        </div>
+      `;
+    }).join('')} 
+  </tbody>
+  </table>
+  <hr/>
+`;
+
+
+
+content += `
+  <h4>Health Facility</h4>
+  <hr />
+  <table class="table-auto w-full">
+    <tbody>
+    ${WoredaData.woreda_institution.HEALTH_FACILITY.map((institution, index) => {
+      return `
+        <div key=${index}>
+            <tr>
+              <td class="border px-4 py-2 font-bold">${institution.value}</td>
+              <td class="border px-4 py-2">${institution.amount}</td>
+            </tr>
+          
+        </div>
+      `;
+    }).join('')} 
+  </tbody>
+  </table>
+  <hr/>
+`;
+
+
+
+
+
+    } catch (error) {
+        // Handle error if needed
+    }
+        } else if (type == "site") {
+          const SiteData = await Site_Data(properties.id);
+
+          console.log("bjsgdvfksdvf", SiteData)
+          content = `
+      <h4>${SiteData.site_name}</h4>
+      <hr />
+      <h6>Site Information</h6>
+
+
+
+      <p><strong>Size in hac.: </strong> ${SiteData.size_ha}</p>
+      <p><strong>Watershed: </strong> ${SiteData.watershed_name}</p>
+      <p><strong>Kebele: </strong> ${SiteData.kebele_name}</p>
+      <p><strong>Woreda: </strong> ${SiteData.woreda_name || "Adwa"}</p>
+      <p><strong>Zone: </strong> ${SiteData.zone_name || "N/A"}</p>
+  
+
+
+
+
+	  `;
+
+    content += `
+  <h4>Site Resource</h4>
+  <hr />
+`;
+
+
+content += `
+  <strong>Current land use</strong>
+  <hr />
+`;
+
+        {SiteData.resources &&
+          SiteData.resources?.map((resource, index) =>
+{
+  resource.LAND?.map((item, index) => (
+                          content += `
+
+    <div key=${index}>
+     
+      
+       
+            <p class="border px-4 py-2 font-bold">${item.value}</p>
+          
+    </div>
+  `                        ))
+}
+        
+
+                      )}
+
+                      content += `
+  <strong>TREE</strong>
+  <hr />
+  <p class = "font-bold"> Indigenous Tree</p>
+`;
+
+        {SiteData.resources &&
+          SiteData.resources?.map((resource, index) =>
+{
+  resource?.TREE?.filter((tree) => tree.indigenous === 1).map((item, index) => (
+                          content += `
+
+    <div key=${index}>
+     
+            <p class="border px-4 py-2 font-bold">${item.value}</p>
+ 
+    </div>
+  `                        ))
+}
+
+
+
+        
+
+                      )}
+                      content +=`
+                      <p class = "font-bold">  Exotic Tree </p>
+                      <hr/>
+                      `
+                      {SiteData.resources &&
+          SiteData.resources?.map((resource, index) =>
+{
+  resource?.TREE?.filter(
+                 (tree) => !tree.hasOwnProperty("indigenous")
+                ).map((item, index) => (
+                          content += `
+
+    <div key=${index}>
+     
+            <p class="border px-4 py-2 font-bold">${item.value}</p>
+ 
+    </div>
+  `                        ))
+}
+)}             
+
+
+                      content += `
+  <strong>LIVESTOCK</strong>
+  <hr />
+`;
+
+        {SiteData.resources &&
+          SiteData.resources?.map((resource, index) =>
+{
+  resource.LIVESTOCK?.map((item, index) => (
+                          content += `
+
+    <div key=${index}>
+     
+            <p class="border px-4 py-2 font-bold">${item.value}</p>
+
+    </div>
+  `                        ))
+}
+        
+
+                      )}
+
+                      content += `
+  <strong>FORAGE</strong>
+  <hr />
+`;
+
+        {SiteData.resources &&
+          SiteData.resources?.map((resource, index) =>
+{
+  resource.FORAGE?.map((item, index) => (
+                          content += `
+
+    <div key=${index}>
+     
+            <p class="border px-4 py-2 font-bold">${item.value}</p>
+         
+    </div>
+  `                        ))
+}
+        
+
+                      )}
+
+                      
+
+                      
+
+        } 
+        else if (type == "kebele") {
+           const kebeleData = await Kebele_Data(properties.id);
+
+           content = `
+            <h4>${kebeleData.kebele_name}</h4>
+            <hr />
+
+            <table class="table-auto w-full">
+               <thead>
+                 
+               </thead>
+               <tbody>
+                 <tr>
+                   <td className="border px-4 py-2 font-bold"><strong>Region Name</strong></td>
+                   <td className="border px-4 py-2">${kebeleData.region_name}</td>
+                 </tr>
+
+                 <tr>
+                   <td className="border px-4 py-2 font-bold"><strong>woreda_name</strong></td>
+                   <td className="border px-4 py-2">  ${kebeleData.woreda_name}</td>
+                 </tr>
+
+                 <tr>
+                   <td className="border px-4 py-2 font-bold"><strong>zone_name</strong></td>
+                   <td className="border px-4 py-2">${kebeleData.zone_name}</td>
+                 </tr>
+
+  
+
+               </tbody>
+             </table>
+             <hr/>
+             <h6>Kebele data</h6>
+
+             <hr/>
+
+
+             <table class="table-auto w-full">
+               <thead>
+                 
+               </thead>
+               <tbody>
+
+                <tr>
+                   <td className="border px-4 py-2 font-bold"><strong>female_population</strong></td>
+                   <td className="border px-4 py-2"> ${kebeleData.kebele_data.female_population}</td>
+                 </tr>
+
+                 <tr>
+                   <td className="border px-4 py-2 font-bold"><strong>male_population</strong></td>
+                   <td className="border px-4 py-2"> ${kebeleData.kebele_data.male_population}</td>
+                 </tr>
+
+                 <tr>
+                   <td className="border px-4 py-2 font-bold"><strong>female_non_employed</strong></td>
+                   <td className="border px-4 py-2">  ${kebeleData.kebele_data.female_non_employed}</td>
+                 </tr>
+
+                 <tr>
+                   <td className="border px-4 py-2 font-bold"><strong>male_non_employed</strong></td>
+                   <td className="border px-4 py-2">  ${kebeleData.kebele_data.male_non_employed}</td>
+                 </tr>
+
+                 <tr>
+                   <td className="border px-4 py-2 font-bold"><strong>mhf_land_owners</strong></td>
+                   <td className="border px-4 py-2">  ${kebeleData.kebele_data.mhf_land_owners}</td>
+                 </tr>
+
+                 <tr>
+                   <td className="border px-4 py-2 font-bold"><strong>fhf_land_owners</strong></td>
+                   <td className="border px-4 py-2">  ${kebeleData.kebele_data.fhf_land_owners}</td>
+                 </tr>
+
+                 <tr>
+                   <td className="border px-4 py-2 font-bold"><strong>mhf_land_lease</strong></td>
+                   <td className="border px-4 py-2">  ${kebeleData.kebele_data.mhf_land_lease}</td>
+                 </tr>
+
+                 <tr>
+                   <td className="border px-4 py-2 font-bold"><strong>fhf_land_lease</strong></td>
+                   <td className="border px-4 py-2">  ${kebeleData.kebele_data.fhf_land_lease}</td>
+                 </tr>
+
+               </tbody>
+             </table>
+
+
+
+        `;  
+
+content += `
+  <strong>crop</strong>
+  <hr />
+  <table class="table-auto w-full">
+        <tbody>
+`;
+
+        {kebeleData.resources &&
+          kebeleData.resources?.map((resource, index) =>
+{
+  resource.CROP?.map((item, index) => (
+                          content += `
+
+    <div key=${index}>
+ 
+          <tr>
+            <td class="border px-4 py-2 font-bold">${item.value}</td>
+            <td class="border px-4 py-2">${item.amount}</td>
+          </tr>
+       
+    </div>
+  `                        ))
+}
+        
+
+                      )}
+
+                      content += `
+                    </tbody>
+      </table>
+      <hr />
+  <strong>Fruit</strong>
+  <hr />
+  <table class="table-auto w-full">
+        <tbody>
+`;
+
+                      {kebeleData.resources &&
+          kebeleData.resources?.map((resource, index) =>
+                        resource.FRUIT?.map((item, index) => (
+                          content += `
+    <div key=${index}>
+     
+          <tr>
+            <td class="border px-4 py-2 font-bold">${item.value}</td>
+            <td class="border px-4 py-2">${item.amount}</td>
+          </tr>
+      
+    </div>
+  `                        ))
+                      )}
+
+                      content += `
+                    </tbody>
+      </table>
+      <hr />
+  <strong>Tree</strong>
+  <hr />
+  <table class="table-auto w-full">
+        <tbody>
+          <tr>
+`;
+
+
+// ////
+
+// content += `
+//   <strong>TREE</strong>
+//   <hr />
+//   <p class = "font-bold"> Indigenous Tree</p>
+// `;
+
+//         {SiteData.resources &&
+//           SiteData.resources?.map((resource, index) =>
+// {
+//   resource?.TREE?.filter((tree) => tree.indigenous === 1).map((item, index) => (
+//                           content += `
+
+//     <div key=${index}>
+     
+//             <p class="border px-4 py-2 font-bold">${item.value}</p>
+ 
+//     </div>
+//   `                        ))
+// }
+
+
+
+        
+
+//                       )}
+//                       content +=`
+//                       <p class = "font-bold">  Exotic Tree </p>
+//                       <hr/>
+//                       `
+//                       {SiteData.resources &&
+//           SiteData.resources?.map((resource, index) =>
+// {
+//   resource?.TREE?.filter(
+//                  (tree) => !tree.hasOwnProperty("indigenous")
+//                 ).map((item, index) => (
+//                           content += `
+
+//     <div key=${index}>
+     
+//             <p class="border px-4 py-2 font-bold">${item.value}</p>
+ 
+//     </div>
+    
+//   `                        ))
+// }
+// )}             
+
+
+// ////
+
+
+content += `
+  <h4>Indigenous Trees</h4>
+  <hr />
+  <table class="table-auto w-full">
+    <tbody>
+      ${
+        kebeleData.resources && kebeleData.resources.map((resource) =>
+          resource.TREE && resource.TREE.filter((tree) => tree.indigenous === 1).map((item, index) => `
+            <tr key=${index}>
+              <td class="border px-4 py-2 font-bold">${item.value}</td>
+              ${item.amount ? `<td class="border px-4 py-2">${item.amount}</td>` : ''}
+            </tr>
+          `).join('')
+        ).join('')
+      }
+    </tbody>
+  </table>
+  <hr />
+  <p class="font-bold">Exotic Trees</p>
+  <hr />
+  <table class="table-auto w-full">
+    <tbody>
+      ${
+        kebeleData.resources && kebeleData.resources.map((resource) =>
+          resource.TREE && resource.TREE.filter((tree) => !tree.hasOwnProperty("indigenous")).map((item, index) => `
+            <tr key=${index}>
+              <td class="border px-4 py-2 font-bold">${item.value}</td>
+              <td class="border px-4 py-2">${item.amount}</td>
+            </tr>
+          `).join('')
+        ).join('')
+      }
+    </tbody>
+  </table>
+  <hr />
+  <strong>FORAGE</strong>
+  <hr />
+  <table class="table-auto w-full">
+    <tbody>
+    
+`;
+
+
+
+                      {kebeleData.resources &&
+          kebeleData.resources?.map((resource, index) =>
+                        resource.FORAGE?.map((item, index) => (
+                          content += `
+    <div key=${index}>
+     
+          <tr>
+            <td class="border px-4 py-2 font-bold">${item.value}</td>
+            <td class="border px-4 py-2">${item.amount}</td>
+          </tr>
+       
+    </div>
+  `                        ))
+                      )}
+
+                      content += `
+                    </tbody>
+      </table>
+      <hr />
+
+  <strong>LiveStock</strong>
+  <hr />
+  <table class="table-auto w-full">
+        <tbody>
+`;
+      
+                      {kebeleData.resources &&
+          kebeleData.resources?.map((resource, index) =>
+                        resource.LIVESTOCK?.map((item, index) => (
+                          content += `
+    <div key=${index}>
+      
+          <tr>
+            <td class="border px-4 py-2 font-bold">${item.value}</td>
+            <td class="border px-4 py-2">${item.amount}</td>
+          </tr>
+       
+    </div>
+  `                        ))
+                      )}
+                      content += `
+                    </tbody>
+      </table>
+      <hr />
+  <strong>Land</strong>
+  <hr />
+  <table class="table-auto w-full">
+        <tbody>
+`;
+
+                      {kebeleData.resources &&
+          kebeleData.resources?.map((resource, index) =>
+                        resource.LAND?.map((item, index) => (
+                          content += `
+    <div key=${index}>
+     
+          <tr>
+            <td class="border px-4 py-2 font-bold">${item.value}</td>
+            <td class="border px-4 py-2">${item.amount}</td>
+          </tr>
+       
+    </div>
+  `                        ))
+                      )}
+
+                      content += `
+                    </tbody>
+      </table>
+      <hr />
+  <strong>Nursery</strong>
+  <hr />
+  <table class="table-auto w-full">
+       <thead>
+        <th></th>
+        <th p-5>amount</th>
+        <th p-5>capacity</th>
+
+        </thead>
+        <tbody>
+`;
+
+                      {kebeleData.resources &&
+          kebeleData.resources?.map((resource, index) =>
+                        resource.NURSERY?.map((item, index) => (
+                          content += `
+    <div key=${index}>
+     
+          <tr>
+            <td class="border px-4 py-2 font-bold">${item.value}</td>
+            <td class="border px-4 py-2">${item.amount}</td>
+            <td class="border px-4 py-2">${item.capacity}</td>
+
+        
+    </div>
+  `                        ))
+                      )}
+
+                      content += `
+                    </tr>
+        </tbody>
+      </table>
+      <hr />
+  <strong>Livelihoods</strong>
+  <hr />
+
+  <table class="table-auto w-full">
+       <thead>
+        <th></th>
+        <th>male</th>
+        <th>female</th>
+
+        </thead>
+        <tbody>
+`;
+
+                      {kebeleData.livelihoods &&
+          kebeleData.livelihoods?.map((item, index) =>
+                       
+                          content += `
+    <div key=${index}>
+      
+          <tr>
+            <td class="border px-4 py-2 font-bold">${item.value}</td>
+            <td class="border px-4 py-2">${item.male_headed_hh}</td>
+            <td class="border px-4 py-2">${item.female_headed_hh}</td>
+
+          </tr>
+       
+    </div>
+  `                        
+                      )}
+
+                    content += `
+                  </tbody>
+      </table>
+      <hr />
+<strong>Energy Sourses</strong>
+<hr />
+<table class="table-auto w-full">
+        <thead>
+        <th>value</th>
+        <th>access_level</th>
+     
+
+        </thead>
+        <tbody>
+`;
+
+                      {kebeleData.energy_sources &&
+          kebeleData.energy_sources?.map((item, index) =>
+                          content += `
+    <div key=${index}>
+     
+          <tr>
+            <td class="border px-4 py-2 font-bold">${item.value}</td>
+            <td class="border px-4 py-2">${item.access_level}</td>
+          </tr>
+        
+    </div>
+  `                        
+                      )}
+
+content += `</tbody>
+      </table>
+      <hr />`
+} 
+       
+        
+        for (var i = 0; i < projectInfoDiv.length; i++) {
+          projectInfoDiv[i].innerHTML = content;
+        }
+        showContainer("woredaContainer", "woredaList");
+        showContainer("kebeleContainer", "kebeleList");
+        showContainer("siteContainer", "siteList");
+        return content;
+      }
+      function showContainer(containerId, listId) {
+        var container = document.getElementById(containerId);
+        var list = document.getElementById(listId);
+
+        if (container && list && list.children.length > 0) {
+          container.style.display = "block";
+        } else {
+          container.style.display = "none";
+        }
+      }
+    </script>
+
+
+
+
+
+</body>
+</html>
