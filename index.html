@@ -961,7 +961,14 @@ regions.forEach((region) => {
   Woredas = [];
   Kebeles = [];
   Sites = [];
+  if (kebeleList) {
+    kebeleList.style.display = "none";
 
+}
+
+if (siteList) {
+  siteList.style.display = "none";
+}
         var selectedRegion = region.id
         woredaLayerGroup.clearLayers();
         regionLayer.resetStyle();
@@ -1222,7 +1229,7 @@ selectWoreda.classList.remove("s-hide");
 woredaContent.classList.remove("s-hide");
 woredaList.innerHTML = "<strong>Woredas:</strong>";
 
-fetchData(`https://tbrr.echnoserve.com/api/regions/${selectedRegion}/woredas?all=true`).then((woredaData) => {
+fetchData(`https://tbrr.echnoserve.com/api/regions/${selectedRegion}/woredas?all=false`).then((woredaData) => {
 woredaData.data
 
 .forEach((Woreda_Data) => {
@@ -1233,8 +1240,15 @@ woredaData.data
     woredaList.appendChild(listItem);
 
 listItem.addEventListener("click", function () {
-  // var selectedWoreda = feature.properties.ADM3_EN;
-  var selectedWoredaId = parseInt(this.dataset.woredaId);
+  if (kebeleList) {
+    kebeleList.style.display = "block";
+
+}  
+if (siteList) {
+    siteList.style.display = "none";
+
+} 
+var selectedWoredaId = parseInt(this.dataset.woredaId);
 
   var W_layer = getLayerByWoredaName(selectedWoredaId.toString()) 
     if(W_layer){
@@ -1387,11 +1401,10 @@ layer.on("click", function () {
       var searchInput = document.getElementById("kebeleInput");
 
       kebeleList.innerHTML = "<strong>Kebeles:</strong>";
-////////////
-// fetchData(`https://tbrr.echnoserve.com/api/woredas/${selectedWoreda}/kebeles?all=true`).then((woredaData) => {
-// woredaData.data
-////////////
-      fetchData(`https://tbrr.echnoserve.com/api/woredas/${selectedWoreda}/kebeles?all=true`).then((kebeleData) => {
+
+      fetchData(`https://tbrr.echnoserve.com/api/woredas/${selectedWoreda}/kebeles?all=false`).then((kebeleData) => {
+       
+
         kebeleData.data.forEach((feature) => {
             var listItem = document.createElement("li");
             listItem.textContent = feature.kebele_name;
@@ -1400,6 +1413,10 @@ layer.on("click", function () {
             listItem.dataset.kebeleName = feature.kebele_name;
             listItem.dataset.kebeleId = feature.id;
             listItem.addEventListener("click", function () {
+
+              if (siteList) {
+  siteList.style.display = "block";
+}
               var selectedKebeleId = parseInt(this.dataset.kebeleId);
               markSelectedKebeleInList(feature.kebele_name)
 
@@ -1518,7 +1535,7 @@ map.fitBounds(layer.getBounds());
 
       siteList.innerHTML = "<strong>Sites:</strong>";
 
-      fetchData(`https://tbrr.echnoserve.com/api/kebeles/${selectedKebele}/sites?all=true`).then((siteData) => {
+      fetchData(`https://tbrr.echnoserve.com/api/kebeles/${selectedKebele}/sites?all=false`).then((siteData) => {
         siteData.data.forEach((feature) => {
             var listItem = document.createElement("li");
             listItem.textContent = feature.site_name;
@@ -1587,6 +1604,7 @@ layer.on("click", function () {
 
     kebeleLayerGroup.clearLayers();
     drawKebelesForWoreda(feature.properties.id);
+    kebeleList.innerHTML = ""
     updateKebeleList(feature.properties.id);
 });
 }
