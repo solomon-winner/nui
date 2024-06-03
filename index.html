@@ -1382,19 +1382,19 @@ if (siteList) {
             const dataRows = [
               {
                 label: "Female Population",
-                value: woredaData.woreda_data.female_population,
+                value: woredaData.woreda_data?.female_population !== undefined ? woredaData.woreda_data.female_population : 'No data',
               },
               {
                 label: "Male Population",
-                value: woredaData.woreda_data.male_population,
+                value: woredaData.woreda_data?.male_population !== undefined ? woredaData.woreda_data.male_population : 'No data',
               },
               {
                 label: "Rural Kebeles",
-                value: woredaData.woreda_data.rural_kebeles,
+                value: woredaData.woreda_data?.rural_kebeles !== undefined ? woredaData.woreda_data.rural_kebeles : 'No data',
               },
               {
                 label: "Urban Kebeles",
-                value: woredaData.woreda_data.urban_kebeles,
+                value: woredaData.woreda_data?.urban_kebeles !== undefined ? woredaData.woreda_data.urban_kebeles : 'No data',
               },
             ];
 
@@ -1404,8 +1404,8 @@ if (siteList) {
                 <hr />
                 <table class="table-auto w-full">
                     <tbody>${renderTableRows([
-                      { label: "Woreda Name", value: woredaData.woreda_name },
-                      { label: "Woreda Code", value: woredaData.woreda_code },
+                      { label: "Woreda Name", value:woredaData.woreda_data?.woreda_name !== undefined ? woredaData.woreda_name : 'No data'},
+                      { label: "Woreda Code", value:woredaData.woreda_data?.woreda_code !== undefined ? woredaData.woreda_code : 'No data' },
                     ])}</tbody>
                 </table>
                 <hr/>
@@ -1417,16 +1417,16 @@ if (siteList) {
                 <hr />
                 <h4>Woreda Resource</h4>
                 <hr />
-                ${resourceTables(woredaData.woreda_resource.LAND, "LAND")}
-                ${resourceTables(woredaData.woreda_resource.ROAD, "ROAD")}
-                ${resourceTables(
-                  woredaData.woreda_institution.SCHOOL,
+                ${woredaData.woreda_resource.length !== 0 ? resourceTables(woredaData.woreda_resource?.LAND, "LAND"): ''}
+                ${woredaData.woreda_resource.length !== 0 ? resourceTables(woredaData.woreda_resource?.ROAD, "ROAD"): ''}
+                ${ woredaData.woreda_institution.length !== 0 ? resourceTables(
+                  woredaData.woreda_institution?.SCHOOL,
                   "School"
-                )}
-                ${resourceTables(
-                  woredaData.woreda_institution.HEALTH_FACILITY,
+                ): ''}
+                ${ woredaData.woreda_institution.length !== 0 ? resourceTables(
+                  woredaData.woreda_institution?.HEALTH_FACILITY,
                   "Health Facility"
-                )}
+                ): ''}
             `;
           } else if (type === "site") {
             const siteData = await Site_Data(id);
