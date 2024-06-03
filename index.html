@@ -160,11 +160,16 @@
 
       .mini-nav {
         padding-left: 10px;
-        padding-right: 5px;
+        padding-right: 10px;
         width: fit-content;
         margin: 10px;
       }
-
+  .nav-trigger {
+    width: 20px;
+}
+    .fixed-nav-wrapper {
+      width: 300px;
+    }
       .accordion-content {
         display: none;
         background-color: white;
@@ -190,7 +195,7 @@
                   src="tbrr public/Main/tbrr/img/tbrrlogo/tbrrlogo1.jpg"
                   height="45px"
                   width="45px"
-                  alt="Tree based Restoration Registry Logo"
+                  alt=" Logo"
                 />
                 Tree based Restoration Registry
               </div>
@@ -1612,6 +1617,7 @@ if (siteList) {
     const energyResourcesTable = (energy_resources) => {
         if (!Array.isArray(energy_resources)) return '';
 
+        
         return `
             <h4>Energy Resources</h4>
             <hr />
