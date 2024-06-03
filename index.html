@@ -1316,7 +1316,7 @@ if (siteList) {
             const resourceTables = (resources, resourceName) => `
                 <h4>${resourceName}</h4>
                 <hr />
-                ${console.log("hdjchshdgcsdjk",resources)}
+
                 <table class="table-auto w-full">
                     <tbody>${resources
                       .map(
@@ -1536,131 +1536,141 @@ if (siteList) {
                       .join("")}</tbody>
                 </table>
             `;
-          } else if (type === "kebele") {
-            const kebeleData = await Kebele_Data(id);
-            console.log("jcdjcgsytdfscmsvd",kebeleData)
-            const dataRows = [
-              {
-                label: "Female Population",
-                value: kebeleData.kebele_data.female_population,
-              },
-              {
-                label: "Male Population",
-                value: kebeleData.kebele_data.male_population,
-              },
-              {
-                label: "Female Non-Employed",
-                value: kebeleData.kebele_data.female_non_employed,
-              },
-              {
-                label: "Male Non-Employed",
-                value: kebeleData.kebele_data.male_non_employed,
-              },
-              {
-                label: "MHF Land Owners",
-                value: kebeleData.kebele_data.mhf_land_owners,
-              },
-              {
-                label: "FHF Land Owners",
-                value: kebeleData.kebele_data.fhf_land_owners,
-              },
-              {
-                label: "MHF Land Lease",
-                value: kebeleData.kebele_data.mhf_land_lease,
-              },
-              {
-                label: "FHF Land Lease",
-                value: kebeleData.kebele_data.fhf_land_lease,
-              },
-            ];
+          }else if (type === "kebele") {
+    const kebeleData = await Kebele_Data(id);
+    console.log("kebeleData:", kebeleData);
 
-            content = `
-                <h4>${kebeleData.kebele_name}</h4>
-                <hr />
-                <table class="table-auto w-full">
-                    <tbody>${renderTableRows([
-                      { label: "Region Name", value: kebeleData.region_name },
-                      { label: "Woreda Name", value: kebeleData.woreda_name },
-                      { label: "Zone Name", value: kebeleData.zone_name },
-                    ])}</tbody>
-                </table>
-                <hr/>
-                <h6>Kebele Data</h6>
-                <hr/>
-                <table class="table-auto w-full">
-                    <tbody>${renderTableRows(dataRows)}</tbody>
-                </table>
-                <hr />
-                ${
-                  kebeleData.resources?.map((resource) => console.log("mkvsjfn vhgvgsdbfhsgd",resourceTables(resource.CROP)),
-                  "Crop"
-                )}
-                ${
-                  kebeleData.resources?.map((resource) => resourceTables(resource.FRUIT),
-                  "Fruit"
-                )}
-                <h4>Tree</h4>
-                <hr />`
-            //     <table class="table-auto w-full">
-            //         <tbody>
-            //             <h4>Indigenous Trees</h4>
-            //             ${kebeleData.resources
-            //               ?.map((resource) =>
-            //                 resource.TREE?.filter(
-            //                   (tree) => tree.indigenous === 1
-            //                 )
-            //                   .map(
-            //                     (item) => `
-            //                 <tr key=${item.index}>
-            //                     <td class="border px-4 py-2 font-bold">${
-            //                       item.value
-            //                     }</td>
-            //                     ${
-            //                       item.amount
-            //                         ? `<td class="border px-4 py-2">${item.amount}</td>`
-            //                         : ""
-            //                     }
-            //                 </tr>
-            //             `
-            //                   )
-            //                   .join("")
-            //               )
-            //               .join("")}
-            //             <hr />
-            //             <p class="font-bold">Exotic Trees</p>
-            //             ${kebeleData.resources
-            //               ?.map((resource) =>
-            //                 resource.TREE?.filter(
-            //                   (tree) => !tree.hasOwnProperty("indigenous")
-            //                 )
-            //                   .map(
-            //                     (item) => `
-            //                 <tr key=${item.index}>
-            //                     <td class="border px-4 py-2 font-bold">${
-            //                       item.value
-            //                     }</td>
-            //                     ${
-            //                       item.amount
-            //                         ? `<td class="border px-4 py-2">${item.amount}</td>`
-            //                         : ""
-            //                     }
-            //                 </tr>
-            //             `
-            //                   )
-            //                   .join("")
-            //               )
-            //               .join("")}
-            //         </tbody>
-            //     </table>
-            //     <strong>LIVESTOCK</strong>
-            //     <hr />
-            //     ${resourceTables(
-            //       kebeleData.resources?.map((resource) => resource.LIVESTOCK),
-            //       "Livestock"
-            //     )}
-            // `;
-          }
+    const dataRows = [
+        { label: "Female Population", value: kebeleData.kebele_data.female_population },
+        { label: "Male Population", value: kebeleData.kebele_data.male_population },
+        { label: "Female Non-Employed", value: kebeleData.kebele_data.female_non_employed },
+        { label: "Male Non-Employed", value: kebeleData.kebele_data.male_non_employed },
+        { label: "MHF Land Owners", value: kebeleData.kebele_data.mhf_land_owners },
+        { label: "FHF Land Owners", value: kebeleData.kebele_data.fhf_land_owners },
+        { label: "MHF Land Lease", value: kebeleData.kebele_data.mhf_land_lease },
+        { label: "FHF Land Lease", value: kebeleData.kebele_data.fhf_land_lease },
+    ];
 
+    const resourceTables = (resources, resourceName) => {
+        if (!Array.isArray(resources)) return '';
+
+        const hasAmount = resources.some(resource => resource.amount !== undefined);
+        const hasCapacity = resources.some(resource => resource.capacity !== undefined);
+
+        return `
+            <h4>${resourceName}</h4>
+            <hr />
+            <table class="table-auto w-full">
+              <thead>
+                    <tr>
+                        <th class=" px-4 py-2"></th>
+                        ${hasAmount ? '<th class=" px-4 py-2 font-bold text-lg">Amount</th>' : ''}
+                        ${hasCapacity ? '<th class=" px-4 py-2 font-bold text-lg">Capacity</th>' : ''}
+                    </tr>
+                </thead>
+                <tbody>${resources.map((resource, index) => `
+                    <tr key=${index}>
+                        <td class="border px-4 py-2 font-bold">${resource.value}</td>
+                        ${resource.amount ? `<td class="border px-4 py-2">${resource.amount}</td>` : ''}
+                        ${resource.capacity ? `<td class="border px-4 py-2">${resource.capacity}</td>` : ''}
+                    </tr>
+                `).join("")}</tbody>
+            </table>
+            <hr />
+        `;
+    };
+
+    const livelihoodTable = (livelihoods) => {
+        if (!Array.isArray(livelihoods)) return '';
+
+        return `
+            <h4>Livelihoods</h4>
+            <hr />
+            <table class="table-auto w-full">
+                <thead>
+                    <tr>
+                        <th class=" px-4 py-2 font-bold text-lg">Type</th>
+                        <th class=" px-4 py-2 font-bold text-lg">Male Headed HH</th>
+                        <th class=" px-4 py-2 font-bold text-lg">Female Headed HH</th>
+                    </tr>
+                </thead>
+                <tbody>${livelihoods.map((livelihood, index) => `
+                    <tr key=${index}>
+                        <td class="border px-4 py-2 font-bold">${livelihood.value}</td>
+                        <td class="border px-4 py-2">${livelihood.male_headed_hh}</td>
+                        <td class="border px-4 py-2">${livelihood.female_headed_hh}</td>
+                    </tr>
+                `).join("")}</tbody>
+            </table>
+            <hr />
+        `;
+    };
+
+    const energyResourcesTable = (energy_resources) => {
+        if (!Array.isArray(energy_resources)) return '';
+
+        return `
+            <h4>Energy Resources</h4>
+            <hr />
+            <table class="table-auto w-full">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2 font-bold text-lg">Type</th>
+                        <th class="px-4 py-2 font-bold text-lg">Access Level</th>
+                    </tr>
+                </thead>
+                <tbody>${energy_resources.map((resource, index) => `
+                    <tr key=${index}>
+                        <td class="border px-4 py-2 font-bold">${resource.value}</td>
+                        <td class="border px-4 py-2">${resource.access_level}</td>
+                    </tr>
+                `).join("")}</tbody>
+            </table>
+            <hr />
+        `;
+    };
+
+    const renderResourceTables = (resources) => {
+        return resources.map(resourceObj => {
+            const resourceType = Object.keys(resourceObj)[0];
+            if (resourceType === "TREE") {
+                const indigenousTrees = resourceObj[resourceType].filter(tree => tree.indigenous);
+                const exoticTrees = resourceObj[resourceType].filter(tree => !tree.indigenous);
+                return `
+                    ${resourceTables(indigenousTrees, "Indigenous Trees")}
+                    ${resourceTables(exoticTrees, "Exotic Trees")}
+                `;
+            } else {
+                return resourceTables(resourceObj[resourceType], resourceType);
+            }
+        }).join('');
+    };
+
+    content = `
+        <h4>${kebeleData.kebele_name}</h4>
+        <hr />
+        <table class="table-auto w-full">
+            <tbody>${renderTableRows([
+                { label: "Region Name", value: kebeleData.region_name },
+                { label: "Woreda Name", value: kebeleData.woreda_name },
+                { label: "Zone Name", value: kebeleData.zone_name },
+            ])}</tbody>
+        </table>
+        <hr/>
+        <h6>Kebele Data</h6>
+        <hr/>
+        <table class="table-auto w-full">
+            <tbody>${renderTableRows(dataRows)}</tbody>
+        </table>
+        <hr />
+        ${renderResourceTables(kebeleData.resources)}
+        ${livelihoodTable(kebeleData.livelihoods)}
+        ${energyResourcesTable(kebeleData.energy_sources)}
+    `;
+}
+
+
+  
           for (let i = 0; i < projectInfoDiv.length; i++) {
             projectInfoDiv[i].innerHTML = content;
           }
