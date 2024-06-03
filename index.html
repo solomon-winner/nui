@@ -1404,8 +1404,11 @@ if (siteList) {
                 <hr />
                 <table class="table-auto w-full">
                     <tbody>${renderTableRows([
-                      { label: "Woreda Name", value:woredaData.woreda_data?.woreda_name !== undefined ? woredaData.woreda_name : 'No data'},
-                      { label: "Woreda Code", value:woredaData.woreda_data?.woreda_code !== undefined ? woredaData.woreda_code : 'No data' },
+                      { label: "Woreda Name", value:woredaData.woreda_name !== undefined ? woredaData.woreda_name : 'No data'},
+                      { label: "Woreda Code", value:woredaData.woreda_code !== undefined ? woredaData.woreda_code : 'No data' },
+                      { label: "Region Name", value:woredaData.region_name !== undefined ? woredaData.region_name : 'No data' },
+                      { label: "Zone Name", value:woredaData.zone_name !== undefined ? woredaData.zone_name : 'No data' },
+
                     ])}</tbody>
                 </table>
                 <hr/>
@@ -1436,9 +1439,9 @@ if (siteList) {
                 <h4>${siteData.site_name}</h4>
                 <hr />
                 <h6>Site Information</h6>
-                <p><strong>Size in Ha.: </strong> ${siteData.size_ha}</p>
-                <p><strong>Watershed: </strong> ${siteData.watershed_name}</p>
-                <p><strong>Kebele: </strong> ${siteData.kebele_name}</p>
+                <p><strong>Size in Ha.: </strong> ${siteData.size_ha !== undefined ? siteData.size_ha: 'No data'}</p>
+                <p><strong>Watershed: </strong> ${siteData.watershed_name !== undefined ?siteData.watershed_name: 'No data'}</p>
+                <p><strong>Kebele: </strong> ${siteData.kebele_name !== undefined ?siteData.kebele_name: 'No data'}</p>
                 <p><strong>Woreda: </strong> ${
                   siteData.woreda_name || "Adwa"
                 }</p>
@@ -1646,8 +1649,8 @@ if (siteList) {
         }).join('');
     };
 
-    content = `
-        <h4>${kebeleData.kebele_name}</h4>
+    content =`
+          <h4>${kebeleData.kebele_name}</h4>
         <hr />
         <table class="table-auto w-full">
             <tbody>${renderTableRows([
