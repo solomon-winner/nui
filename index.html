@@ -1312,6 +1312,46 @@ if (siteList) {
             )
             .join("");
 
+
+            const resourceTables = (resources, resourceName) => `
+                <h4>${resourceName}</h4>
+                <hr />
+                ${console.log("hdjchshdgcsdjk",resources)}
+                <table class="table-auto w-full">
+                    <tbody>${resources
+                      .map(
+                        (resource, index) => `
+                        <tr key=${index}>
+                            <td class="border px-4 py-2 font-bold">${resource.value}</td>
+                            <td class="border px-4 py-2">${resource.amount}</td>
+                        </tr>
+                    `
+                      )
+                      .join("")}</tbody>
+                </table>
+                <hr />
+            `;
+
+//             const resourceTables = (resources, title) => {
+//     if (!resources || resources.length === 0) return '';
+
+//     const tableRows = resources[0].map(resource => `
+//         <tr>
+//           ${console.log("hdjchdssdddddddddddddshdgcsdjk",resource)}
+
+//             <td class="border px-4 py-2 font-bold">${resource.value}</td>
+//             ${resource.amount ? `<td class="border px-4 py-2">${resource.amount}</td>` : ''}
+//         </tr>
+//     `).join('');
+
+//     return `
+//         <h4>${title}</h4>
+//         <hr />
+//         <table class="table-auto w-full">
+//             <tbody>${tableRows}</tbody>
+//         </table>
+//     `;
+// };
         try {
           if (type === "region") {
             const regionData = await RegionData(id);
@@ -1351,23 +1391,6 @@ if (siteList) {
               },
             ];
 
-            const resourceTables = (resources, resourceName) => `
-                <h4>${resourceName}</h4>
-                <hr />
-                <table class="table-auto w-full">
-                    <tbody>${resources
-                      .map(
-                        (resource, index) => `
-                        <tr key=${index}>
-                            <td class="border px-4 py-2 font-bold">${resource.value}</td>
-                            <td class="border px-4 py-2">${resource.amount}</td>
-                        </tr>
-                    `
-                      )
-                      .join("")}</tbody>
-                </table>
-                <hr />
-            `;
 
             content = `
                 <h4>${woredaData.woreda_name}</h4>
@@ -1508,6 +1531,7 @@ if (siteList) {
             `;
           } else if (type === "kebele") {
             const kebeleData = await Kebele_Data(id);
+            console.log("jcdjcgsytdfscmsvd",kebeleData)
             const dataRows = [
               {
                 label: "Female Population",
@@ -1569,65 +1593,65 @@ if (siteList) {
                   "Fruit"
                 )}
                 <h4>Tree</h4>
-                <hr />
-                <table class="table-auto w-full">
-                    <tbody>
-                        <h4>Indigenous Trees</h4>
-                        ${kebeleData.resources
-                          ?.map((resource) =>
-                            resource.TREE?.filter(
-                              (tree) => tree.indigenous === 1
-                            )
-                              .map(
-                                (item) => `
-                            <tr key=${item.index}>
-                                <td class="border px-4 py-2 font-bold">${
-                                  item.value
-                                }</td>
-                                ${
-                                  item.amount
-                                    ? `<td class="border px-4 py-2">${item.amount}</td>`
-                                    : ""
-                                }
-                            </tr>
-                        `
-                              )
-                              .join("")
-                          )
-                          .join("")}
-                        <hr />
-                        <p class="font-bold">Exotic Trees</p>
-                        ${kebeleData.resources
-                          ?.map((resource) =>
-                            resource.TREE?.filter(
-                              (tree) => !tree.hasOwnProperty("indigenous")
-                            )
-                              .map(
-                                (item) => `
-                            <tr key=${item.index}>
-                                <td class="border px-4 py-2 font-bold">${
-                                  item.value
-                                }</td>
-                                ${
-                                  item.amount
-                                    ? `<td class="border px-4 py-2">${item.amount}</td>`
-                                    : ""
-                                }
-                            </tr>
-                        `
-                              )
-                              .join("")
-                          )
-                          .join("")}
-                    </tbody>
-                </table>
-                <strong>LIVESTOCK</strong>
-                <hr />
-                ${resourceTables(
-                  kebeleData.resources?.map((resource) => resource.LIVESTOCK),
-                  "Livestock"
-                )}
-            `;
+                <hr />`
+            //     <table class="table-auto w-full">
+            //         <tbody>
+            //             <h4>Indigenous Trees</h4>
+            //             ${kebeleData.resources
+            //               ?.map((resource) =>
+            //                 resource.TREE?.filter(
+            //                   (tree) => tree.indigenous === 1
+            //                 )
+            //                   .map(
+            //                     (item) => `
+            //                 <tr key=${item.index}>
+            //                     <td class="border px-4 py-2 font-bold">${
+            //                       item.value
+            //                     }</td>
+            //                     ${
+            //                       item.amount
+            //                         ? `<td class="border px-4 py-2">${item.amount}</td>`
+            //                         : ""
+            //                     }
+            //                 </tr>
+            //             `
+            //                   )
+            //                   .join("")
+            //               )
+            //               .join("")}
+            //             <hr />
+            //             <p class="font-bold">Exotic Trees</p>
+            //             ${kebeleData.resources
+            //               ?.map((resource) =>
+            //                 resource.TREE?.filter(
+            //                   (tree) => !tree.hasOwnProperty("indigenous")
+            //                 )
+            //                   .map(
+            //                     (item) => `
+            //                 <tr key=${item.index}>
+            //                     <td class="border px-4 py-2 font-bold">${
+            //                       item.value
+            //                     }</td>
+            //                     ${
+            //                       item.amount
+            //                         ? `<td class="border px-4 py-2">${item.amount}</td>`
+            //                         : ""
+            //                     }
+            //                 </tr>
+            //             `
+            //                   )
+            //                   .join("")
+            //               )
+            //               .join("")}
+            //         </tbody>
+            //     </table>
+            //     <strong>LIVESTOCK</strong>
+            //     <hr />
+            //     ${resourceTables(
+            //       kebeleData.resources?.map((resource) => resource.LIVESTOCK),
+            //       "Livestock"
+            //     )}
+            // `;
           }
 
           for (let i = 0; i < projectInfoDiv.length; i++) {
