@@ -1332,6 +1332,24 @@ if (siteList) {
                 <hr />
             `;
 
+            const KebeleresourceTables = (resources, resourceName) => `
+                <h4>${resourceName}</h4>
+                <hr />
+                ${console.log("hdjchshdgcsdjk",resources)}
+                <table class="table-auto w-full">
+                    <tbody>${resources
+                      .map(
+                        (resource, index) => `
+                        <tr key=${index}>
+                            <td class="border px-4 py-2 font-bold">${resource.value}</td>
+                            <td class="border px-4 py-2">${resource.amount}</td>
+                        </tr>
+                    `
+                      )
+                      .join("")}</tbody>
+                </table>
+                <hr />
+            `;
 //             const resourceTables = (resources, title) => {
 //     if (!resources || resources.length === 0) return '';
 
