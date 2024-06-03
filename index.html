@@ -1333,22 +1333,11 @@ if (siteList) {
             `;
 
             const KebeleresourceTables = (resources, resourceName) => `
+
+            ${console.log(resources,"resourcesksdhfiurjhf")}
                 <h4>${resourceName}</h4>
                 <hr />
-                ${console.log("hdjchshdgcsdjk",resources)}
-                <table class="table-auto w-full">
-                    <tbody>${resources
-                      .map(
-                        (resource, index) => `
-                        <tr key=${index}>
-                            <td class="border px-4 py-2 font-bold">${resource.value}</td>
-                            <td class="border px-4 py-2">${resource.amount}</td>
-                        </tr>
-                    `
-                      )
-                      .join("")}</tbody>
-                </table>
-                <hr />
+               
             `;
 //             const resourceTables = (resources, title) => {
 //     if (!resources || resources.length === 0) return '';
@@ -1602,12 +1591,12 @@ if (siteList) {
                     <tbody>${renderTableRows(dataRows)}</tbody>
                 </table>
                 <hr />
-                ${resourceTables(
-                  kebeleData.resources?.map((resource) => resource.CROP),
+                ${
+                  kebeleData.resources?.map((resource) => console.log("mkvsjfn vhgvgsdbfhsgd",resourceTables(resource.CROP)),
                   "Crop"
                 )}
-                ${resourceTables(
-                  kebeleData.resources?.map((resource) => resource.FRUIT),
+                ${
+                  kebeleData.resources?.map((resource) => resourceTables(resource.FRUIT),
                   "Fruit"
                 )}
                 <h4>Tree</h4>
