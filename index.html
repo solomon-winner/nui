@@ -164,12 +164,12 @@
         width: fit-content;
         margin: 10px;
       }
-  .nav-trigger {
-    width: 20px;
-}
-    .fixed-nav-wrapper {
-      width: 300px;
-    }
+      .nav-trigger {
+        width: 20px;
+      }
+      .fixed-nav-wrapper {
+        width: 300px;
+      }
       .accordion-content {
         display: none;
         background-color: white;
@@ -180,13 +180,65 @@
       .accordion-active {
         display: block;
       }
+      body.loading .loading-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #fff;
+      }
+      .loading-container {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: rgba(255, 255, 255, 0.8);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .loading-spinner {
+        margin-bottom: 20px;
+      }
     </style>
   </head>
   <body
-    class="home page-template-default page page-id-9 header-over-content no-sidebar"
+    class="home page-template-default page page-id-9 header-over-content no-sidebar loading"
   >
-
-  <div class="loading-container"></div>
+    <div class="loading-container">
+      <div class="loading-spinner d-flex justify-content-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="xMidYMid"
+          width="60"
+          height="60"
+          style="shape-rendering: auto; display: block; background: transparent"
+        >
+          <circle
+            cx="50"
+            cy="50"
+            r="35"
+            stroke="#00604a"
+            stroke-width="10"
+            fill="none"
+            stroke-dasharray="164.93361431346415 56.97787143782138"
+          >
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              values="0 50 50;360 50 50"
+              dur="1s"
+              repeatCount="indefinite"
+            ></animateTransform>
+          </circle>
+        </svg>
+      </div>
+      <strong>Please Wait...</strong>
+    </div>
 
     <header>
       <div class="container-fluid native-padding">
@@ -520,37 +572,10 @@
 
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
+      window.addEventListener("load", function () {
+        document.body.classList.remove("loading");
+      });
 
- // Display the loading animation when the page starts loading
-document.addEventListener("DOMContentLoaded", function () {
-  const loadingAnimation = `
-    <div class="loading-spinner d-flex justify-content-center">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" width="60" height="200" style="shape-rendering: auto; display: block; background: transparent;" xmlns:xlink="http://www.w3.org/1999/xlink">
-        <g>
-          <circle stroke-dasharray="164.93361431346415 56.97787143782138" r="35" stroke-width="10" stroke="#00604a" fill="none" cy="50" cx="50">
-            <animateTransform keyTimes="0;1" values="0 50 50;360 50 50" dur="1s" repeatCount="indefinite" type="rotate" attributeName="transform"></animateTransform>
-          </circle>
-        </g>
-      </svg>
-    </div>
-     <strong>Please Wait...</strong>
-  `;
-
-  const loadingContainer = document.querySelector(".loading-container");
-  if (loadingContainer) {
-    loadingContainer.innerHTML = loadingAnimation;
-  }
-});
-
-window.addEventListener("load", function () {
-  const loadingContainer = document.querySelector(".loading-container");
-  if (loadingContainer) {
-    loadingContainer.style.display = "none";
-  }
-});
-
-
-      
       const thirdOpacity = 0.1;
       const secondaryOpacity = 0.4;
       const mainOpacity = 0.0;
@@ -609,7 +634,6 @@ window.addEventListener("load", function () {
       var kebeleList = document.getElementById("kebeleList");
       var siteList = document.getElementById("siteList");
 
-
       fetch("https://tbrr.echnoserve.com/api/geojson/regions")
         .then((response) => response.json())
         .then((data) => {
@@ -642,13 +666,12 @@ window.addEventListener("load", function () {
                     Sites = [];
 
                     if (kebeleList) {
-                         kebeleList.style.display = "none";
+                      kebeleList.style.display = "none";
+                    }
 
-                         }
-
-              if (siteList) {
-                     siteList.style.display = "none";
-                        }
+                    if (siteList) {
+                      siteList.style.display = "none";
+                    }
 
                     var selectedRegion = region.id;
                     woredaLayerGroup.clearLayers();
@@ -857,16 +880,12 @@ window.addEventListener("load", function () {
                       woredaList.appendChild(listItem);
 
                       listItem.addEventListener("click", function () {
-
                         if (kebeleList) {
-    kebeleList.style.display = "block";
-
-}  
-if (siteList) {
-    siteList.style.display = "none";
-
-} 
-
+                          kebeleList.style.display = "block";
+                        }
+                        if (siteList) {
+                          siteList.style.display = "none";
+                        }
 
                         var selectedWoredaId = parseInt(this.dataset.woredaId);
 
@@ -968,16 +987,16 @@ if (siteList) {
                   layer.on("click", function () {
                     kebeleLayerGroup.eachLayer(function (kebeleLayer) {
                       kebeleLayer.setStyle({
-                        color: "#6c757d",
-                        fillOpacity: mainOpacity,
-                        weight: 1,
+                        color: "green",
+                        fillOpacity: 0,
+                        weight: 4,
                       });
                     });
 
                     layer.setStyle({
-                      color: "#4CAF50",
-                      fillOpacity: secondaryOpacity,
-                      weight: 1,
+                      color: "green",
+                      fillOpacity: 0,
+                      weight: 2,
                     });
                     ``;
                     console.log("keb layer", feature, layer);
@@ -1023,10 +1042,9 @@ if (siteList) {
                       listItem.dataset.kebeleName = feature.kebele_name;
                       listItem.dataset.kebeleId = feature.id;
                       listItem.addEventListener("click", function () {
-
                         if (siteList) {
-                  siteList.style.display = "block";
-                          }
+                          siteList.style.display = "block";
+                        }
 
                         var selectedKebeleId = parseInt(this.dataset.kebeleId);
                         markSelectedKebeleInList(feature.kebele_name);
@@ -1343,8 +1361,7 @@ if (siteList) {
             )
             .join("");
 
-
-            const resourceTables = (resources, resourceName) => `
+        const resourceTables = (resources, resourceName) => `
                 <h4>${resourceName}</h4>
                 <hr />
 
@@ -1362,7 +1379,6 @@ if (siteList) {
                 </table>
                 <hr />
             `;
-
 
         try {
           if (type === "region") {
@@ -1387,33 +1403,67 @@ if (siteList) {
             const dataRows = [
               {
                 label: "Female Population",
-                value: woredaData.woreda_data?.female_population !== undefined ? woredaData.woreda_data.female_population : 'No data',
+                value:
+                  woredaData.woreda_data?.female_population !== undefined
+                    ? woredaData.woreda_data.female_population
+                    : "No data",
               },
               {
                 label: "Male Population",
-                value: woredaData.woreda_data?.male_population !== undefined ? woredaData.woreda_data.male_population : 'No data',
+                value:
+                  woredaData.woreda_data?.male_population !== undefined
+                    ? woredaData.woreda_data.male_population
+                    : "No data",
               },
               {
                 label: "Rural Kebeles",
-                value: woredaData.woreda_data?.rural_kebeles !== undefined ? woredaData.woreda_data.rural_kebeles : 'No data',
+                value:
+                  woredaData.woreda_data?.rural_kebeles !== undefined
+                    ? woredaData.woreda_data.rural_kebeles
+                    : "No data",
               },
               {
                 label: "Urban Kebeles",
-                value: woredaData.woreda_data?.urban_kebeles !== undefined ? woredaData.woreda_data.urban_kebeles : 'No data',
+                value:
+                  woredaData.woreda_data?.urban_kebeles !== undefined
+                    ? woredaData.woreda_data.urban_kebeles
+                    : "No data",
               },
             ];
-
 
             content = `
                 <h4>${woredaData.woreda_name}</h4>
                 <hr />
                 <table class="table-auto w-full">
                     <tbody>${renderTableRows([
-                      { label: "Woreda Name", value:woredaData.woreda_name !== undefined ? woredaData.woreda_name : 'No data'},
-                      { label: "Woreda Code", value:woredaData.woreda_code !== undefined ? woredaData.woreda_code : 'No data' },
-                      { label: "Region Name", value:woredaData.region_name !== undefined ? woredaData.region_name : 'No data' },
-                      { label: "Zone Name", value:woredaData.zone_name !== undefined ? woredaData.zone_name : 'No data' },
-
+                      {
+                        label: "Woreda Name",
+                        value:
+                          woredaData.woreda_name !== undefined
+                            ? woredaData.woreda_name
+                            : "No data",
+                      },
+                      {
+                        label: "Woreda Code",
+                        value:
+                          woredaData.woreda_code !== undefined
+                            ? woredaData.woreda_code
+                            : "No data",
+                      },
+                      {
+                        label: "Region Name",
+                        value:
+                          woredaData.region_name !== undefined
+                            ? woredaData.region_name
+                            : "No data",
+                      },
+                      {
+                        label: "Zone Name",
+                        value:
+                          woredaData.zone_name !== undefined
+                            ? woredaData.zone_name
+                            : "No data",
+                      },
                     ])}</tbody>
                 </table>
                 <hr/>
@@ -1425,16 +1475,32 @@ if (siteList) {
                 <hr />
                 <h4>Woreda Resource</h4>
                 <hr />
-                ${woredaData.woreda_resource.length !== 0 ? resourceTables(woredaData.woreda_resource?.LAND, "LAND"): ''}
-                ${woredaData.woreda_resource.length !== 0 ? resourceTables(woredaData.woreda_resource?.ROAD, "ROAD"): ''}
-                ${ woredaData.woreda_institution.length !== 0 ? resourceTables(
-                  woredaData.woreda_institution?.SCHOOL,
-                  "School"
-                ): ''}
-                ${ woredaData.woreda_institution.length !== 0 ? resourceTables(
-                  woredaData.woreda_institution?.HEALTH_FACILITY,
-                  "Health Facility"
-                ): ''}
+                ${
+                  woredaData.woreda_resource.length !== 0
+                    ? resourceTables(woredaData.woreda_resource?.LAND, "LAND")
+                    : ""
+                }
+                ${
+                  woredaData.woreda_resource.length !== 0
+                    ? resourceTables(woredaData.woreda_resource?.ROAD, "ROAD")
+                    : ""
+                }
+                ${
+                  woredaData.woreda_institution.length !== 0
+                    ? resourceTables(
+                        woredaData.woreda_institution?.SCHOOL,
+                        "School"
+                      )
+                    : ""
+                }
+                ${
+                  woredaData.woreda_institution.length !== 0
+                    ? resourceTables(
+                        woredaData.woreda_institution?.HEALTH_FACILITY,
+                        "Health Facility"
+                      )
+                    : ""
+                }
             `;
           } else if (type === "site") {
             const siteData = await Site_Data(id);
@@ -1444,9 +1510,19 @@ if (siteList) {
                 <h4>${siteData.site_name}</h4>
                 <hr />
                 <h6>Site Information</h6>
-                <p><strong>Size in Ha.: </strong> ${siteData.size_ha !== undefined ? siteData.size_ha: 'No data'}</p>
-                <p><strong>Watershed: </strong> ${siteData.watershed_name !== undefined ?siteData.watershed_name: 'No data'}</p>
-                <p><strong>Kebele: </strong> ${siteData.kebele_name !== undefined ?siteData.kebele_name: 'No data'}</p>
+                <p><strong>Size in Ha.: </strong> ${
+                  siteData.size_ha !== undefined ? siteData.size_ha : "No data"
+                }</p>
+                <p><strong>Watershed: </strong> ${
+                  siteData.watershed_name !== undefined
+                    ? siteData.watershed_name
+                    : "No data"
+                }</p>
+                <p><strong>Kebele: </strong> ${
+                  siteData.kebele_name !== undefined
+                    ? siteData.kebele_name
+                    : "No data"
+                }</p>
                 <p><strong>Woreda: </strong> ${
                   siteData.woreda_name || "Adwa"
                 }</p>
@@ -1544,56 +1620,110 @@ if (siteList) {
                       .join("")}</tbody>
                 </table>
             `;
-          }else if (type === "kebele") {
-    const kebeleData = await Kebele_Data(id);
-    console.log("kebeleData:", kebeleData);
+          } else if (type === "kebele") {
+            const kebeleData = await Kebele_Data(id);
+            console.log("kebeleData:", kebeleData);
 
-    const dataRows = [
-        { label: "Female Population", value: kebeleData.kebele_data.female_population },
-        { label: "Male Population", value: kebeleData.kebele_data.male_population },
-        { label: "Female Non-Employed", value: kebeleData.kebele_data.female_non_employed },
-        { label: "Male Non-Employed", value: kebeleData.kebele_data.male_non_employed },
-        { label: "MHF Land Owners", value: kebeleData.kebele_data.mhf_land_owners },
-        { label: "FHF Land Owners", value: kebeleData.kebele_data.fhf_land_owners },
-        { label: "MHF Land Lease", value: kebeleData.kebele_data.mhf_land_lease },
-        { label: "FHF Land Lease", value: kebeleData.kebele_data.fhf_land_lease },
-    ];
+            const dataRows = [
+              {
+                label: "Female Population",
+                value: kebeleData.kebele_data.female_population,
+              },
+              {
+                label: "Male Population",
+                value: kebeleData.kebele_data.male_population,
+              },
+              {
+                label: "Female Non-Employed",
+                value: kebeleData.kebele_data.female_non_employed,
+              },
+              {
+                label: "Male Non-Employed",
+                value: kebeleData.kebele_data.male_non_employed,
+              },
+              {
+                label: "MHF Land Owners",
+                value: kebeleData.kebele_data.mhf_land_owners,
+              },
+              {
+                label: "FHF Land Owners",
+                value: kebeleData.kebele_data.fhf_land_owners,
+              },
+              {
+                label: "MHF Land Lease",
+                value: kebeleData.kebele_data.mhf_land_lease,
+              },
+              {
+                label: "FHF Land Lease",
+                value: kebeleData.kebele_data.fhf_land_lease,
+              },
+            ];
 
-    const resourceTables = (resources, resourceName) => {
-    if (!Array.isArray(resources)) return '';
+            const resourceTables = (resources, resourceName) => {
+              if (!Array.isArray(resources)) return "";
 
-    const hasAmount = resources.some(resource => resource.amount !== undefined);
-    const hasCapacity = resources.some(resource => resource.capacity !== undefined);
+              const hasAmount = resources.some(
+                (resource) => resource.amount !== undefined
+              );
+              const hasCapacity = resources.some(
+                (resource) => resource.capacity !== undefined
+              );
 
-    return `
+              return `
         <h4>${resourceName}</h4>
         <hr />
         <table class="table-auto w-full">
             <thead>
                 <tr>
                     <th class="px-4 py-2"></th>
-                    ${hasAmount ? '<th class="px-4 py-2 font-bold text-lg">Amount</th>' : ''}
-                    ${hasCapacity ? '<th class="px-4 py-2 font-bold text-lg">Capacity</th>' : ''}
+                    ${
+                      hasAmount
+                        ? '<th class="px-4 py-2 font-bold text-lg">Amount</th>'
+                        : ""
+                    }
+                    ${
+                      hasCapacity
+                        ? '<th class="px-4 py-2 font-bold text-lg">Capacity</th>'
+                        : ""
+                    }
                 </tr>
             </thead>
             <tbody>
-                ${resources.map((resource, index) => `
+                ${resources
+                  .map(
+                    (resource, index) => `
                     <tr key=${index}>
-                        <td class="border px-4 py-2 font-bold">${resource.value}</td>
-                        ${hasAmount ? `<td class="border px-4 py-2">${resource.amount || 'No data'}</td>` : ''}
-                        ${hasCapacity ? `<td class="border px-4 py-2">${resource.capacity || 'No data'}</td>` : ''}
+                        <td class="border px-4 py-2 font-bold">${
+                          resource.value
+                        }</td>
+                        ${
+                          hasAmount
+                            ? `<td class="border px-4 py-2">${
+                                resource.amount || "No data"
+                              }</td>`
+                            : ""
+                        }
+                        ${
+                          hasCapacity
+                            ? `<td class="border px-4 py-2">${
+                                resource.capacity || "No data"
+                              }</td>`
+                            : ""
+                        }
                     </tr>
-                `).join('')}
+                `
+                  )
+                  .join("")}
             </tbody>
         </table>
         <hr />
     `;
-};
+            };
 
-    const livelihoodTable = (livelihoods) => {
-        if (!Array.isArray(livelihoods)) return '';
+            const livelihoodTable = (livelihoods) => {
+              if (!Array.isArray(livelihoods)) return "";
 
-        return `
+              return `
             <h4>Livelihoods</h4>
             <hr />
             <table class="table-auto w-full">
@@ -1604,23 +1734,26 @@ if (siteList) {
                         <th class=" px-4 py-2 font-bold text-lg">Female Headed HH</th>
                     </tr>
                 </thead>
-                <tbody>${livelihoods.map((livelihood, index) => `
+                <tbody>${livelihoods
+                  .map(
+                    (livelihood, index) => `
                     <tr key=${index}>
                         <td class="border px-4 py-2 font-bold">${livelihood.value}</td>
                         <td class="border px-4 py-2">${livelihood.male_headed_hh}</td>
                         <td class="border px-4 py-2">${livelihood.female_headed_hh}</td>
                     </tr>
-                `).join("")}</tbody>
+                `
+                  )
+                  .join("")}</tbody>
             </table>
             <hr />
         `;
-    };
+            };
 
-    const energyResourcesTable = (energy_resources) => {
-        if (!Array.isArray(energy_resources)) return '';
+            const energyResourcesTable = (energy_resources) => {
+              if (!Array.isArray(energy_resources)) return "";
 
-        
-        return `
+              return `
             <h4>Energy Resources</h4>
             <hr />
             <table class="table-auto w-full">
@@ -1630,41 +1763,54 @@ if (siteList) {
                         <th class="px-4 py-2 font-bold text-lg">Access Level</th>
                     </tr>
                 </thead>
-                <tbody>${energy_resources.map((resource, index) => `
+                <tbody>${energy_resources
+                  .map(
+                    (resource, index) => `
                     <tr key=${index}>
                         <td class="border px-4 py-2 font-bold">${resource.value}</td>
                         <td class="border px-4 py-2">${resource.access_level}</td>
                     </tr>
-                `).join("")}</tbody>
+                `
+                  )
+                  .join("")}</tbody>
             </table>
             <hr />
         `;
-    };
+            };
 
-    const renderResourceTables = (resources) => {
-        return resources.map(resourceObj => {
-            const resourceType = Object.keys(resourceObj)[0];
-            if (resourceType === "TREE") {
-                const indigenousTrees = resourceObj[resourceType].filter(tree => tree.indigenous);
-                const exoticTrees = resourceObj[resourceType].filter(tree => !tree.indigenous);
-                return `
+            const renderResourceTables = (resources) => {
+              return resources
+                .map((resourceObj) => {
+                  const resourceType = Object.keys(resourceObj)[0];
+                  if (resourceType === "TREE") {
+                    const indigenousTrees = resourceObj[resourceType].filter(
+                      (tree) => tree.indigenous
+                    );
+                    const exoticTrees = resourceObj[resourceType].filter(
+                      (tree) => !tree.indigenous
+                    );
+                    return `
                     ${resourceTables(indigenousTrees, "Indigenous Trees")}
                     ${resourceTables(exoticTrees, "Exotic Trees")}
                 `;
-            } else {
-                return resourceTables(resourceObj[resourceType], resourceType);
-            }
-        }).join('');
-    };
+                  } else {
+                    return resourceTables(
+                      resourceObj[resourceType],
+                      resourceType
+                    );
+                  }
+                })
+                .join("");
+            };
 
-    content =`
+            content = `
           <h4>${kebeleData.kebele_name}</h4>
         <hr />
         <table class="table-auto w-full">
             <tbody>${renderTableRows([
-                { label: "Region Name", value: kebeleData.region_name },
-                { label: "Woreda Name", value: kebeleData.woreda_name },
-                { label: "Zone Name", value: kebeleData.zone_name },
+              { label: "Region Name", value: kebeleData.region_name },
+              { label: "Woreda Name", value: kebeleData.woreda_name },
+              { label: "Zone Name", value: kebeleData.zone_name },
             ])}</tbody>
         </table>
         <hr/>
@@ -1678,10 +1824,8 @@ if (siteList) {
         ${livelihoodTable(kebeleData.livelihoods)}
         ${energyResourcesTable(kebeleData.energy_sources)}
     `;
-}
+          }
 
-
-  
           for (let i = 0; i < projectInfoDiv.length; i++) {
             projectInfoDiv[i].innerHTML = content;
           }
