@@ -877,16 +877,16 @@ if (siteList) {
                           map.fitBounds(W_layer.getBounds());
                           W_layer.setStyle({
                             color: "black",
-                            fillOpacity: secondaryOpacity,
-                            weight: 1,
+                            fillOpacity: 0,
+                            weight: 3,
                           });
                           W_layer.fire("click");
                         }
 
                         woredaLayerGroup.eachLayer(function (woredaLayer) {
                           woredaLayer.setStyle({
-                            color: "#803d00",
-                            fillOpacity: thirdOpacity,
+                            color: "black",
+                            fillOpacity: 0,
                             weight: 1,
                           });
                         });
@@ -898,7 +898,7 @@ if (siteList) {
                               W_layer.feature.properties.id
                           ) {
                             woredaLayer.setStyle({
-                              color: "#803d00",
+                              color: "black",
                               fillOpacity: mainOpacity,
                               weight: 1,
                             });
@@ -1204,17 +1204,17 @@ if (siteList) {
                     projectInfo(feature.properties.id, "woreda");
                     woredaLayerGroup.eachLayer(function (woredaLayer) {
                       woredaLayer.setStyle({
-                        color: "#803d00",
+                        color: "black",
                         fillOpacity: thirdOpacity,
-                        weight: 1,
+                        weight: 3,
                       });
                     });
 
-                    layer.setStyle({
-                      color: "#803d00",
-                      fillOpacity: mainOpacity,
-                      weight: 1,
-                    });
+                    // layer.setStyle({
+                    //   color: "#803d00",
+                    //   fillOpacity: mainOpacity,
+                    //   weight: 1,
+                    // });
 
                     markSelectedWoredaInList(feature.properties.name);
 
