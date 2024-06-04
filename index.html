@@ -536,14 +536,12 @@ document.addEventListener("DOMContentLoaded", function () {
      <strong>Please Wait...</strong>
   `;
 
-  // Add the loading animation to your desired container (e.g., a div with class "loading-container")
   const loadingContainer = document.querySelector(".loading-container");
   if (loadingContainer) {
     loadingContainer.innerHTML = loadingAnimation;
   }
 });
 
-// Hide the loading animation when the page has finished loading
 window.addEventListener("load", function () {
   const loadingContainer = document.querySelector(".loading-container");
   if (loadingContainer) {
@@ -664,7 +662,6 @@ window.addEventListener("load", function () {
                   });
                 });
 
-                ///////////////
                 searchInput.addEventListener("input", function () {
                   var filterValue = searchInput.value.toLowerCase();
                   Array.from(regionList.getElementsByTagName("li")).forEach(
