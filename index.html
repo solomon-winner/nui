@@ -1337,13 +1337,7 @@ if (siteList) {
                 <hr />
             `;
 
-            const KebeleresourceTables = (resources, resourceName) => `
 
-            ${console.log(resources,"resourcesksdhfiurjhf")}
-                <h4>${resourceName}</h4>
-                <hr />
-               
-            `;
 //             const resourceTables = (resources, title) => {
 //     if (!resources || resources.length === 0) return '';
 
@@ -1560,33 +1554,35 @@ if (siteList) {
     ];
 
     const resourceTables = (resources, resourceName) => {
-        if (!Array.isArray(resources)) return '';
+    if (!Array.isArray(resources)) return '';
 
-        const hasAmount = resources.some(resource => resource.amount !== undefined);
-        const hasCapacity = resources.some(resource => resource.capacity !== undefined);
+    const hasAmount = resources.some(resource => resource.amount !== undefined);
+    const hasCapacity = resources.some(resource => resource.capacity !== undefined);
 
-        return `
-            <h4>${resourceName}</h4>
-            <hr />
-            <table class="table-auto w-full">
-              <thead>
-                    <tr>
-                        <th class=" px-4 py-2"></th>
-                        ${hasAmount ? '<th class=" px-4 py-2 font-bold text-lg">Amount</th>' : ''}
-                        ${hasCapacity ? '<th class=" px-4 py-2 font-bold text-lg">Capacity</th>' : ''}
-                    </tr>
-                </thead>
-                <tbody>${resources.map((resource, index) => `
+    return `
+        <h4>${resourceName}</h4>
+        <hr />
+        <table class="table-auto w-full">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2"></th>
+                    ${hasAmount ? '<th class="px-4 py-2 font-bold text-lg">Amount</th>' : ''}
+                    ${hasCapacity ? '<th class="px-4 py-2 font-bold text-lg">Capacity</th>' : ''}
+                </tr>
+            </thead>
+            <tbody>
+                ${resources.map((resource, index) => `
                     <tr key=${index}>
                         <td class="border px-4 py-2 font-bold">${resource.value}</td>
-                        ${resource.amount ? `<td class="border px-4 py-2">${resource.amount}</td>` : ''}
-                        ${resource.capacity ? `<td class="border px-4 py-2">${resource.capacity}</td>` : ''}
+                        ${hasAmount ? `<td class="border px-4 py-2">${resource.amount || 'No data'}</td>` : ''}
+                        ${hasCapacity ? `<td class="border px-4 py-2">${resource.capacity || 'No data'}</td>` : ''}
                     </tr>
-                `).join("")}</tbody>
-            </table>
-            <hr />
-        `;
-    };
+                `).join('')}
+            </tbody>
+        </table>
+        <hr />
+    `;
+};
 
     const livelihoodTable = (livelihoods) => {
         if (!Array.isArray(livelihoods)) return '';
