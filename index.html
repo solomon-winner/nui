@@ -611,10 +611,7 @@ window.addEventListener("load", function () {
       var kebeleList = document.getElementById("kebeleList");
       var siteList = document.getElementById("siteList");
 
-      //https://tbrr.echnoserve.com/api/geojson/sites
-      ////////////
 
-      ///////////
       fetch("https://tbrr.echnoserve.com/api/geojson/regions")
         .then((response) => response.json())
         .then((data) => {
@@ -647,13 +644,13 @@ window.addEventListener("load", function () {
                     Sites = [];
 
                     if (kebeleList) {
-    kebeleList.style.display = "none";
+                         kebeleList.style.display = "none";
 
-}
+                         }
 
-if (siteList) {
-  siteList.style.display = "none";
-}
+              if (siteList) {
+                     siteList.style.display = "none";
+                        }
 
                     var selectedRegion = region.id;
                     woredaLayerGroup.clearLayers();
@@ -1018,10 +1015,7 @@ if (siteList) {
                   var searchInput = document.getElementById("kebeleInput");
 
                   kebeleList.innerHTML = "<strong>Kebeles:</strong>";
-                  ////////////
-                  // fetchData(`https://tbrr.echnoserve.com/api/woredas/${selectedWoreda}/kebeles?all=false`).then((woredaData) => {
-                  // woredaData.data
-                  ////////////
+
                   fetchData(
                     `https://tbrr.echnoserve.com/api/woredas/${selectedWoreda}/kebeles?all=false`
                   ).then((kebeleData) => {
@@ -1035,8 +1029,8 @@ if (siteList) {
                       listItem.addEventListener("click", function () {
 
                         if (siteList) {
-  siteList.style.display = "block";
-}
+                  siteList.style.display = "block";
+                          }
 
                         var selectedKebeleId = parseInt(this.dataset.kebeleId);
                         markSelectedKebeleInList(feature.kebele_name);
@@ -1374,26 +1368,6 @@ if (siteList) {
             `;
 
 
-//             const resourceTables = (resources, title) => {
-//     if (!resources || resources.length === 0) return '';
-
-//     const tableRows = resources[0].map(resource => `
-//         <tr>
-//           ${console.log("hdjchdssdddddddddddddshdgcsdjk",resource)}
-
-//             <td class="border px-4 py-2 font-bold">${resource.value}</td>
-//             ${resource.amount ? `<td class="border px-4 py-2">${resource.amount}</td>` : ''}
-//         </tr>
-//     `).join('');
-
-//     return `
-//         <h4>${title}</h4>
-//         <hr />
-//         <table class="table-auto w-full">
-//             <tbody>${tableRows}</tbody>
-//         </table>
-//     `;
-// };
         try {
           if (type === "region") {
             const regionData = await RegionData(id);
