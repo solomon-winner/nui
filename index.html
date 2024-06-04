@@ -528,11 +528,14 @@
           </circle><g></g></g></svg>
         </div>
     `;
-
-        // Set the content to the loading animation
-        // for (let i = 0; i < Body.length; i++) {
-        //   Body[i].innerHTML = loadingAnimation;
-        // }
+    let w = 0
+       // Set the content to the loading animation
+        if(w < Body.length) {
+          Body[i].innerHTML = loadingAnimation;
+        }
+        else {
+            Body.style.display('block')
+        }
       
       const thirdOpacity = 0.1;
       const secondaryOpacity = 0.4;
