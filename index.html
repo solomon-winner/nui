@@ -407,7 +407,7 @@
                 </div>
                 <div
                   class="card-body overflow-auto projectInfo"
-                  style="height: 400px"
+                  style=""
                 >
                   Explore detailed location information by selecting a region
                   and other criteria using the filters above. Simply click on
@@ -1328,7 +1328,7 @@
           const data = await response.json();
           return data.features[0].geometry.coordinates[0][0];
         } catch (error) {
-          console.error("Error fetching geoJSON:", error);
+          return "No Coordinate";
           throw error;
         }
       }
@@ -1590,74 +1590,99 @@
                   .join("")}
                 <strong>FORAGE</strong>
                 <hr />
-                ${siteData.resources
-                  ?.map((resource) =>
-                    resource.FORAGE?.map(
-                      (item) => `
-                    <div key=${item.index}>
-                        <p class="border px-4 py-2 font-bold">${item.value}</p>
-                    </div>
-                `
-                    ).join("")
-                  )
-                  .join("")}
-                <strong>Coordinates</strong>
-                <hr/>
-                <table class="table-auto w-full">
-                    <thead>
-                        <th>Latitude</th>
-                        <th>Longitude</th>
-                    </thead>
-                    <tbody>${coordinates
-                      .map(
-                        (coords, index) => `
-                        <tr key=${index}>
-                            <td class="border px-4 py-2 font-bold">${coords[0]}</td>
-                            <td class="border px-4 py-2">${coords[1]}</td>
-                        </tr>
-                    `
-                      )
-                      .join("")}</tbody>
-                </table>
-            `;
+${siteData.resources
+    ?.map(resource =>
+      resource.FORAGE?.map(
+        item => `
+        <div key=${item.index}>
+          <p class="border px-4 py-2 font-bold">${item.value}</p>
+        </div>
+      `
+      ).join("")
+    ).join("")
+  }
+  <strong>Coordinates</strong>
+  <hr/>
+  ${coordinates === "No Coordinate" ? `
+    <p class="border px-4 py-2 font-bold">No Coordinate</p>
+  ` : `
+    <table class="table-auto w-full">
+      <thead>
+        <tr>
+          <th>Latitude</th>
+          <th>Longitude</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${coordinates
+          .map(
+            (coords, index) => `
+            <tr key=${index}>
+              <td class="border px-4 py-2 font-bold">${coords[0]}</td>
+              <td class="border px-4 py-2">${coords[1]}</td>
+            </tr>
+          `
+          ).join("")
+        }
+      </tbody>
+    </table>
+  `}
+`;
           } else if (type === "kebele") {
             const kebeleData = await Kebele_Data(id);
             console.log("kebeleData:", kebeleData);
 
-            const dataRows = [
-              {
-                label: "Female Population",
-                value: kebeleData.kebele_data.female_population,
-              },
-              {
-                label: "Male Population",
-                value: kebeleData.kebele_data.male_population,
-              },
-              {
-                label: "Female Non-Employed",
-                value: kebeleData.kebele_data.female_non_employed,
-              },
-              {
-                label: "Male Non-Employed",
-                value: kebeleData.kebele_data.male_non_employed,
-              },
-              {
-                label: "MHF Land Owners",
-                value: kebeleData.kebele_data.mhf_land_owners,
-              },
-              {
-                label: "FHF Land Owners",
-                value: kebeleData.kebele_data.fhf_land_owners,
-              },
-              {
-                label: "MHF Land Lease",
-                value: kebeleData.kebele_data.mhf_land_lease,
-              },
-              {
-                label: "FHF Land Lease",
-                value: kebeleData.kebele_data.fhf_land_lease,
-              },
-            ];
+const dataRows = [
+  {
+    label: "Female Population",
+    value: kebeleData.kebele_data.female_population !== undefined && kebeleData.kebele_data.female_population !== null 
+      ? kebeleData.kebele_data.female_population 
+      : 'No Data',
+  },
+  {
+    label: "Male Population",
+    value: kebeleData.kebele_data.male_population !== undefined && kebeleData.kebele_data.male_population !== null 
+      ? kebeleData.kebele_data.male_population 
+      : 'No Data',
+  },
+  {
+    label: "Female Non-Employed",
+    value: kebeleData.kebele_data.female_non_employed !== undefined && kebeleData.kebele_data.female_non_employed !== null 
+      ? kebeleData.kebele_data.female_non_employed 
+      : 'No Data',
+  },
+  {
+    label: "Male Non-Employed",
+    value: kebeleData.kebele_data.male_non_employed !== undefined && kebeleData.kebele_data.male_non_employed !== null 
+      ? kebeleData.kebele_data.male_non_employed 
+      : 'No Data',
+  },
+  {
+    label: "MHF Land Owners",
+    value: kebeleData.kebele_data.mhf_land_owners !== undefined && kebeleData.kebele_data.mhf_land_owners !== null 
+      ? kebeleData.kebele_data.mhf_land_owners 
+      : 'No Data',
+  },
+  {
+    label: "FHF Land Owners",
+    value: kebeleData.kebele_data.fhf_land_owners !== undefined && kebeleData.kebele_data.fhf_land_owners !== null 
+      ? kebeleData.kebele_data.fhf_land_owners 
+      : 'No Data',
+  },
+  {
+    label: "MHF Land Lease",
+    value: kebeleData.kebele_data.mhf_land_lease !== undefined && kebeleData.kebele_data.mhf_land_lease !== null 
+      ? kebeleData.kebele_data.mhf_land_lease 
+      : 'No Data',
+  },
+  {
+    label: "FHF Land Lease",
+    value: kebeleData.kebele_data.fhf_land_lease !== undefined && kebeleData.kebele_data.fhf_land_lease !== null 
+      ? kebeleData.kebele_data.fhf_land_lease 
+      : 'No Data',
+  },
+];
+
 
             const resourceTables = (resources, resourceName) => {
               if (!Array.isArray(resources)) return "";
@@ -1721,7 +1746,7 @@
             };
 
             const livelihoodTable = (livelihoods) => {
-              if (!Array.isArray(livelihoods)) return "";
+              if (!Array.isArray(livelihoods)) return " No Data";
 
               return `
             <h4>Livelihoods</h4>
@@ -1751,7 +1776,7 @@
             };
 
             const energyResourcesTable = (energy_resources) => {
-              if (!Array.isArray(energy_resources)) return "";
+              if (!Array.isArray(energy_resources)) return "No Data";
 
               return `
             <h4>Energy Resources</h4>
@@ -1808,9 +1833,12 @@
         <hr />
         <table class="table-auto w-full">
             <tbody>${renderTableRows([
-              { label: "Region Name", value: kebeleData.region_name },
-              { label: "Woreda Name", value: kebeleData.woreda_name },
-              { label: "Zone Name", value: kebeleData.zone_name },
+              { label: "Region Name", value: kebeleData.region_name !== undefined && 
+              kebeleData.region_name !== null ? kebeleData.region_name : "No Data"},
+              { label: "Woreda Name", value: kebeleData.woreda_name !== undefined &&
+               kebeleData.woreda_name !== null ? kebeleData.woreda_name : "No Data"},
+              { label: "Zone Name", value: kebeleData.zone_name !== undefined &&
+               kebeleData.woreda_name !== null ? kebeleData.woreda_name: "No Data"},
             ])}</tbody>
         </table>
         <hr/>
