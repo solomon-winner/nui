@@ -872,6 +872,9 @@
                   fetchData(
                     `https://tbrr.echnoserve.com/api/regions/${selectedRegion}/woredas?all=false`
                   ).then((woredaData) => {
+                    if (woredaData.data.length === 0) {
+                      woredaList.innerHTML += "<p>No Woreda</p>";
+                      } else {
                     woredaData.data.forEach((Woreda_Data) => {
                       var listItem = document.createElement("li");
                       listItem.textContent = Woreda_Data.woreda_name;
@@ -926,7 +929,7 @@
                             woredaLayer.fire("click");
                           }
                         });
-                        // console.log("W_layer.feature.properties.name",W_layer.feature.properties.name)
+                         console.log("W_layer.feature.properties.name",W_layer)
                         markSelectedWoredaInList(
                           W_layer.feature.properties.name
                         );
@@ -949,7 +952,7 @@
                         }
                       );
                     });
-                  });
+                 } });
 
                   showContainer("woredaContainer", "woredaList");
                 }
@@ -1034,6 +1037,9 @@
                   fetchData(
                     `https://tbrr.echnoserve.com/api/woredas/${selectedWoreda}/kebeles?all=false`
                   ).then((kebeleData) => {
+                    if (kebeleData.data.length === 0) {
+                      kebeleList.innerHTML += "<p>No Site</p>";
+      } else {
                     kebeleData.data.forEach((feature) => {
                       var listItem = document.createElement("li");
                       listItem.textContent = feature.kebele_name;
@@ -1087,7 +1093,7 @@
                         updateSiteList(this.dataset.kebeleId);
                       });
                     });
-                  });
+                  }  });
 
                   // Filter/Search functionality
                   searchInput.addEventListener("input", function () {
@@ -1166,49 +1172,51 @@
                     });
                 }
                 function updateSiteList(selectedKebele) {
-                  var siteList = document.getElementById("siteList");
-                  siteList.innerHTML = "<strong>Sites:</strong>";
+  var siteList = document.getElementById("siteList");
+  siteList.innerHTML = "<strong>Sites:</strong>";
 
-                  fetchData(
-                    `https://tbrr.echnoserve.com/api/kebeles/${selectedKebele}/sites?all=false`
-                  ).then((siteData) => {
-                    siteData.data.forEach((feature) => {
-                      var listItem = document.createElement("li");
-                      listItem.textContent =
-                        feature.site_name ?? feature.watershed_name;
-                      listItem.dataset.siteId = feature.id;
-                      listItem.dataset.name = feature.site_name;
-                      siteList.appendChild(listItem);
+  fetchData(`https://tbrr.echnoserve.com/api/kebeles/${selectedKebele}/sites?all=false`)
+    .then((siteData) => {
+      if (siteData.data.length === 0) {
+        siteList.innerHTML += "<p>No Site</p>";
+      } else {
+        siteData.data.forEach((feature) => {
+          var listItem = document.createElement("li");
+          listItem.textContent = feature.site_name ?? feature.watershed_name;
+          listItem.dataset.siteId = feature.id;
+          listItem.dataset.name = feature.site_name;
+          siteList.appendChild(listItem);
 
-                      listItem.addEventListener("click", function () {
-                        projectInfo(feature.id, "site");
-                        siteLayerGroup.eachLayer(function (siteLayer) {
-                          if (
-                            siteLayer.feature &&
-                            siteLayer.feature.properties.Name ===
-                              feature.site_name
-                          ) {
-                            siteLayer.setStyle({
-                              color: "#ffd790",
-                              fillOpacity: secondaryOpacity,
-                              weight: 1,
-                            });
-                          } else {
-                            map.fitBounds(siteLayer.getBounds());
-                            siteLayer.setStyle({
-                              color: "#ffd700",
-                              fillOpacity: mainOpacity,
-                              weight: 1,
-                            });
-                          }
-                        });
+          listItem.addEventListener("click", function () {
+            projectInfo(feature.id, "site");
+            siteLayerGroup.eachLayer(function (siteLayer) {
+              if (
+                siteLayer.feature &&
+                siteLayer.feature.properties.Name === feature.site_name
+              ) {
+                siteLayer.setStyle({
+                  color: "#ffd790",
+                  fillOpacity: secondaryOpacity,
+                  weight: 1,
+                });
+              } else {
+                map.fitBounds(siteLayer.getBounds());
+                siteLayer.setStyle({
+                  color: "#ffd700",
+                  fillOpacity: mainOpacity,
+                  weight: 1,
+                });
+              }
+            });
 
-                        markSelectedSiteInList(feature.site_name);
-                      });
-                    });
-                  });
-                  showContainer("siteContainer", "siteList");
-                }
+            markSelectedSiteInList(feature.site_name);
+          });
+        });
+      }
+    });
+  showContainer("siteContainer", "siteList");
+}
+
 
                 function onEachWoredaFeature(feature, layer) {
                   Woredas.push(layer);
