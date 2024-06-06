@@ -48,7 +48,6 @@
     <!-- Base CSS -->
     <link rel="stylesheet" href="tbrr public/Main/tbrr/css/base.css" />
     <!-- Style CSS -->
-    <link rel="stylesheet" href="tbrr public/Main/tbrr/css/style.css" />
     <!-- Responsive CSS -->
     <link rel="stylesheet" href="tbrr public/Main/tbrr/css/responsive.css" />
 
@@ -1532,7 +1531,7 @@
                     : "No data"
                 }</p>
                 <p><strong>Woreda: </strong> ${
-                  siteData.woreda_name || "Adwa"
+                  siteData.woreda_name || "No data"
                 }</p>
                 <p><strong>Zone: </strong> ${siteData.zone_name || "N/A"}</p>
                 <h4>Site Resource</h4>
@@ -1566,7 +1565,7 @@
                       .join("")
                   )
                   .join("")}
-                <p class="font-bold">Exotic Tree</p>
+                <p class="font-bold ">Exotic Tree</p>
                 <hr />
                 ${siteData.resources
                   ?.map((resource) =>
