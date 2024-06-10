@@ -406,7 +406,6 @@
                 </div>
                 <div
                   class="card-body overflow-auto projectInfo"
-                  style=""
                 >
                   Explore detailed location information by selecting a region
                   and other criteria using the filters above. Simply click on
@@ -582,8 +581,8 @@
       const map = L.map("map", {
         minZoom: 5,
         maxBounds: [
-          [3.306, 32.897], // Southwestern corner of the bounding box
-          [15.003, 48.102], // Northeastern corner of the bounding box
+          [3.306, 32.897], 
+          [15.003, 48.102], 
         ],
         updateWhenIdle: false,
       }).setView(ethiopia, 7);
@@ -595,7 +594,6 @@
         }
       ).addTo(map);
 
-      // Helper function to fetch GeoJSON data
       function fetchData(url) {
         return fetch(url).then((response) => response.json());
       }
@@ -730,6 +728,8 @@
                     var THE_SITE = all_Site.find(
                       (LAYER) => LAYER.feature.properties.id === SITE_ID
                     );
+
+                    
                     THE_SITE.setStyle({ color: "black" });
                     map.fitBounds(THE_SITE.getBounds());
                     projectInfo(SITE_ID, "site");
@@ -807,6 +807,11 @@
                           fetchData(
                             `https://tbrr.echnoserve.com/${woro_da}`
                           ).then((woredaData) => {
+                             const WoredaId = woro_da.match(/\/([^\/]+)\.geojson$/)[1];
+                              woredaData.features.forEach(feature => {
+                                 feature.properties.WoredaId = WoredaId;
+                                });
+
                             Woredas_List.push(woredaData);
                             L.geoJSON(woredaData, {
                               onEachFeature: onEachWoredaFeature,
@@ -928,7 +933,6 @@
                             woredaLayer.fire("click");
                           }
                         });
-                         console.log("W_layer.feature.properties.name",W_layer)
                         markSelectedWoredaInList(
                           W_layer.feature.properties.name
                         );
@@ -1000,7 +1004,6 @@
                       fillOpacity: 0,
                       weight: 2,
                     });
-                    console.log("keb layer", feature, layer);
                     projectInfo(feature.properties.id, "kebele");
 
                     markSelectedKebeleInList(feature.properties.name);
@@ -1225,7 +1228,7 @@
                     fontSize: "16px",
                   });
                   layer.on("click", function () {
-                    projectInfo(feature.properties.id, "woreda");
+                    projectInfo(feature.properties.WoredaId, "woreda");
                     woredaLayerGroup.eachLayer(function (woredaLayer) {
                       woredaLayer.setStyle({
                         color: "black",
@@ -1246,8 +1249,8 @@
                     map.fitBounds(layer.getBounds());
 
                     kebeleLayerGroup.clearLayers();
-                    drawKebelesForWoreda(feature.properties.id);
-                    updateKebeleList(feature.properties.id);
+                    drawKebelesForWoreda(feature.properties.WoredaId);
+                    updateKebeleList(feature.properties.WoredaId);
                   });
                 }
 
@@ -1635,126 +1638,57 @@ ${siteData.resources
   `}
 `;
           } else if (type === "kebele") {
-            const kebeleData = await Kebele_Data(id);
-            console.log("kebeleData:", kebeleData);
+    const kebeleData = await Kebele_Data(id);
 
-const dataRows = [
-  {
-    label: "Female Population",
-    value: kebeleData.kebele_data.female_population !== undefined && kebeleData.kebele_data.female_population !== null 
-      ? kebeleData.kebele_data.female_population 
-      : 'No Data',
-  },
-  {
-    label: "Male Population",
-    value: kebeleData.kebele_data.male_population !== undefined && kebeleData.kebele_data.male_population !== null 
-      ? kebeleData.kebele_data.male_population 
-      : 'No Data',
-  },
-  {
-    label: "Female Non-Employed",
-    value: kebeleData.kebele_data.female_non_employed !== undefined && kebeleData.kebele_data.female_non_employed !== null 
-      ? kebeleData.kebele_data.female_non_employed 
-      : 'No Data',
-  },
-  {
-    label: "Male Non-Employed",
-    value: kebeleData.kebele_data.male_non_employed !== undefined && kebeleData.kebele_data.male_non_employed !== null 
-      ? kebeleData.kebele_data.male_non_employed 
-      : 'No Data',
-  },
-  {
-    label: "MHF Land Owners",
-    value: kebeleData.kebele_data.mhf_land_owners !== undefined && kebeleData.kebele_data.mhf_land_owners !== null 
-      ? kebeleData.kebele_data.mhf_land_owners 
-      : 'No Data',
-  },
-  {
-    label: "FHF Land Owners",
-    value: kebeleData.kebele_data.fhf_land_owners !== undefined && kebeleData.kebele_data.fhf_land_owners !== null 
-      ? kebeleData.kebele_data.fhf_land_owners 
-      : 'No Data',
-  },
-  {
-    label: "MHF Land Lease",
-    value: kebeleData.kebele_data.mhf_land_lease !== undefined && kebeleData.kebele_data.mhf_land_lease !== null 
-      ? kebeleData.kebele_data.mhf_land_lease 
-      : 'No Data',
-  },
-  {
-    label: "FHF Land Lease",
-    value: kebeleData.kebele_data.fhf_land_lease !== undefined && kebeleData.kebele_data.fhf_land_lease !== null 
-      ? kebeleData.kebele_data.fhf_land_lease 
-      : 'No Data',
-  },
-];
+    const getDataValue = (data, key) => 
+        data && data.hasOwnProperty(key) && data[key] !== undefined && data[key] !== null ? data[key] : 'No Data';
 
+    const dataRows = [
+        { label: "Female Population", value: getDataValue(kebeleData.kebele_data, 'female_population') },
+        { label: "Male Population", value: getDataValue(kebeleData.kebele_data, 'male_population') },
+        { label: "Female Non-Employed", value: getDataValue(kebeleData.kebele_data, 'female_non_employed') },
+        { label: "Male Non-Employed", value: getDataValue(kebeleData.kebele_data, 'male_non_employed') },
+        { label: "MHF Land Owners", value: getDataValue(kebeleData.kebele_data, 'mhf_land_owners') },
+        { label: "FHF Land Owners", value: getDataValue(kebeleData.kebele_data, 'fhf_land_owners') },
+        { label: "MHF Land Lease", value: getDataValue(kebeleData.kebele_data, 'mhf_land_lease') },
+        { label: "FHF Land Lease", value: getDataValue(kebeleData.kebele_data, 'fhf_land_lease') },
+    ];
 
-            const resourceTables = (resources, resourceName) => {
-              if (!Array.isArray(resources)) return "";
+    const resourceTables = (resources, resourceName) => {
+        if (!Array.isArray(resources)) return "";
 
-              const hasAmount = resources.some(
-                (resource) => resource.amount !== undefined
-              );
-              const hasCapacity = resources.some(
-                (resource) => resource.capacity !== undefined
-              );
+        const hasAmount = resources.some(resource => resource.amount !== undefined);
+        const hasCapacity = resources.some(resource => resource.capacity !== undefined);
 
-              return `
-        <h4>${resourceName}</h4>
-        <hr />
-        <table class="table-auto w-full">
-            <thead>
-                <tr>
-                    <th class="px-4 py-2"></th>
-                    ${
-                      hasAmount
-                        ? '<th class="px-4 py-2 font-bold text-lg">Amount</th>'
-                        : ""
-                    }
-                    ${
-                      hasCapacity
-                        ? '<th class="px-4 py-2 font-bold text-lg">Capacity</th>'
-                        : ""
-                    }
-                </tr>
-            </thead>
-            <tbody>
-                ${resources
-                  .map(
-                    (resource, index) => `
-                    <tr key=${index}>
-                        <td class="border px-4 py-2 font-bold">${
-                          resource.value
-                        }</td>
-                        ${
-                          hasAmount
-                            ? `<td class="border px-4 py-2">${
-                                resource.amount || "No data"
-                              }</td>`
-                            : ""
-                        }
-                        ${
-                          hasCapacity
-                            ? `<td class="border px-4 py-2">${
-                                resource.capacity || "No data"
-                              }</td>`
-                            : ""
-                        }
+        return `
+            <h4>${resourceName}</h4>
+            <hr />
+            <table class="table-auto w-full">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2"></th>
+                        ${hasAmount ? '<th class="px-4 py-2 font-bold text-lg">Amount</th>' : ""}
+                        ${hasCapacity ? '<th class="px-4 py-2 font-bold text-lg">Capacity</th>' : ""}
                     </tr>
-                `
-                  )
-                  .join("")}
-            </tbody>
-        </table>
-        <hr />
-    `;
-            };
+                </thead>
+                <tbody>
+                    ${resources.map((resource, index) => `
+                        <tr key=${index}>
+                            <td class="border px-4 py-2 font-bold">${resource.value}</td>
+                            ${hasAmount ? `<td class="border px-4 py-2">${resource.amount || "No data"}</td>` : ""}
+                            ${hasCapacity ? `<td class="border px-4 py-2">${resource.capacity || "No data"}</td>` : ""}
+                        </tr>
+                    `).join("")}
+                </tbody>
+            </table>
+            <hr />
+        `;
+    };
 
-            const livelihoodTable = (livelihoods) => {
-              if (!Array.isArray(livelihoods)) return " No Data";
+    const livelihoodTable = (livelihoods) => {
+        if (!Array.isArray(livelihoods)) return " No Data";
 
-              return `
+        return `
             <h4>Livelihoods</h4>
             <hr />
             <table class="table-auto w-full">
@@ -1765,26 +1699,24 @@ const dataRows = [
                         <th class=" px-4 py-2 font-bold text-lg">Female Headed HH</th>
                     </tr>
                 </thead>
-                <tbody>${livelihoods
-                  .map(
-                    (livelihood, index) => `
-                    <tr key=${index}>
-                        <td class="border px-4 py-2 font-bold">${livelihood.value}</td>
-                        <td class="border px-4 py-2">${livelihood.male_headed_hh}</td>
-                        <td class="border px-4 py-2">${livelihood.female_headed_hh}</td>
-                    </tr>
-                `
-                  )
-                  .join("")}</tbody>
+                <tbody>
+                    ${livelihoods.map((livelihood, index) => `
+                        <tr key=${index}>
+                            <td class="border px-4 py-2 font-bold">${livelihood.value}</td>
+                            <td class="border px-4 py-2">${livelihood.male_headed_hh}</td>
+                            <td class="border px-4 py-2">${livelihood.female_headed_hh}</td>
+                        </tr>
+                    `).join("")}
+                </tbody>
             </table>
             <hr />
         `;
-            };
+    };
 
-            const energyResourcesTable = (energy_resources) => {
-              if (!Array.isArray(energy_resources)) return "No Data";
+    const energyResourcesTable = (energy_resources) => {
+        if (!Array.isArray(energy_resources)) return "No Data";
 
-              return `
+        return `
             <h4>Energy Resources</h4>
             <hr />
             <table class="table-auto w-full">
@@ -1794,58 +1726,57 @@ const dataRows = [
                         <th class="px-4 py-2 font-bold text-lg">Access Level</th>
                     </tr>
                 </thead>
-                <tbody>${energy_resources
-                  .map(
-                    (resource, index) => `
-                    <tr key=${index}>
-                        <td class="border px-4 py-2 font-bold">${resource.value}</td>
-                        <td class="border px-4 py-2">${resource.access_level}</td>
-                    </tr>
-                `
-                  )
-                  .join("")}</tbody>
+                <tbody>
+                    ${energy_resources.map((resource, index) => `
+                        <tr key=${index}>
+                            <td class="border px-4 py-2 font-bold">${resource.value}</td>
+                            <td class="border px-4 py-2">${resource.access_level}</td>
+                        </tr>
+                    `).join("")}
+                </tbody>
             </table>
             <hr />
         `;
-            };
+    };
 
-            const renderResourceTables = (resources) => {
-              return resources
-                .map((resourceObj) => {
-                  const resourceType = Object.keys(resourceObj)[0];
-                  if (resourceType === "TREE") {
-                    const indigenousTrees = resourceObj[resourceType].filter(
-                      (tree) => tree.indigenous
-                    );
-                    const exoticTrees = resourceObj[resourceType].filter(
-                      (tree) => !tree.indigenous
-                    );
-                    return `
+    const renderResourceTables = (resources) => {
+        if (!Array.isArray(resources)) return "No Data";
+
+        return resources.map(resourceObj => {
+            const resourceType = Object.keys(resourceObj)[0];
+            if (resourceType === "TREE") {
+                const indigenousTrees = resourceObj[resourceType].filter(tree => tree.indigenous);
+                const exoticTrees = resourceObj[resourceType].filter(tree => !tree.indigenous);
+                return `
                     ${resourceTables(indigenousTrees, "Indigenous Trees")}
                     ${resourceTables(exoticTrees, "Exotic Trees")}
                 `;
-                  } else {
-                    return resourceTables(
-                      resourceObj[resourceType],
-                      resourceType
-                    );
-                  }
-                })
-                .join("");
-            };
+            } else {
+                return resourceTables(resourceObj[resourceType], resourceType);
+            }
+        }).join("");
+    };
 
-            content = `
-          <h4>${kebeleData.kebele_name}</h4>
+    const renderTableRows = (rows) => {
+        return rows.map(row => `
+            <tr>
+                <td class="border px-4 py-2 font-bold">${row.label}</td>
+                <td class="border px-4 py-2">${row.value}</td>
+            </tr>
+        `).join("");
+    };
+
+    content = `
+        <h4>${kebeleData.kebele_name}</h4>
         <hr />
         <table class="table-auto w-full">
-            <tbody>${renderTableRows([
-              { label: "Region Name", value: kebeleData.region_name !== undefined && 
-              kebeleData.region_name !== null ? kebeleData.region_name : "No Data"},
-              { label: "Woreda Name", value: kebeleData.woreda_name !== undefined &&
-               kebeleData.woreda_name !== null ? kebeleData.woreda_name : "No Data"},
-              { label: "Zone Name", value: kebeleData.zone_name !== undefined &&
-               kebeleData.woreda_name !== null ? kebeleData.woreda_name: "No Data"},
-            ])}</tbody>
+            <tbody>
+                ${renderTableRows([
+                    { label: "Region Name", value: kebeleData.region_name !== undefined && kebeleData.region_name !== null ? kebeleData.region_name : "No Data" },
+                    { label: "Woreda Name", value: kebeleData.woreda_name !== undefined && kebeleData.woreda_name !== null ? kebeleData.woreda_name : "No Data" },
+                    { label: "Zone Name", value: kebeleData.zone_name !== undefined && kebeleData.zone_name !== null ? kebeleData.zone_name : "No Data" },
+                ])}
+            </tbody>
         </table>
         <hr/>
         <h6>Kebele Data</h6>
@@ -1858,7 +1789,7 @@ const dataRows = [
         ${livelihoodTable(kebeleData.livelihoods)}
         ${energyResourcesTable(kebeleData.energy_sources)}
     `;
-          }
+}
 
           for (let i = 0; i < projectInfoDiv.length; i++) {
             projectInfoDiv[i].innerHTML = content;
