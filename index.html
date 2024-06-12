@@ -1288,7 +1288,8 @@
           return data.data;
         } catch (error) {
           console.error("Error fetching data:", error);
-          throw error; // Propagate the error further if needed
+          return "No Data"
+          throw error;
         }
       }
 
@@ -1301,6 +1302,7 @@
           return data.data;
         } catch (error) {
           console.error("Error fetching data:", error);
+          return "No Data"
           throw error;
         }
       }
@@ -1314,6 +1316,7 @@
           return data.data;
         } catch (error) {
           console.error("Error fetching data:", error);
+          return "No Data"
           throw error;
         }
       }
@@ -1327,6 +1330,7 @@
           return data.data;
         } catch (error) {
           console.error("Error fetching data:", error);
+          return "No Data"
           throw error;
         }
       }
@@ -1413,28 +1417,35 @@
               {
                 label: "Female Population",
                 value:
-                  woredaData.woreda_data?.female_population !== undefined
+                  (woredaData.woreda_data?.female_population !== undefined &&
+                  woredaData.woreda_data?.female_population !== null
+                  )
                     ? woredaData.woreda_data.female_population
                     : "No data",
               },
               {
                 label: "Male Population",
                 value:
-                  woredaData.woreda_data?.male_population !== undefined
+                  (woredaData.woreda_data?.male_population !== undefined &&
+                  woredaData.woreda_data?.male_population !== null
+                  )
                     ? woredaData.woreda_data.male_population
                     : "No data",
               },
               {
                 label: "Rural Kebeles",
                 value:
-                  woredaData.woreda_data?.rural_kebeles !== undefined
+                  (woredaData.woreda_data?.rural_kebeles !== undefined &&
+                  woredaData.woreda_data?.rural_kebeles !== null
+                  )
                     ? woredaData.woreda_data.rural_kebeles
                     : "No data",
               },
               {
                 label: "Urban Kebeles",
                 value:
-                  woredaData.woreda_data?.urban_kebeles !== undefined
+                  (woredaData.woreda_data?.urban_kebeles !== undefined && 
+                  woredaData.woreda_data?.urban_kebeles !== null)
                     ? woredaData.woreda_data.urban_kebeles
                     : "No data",
               },
@@ -1448,28 +1459,36 @@
                       {
                         label: "Woreda Name",
                         value:
-                          woredaData.woreda_name !== undefined
+                         ( woredaData.woreda_name !== undefined &&
+                         woredaData.woreda_name !== null
+                         )
                             ? woredaData.woreda_name
                             : "No data",
                       },
                       {
                         label: "Woreda Code",
                         value:
-                          woredaData.woreda_code !== undefined
+                          (woredaData.woreda_code !== undefined
+                            && woredaData.woreda_code !== null
+                          )
                             ? woredaData.woreda_code
                             : "No data",
                       },
                       {
                         label: "Region Name",
                         value:
-                          woredaData.region_name !== undefined
+                          (woredaData.region_name !== undefined &&
+                          woredaData.region_name !== null
+                          )
                             ? woredaData.region_name
                             : "No data",
                       },
                       {
                         label: "Zone Name",
                         value:
-                          woredaData.zone_name !== undefined
+                          (woredaData.zone_name !== undefined &&
+                          woredaData.zone_name !== null
+                          )
                             ? woredaData.zone_name
                             : "No data",
                       },
@@ -1520,15 +1539,20 @@
                 <hr />
                 <h6>Site Information</h6>
                 <p><strong>Size in Ha.: </strong> ${
-                  siteData.size_ha !== undefined ? siteData.size_ha : "No data"
+                  (siteData.size_ha !== undefined &&
+                   siteData.size_ha !== null) ? siteData.size_ha : "No data"
                 }</p>
                 <p><strong>Watershed: </strong> ${
-                  siteData.watershed_name !== undefined
+                  (siteData.watershed_name !== undefined &&
+                  siteData.watershed_name !== null
+                  )
                     ? siteData.watershed_name
                     : "No data"
                 }</p>
                 <p><strong>Kebele: </strong> ${
-                  siteData.kebele_name !== undefined
+                  (siteData.kebele_name !== undefined &&
+                  siteData.kebele_name !== null
+                  )
                     ? siteData.kebele_name
                     : "No data"
                 }</p>
@@ -1551,7 +1575,7 @@
                     ).join("")
                   )
                   .join("")}
-                <strong>TREE</strong>
+                <strong class = "text-xl">TREE</strong>
                 <hr />
                 <p class="font-bold">Indigenous Tree</p>
                 ${siteData.resources
@@ -1686,7 +1710,7 @@ ${siteData.resources
     };
 
     const livelihoodTable = (livelihoods) => {
-        if (!Array.isArray(livelihoods)) return " No Data";
+        if (!Array.isArray(livelihoods)) return "";
 
         return `
             <h4>Livelihoods</h4>
@@ -1714,7 +1738,7 @@ ${siteData.resources
     };
 
     const energyResourcesTable = (energy_resources) => {
-        if (!Array.isArray(energy_resources)) return "No Data";
+        if (!Array.isArray(energy_resources)) return "";
 
         return `
             <h4>Energy Resources</h4>
@@ -1740,7 +1764,7 @@ ${siteData.resources
     };
 
     const renderResourceTables = (resources) => {
-        if (!Array.isArray(resources)) return "No Data";
+        if (!Array.isArray(resources)) return "";
 
         return resources.map(resourceObj => {
             const resourceType = Object.keys(resourceObj)[0];
