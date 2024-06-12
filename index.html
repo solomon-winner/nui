@@ -877,8 +877,10 @@
                     `https://tbrr.echnoserve.com/api/regions/${selectedRegion}/woredas?all=false`
                   ).then((woredaData) => {
                     if (woredaData.data.length === 0) {
+                      woredaList.innerHTML = ""
                       woredaList.innerHTML += "<p>No Woreda</p>";
                       } else {
+                        woredaList.innerHTML = ""
                     woredaData.data.forEach((Woreda_Data) => {
                       var listItem = document.createElement("li");
                       listItem.textContent = Woreda_Data.woreda_name;
@@ -1039,8 +1041,10 @@
                     `https://tbrr.echnoserve.com/api/woredas/${selectedWoreda}/kebeles?all=false`
                   ).then((kebeleData) => {
                     if (kebeleData.data.length === 0) {
-                      kebeleList.innerHTML += "<p>No Site</p>";
+                      kebeleList.innerHTML = ""
+                      kebeleList.innerHTML += "<p>No Keble</p>";
       } else {
+                   kebeleList.innerHTML = ""
                     kebeleData.data.forEach((feature) => {
                       var listItem = document.createElement("li");
                       listItem.textContent = feature.kebele_name;
@@ -1179,9 +1183,11 @@
   fetchData(`https://tbrr.echnoserve.com/api/kebeles/${selectedKebele}/sites?all=false`)
     .then((siteData) => {
       if (siteData.data.length === 0) {
+        siteList.innerHTML = ""
         siteList.innerHTML += "<p>No Site</p>";
       } else {
         siteData.data.forEach((feature) => {
+          siteList.innerHTML = ""
           var listItem = document.createElement("li");
           listItem.textContent = feature.site_name ?? feature.watershed_name;
           listItem.dataset.siteId = feature.id;
@@ -1412,255 +1418,167 @@
                 </table>
             `;
           } else if (type === "woreda") {
-            const woredaData = await Woreda_Data(id);
-            const dataRows = [
-              {
-                label: "Female Population",
-                value:
-                  (woredaData.woreda_data?.female_population !== undefined &&
-                  woredaData.woreda_data?.female_population !== null
-                  )
-                    ? woredaData.woreda_data.female_population
-                    : "No data",
-              },
-              {
-                label: "Male Population",
-                value:
-                  (woredaData.woreda_data?.male_population !== undefined &&
-                  woredaData.woreda_data?.male_population !== null
-                  )
-                    ? woredaData.woreda_data.male_population
-                    : "No data",
-              },
-              {
-                label: "Rural Kebeles",
-                value:
-                  (woredaData.woreda_data?.rural_kebeles !== undefined &&
-                  woredaData.woreda_data?.rural_kebeles !== null
-                  )
-                    ? woredaData.woreda_data.rural_kebeles
-                    : "No data",
-              },
-              {
-                label: "Urban Kebeles",
-                value:
-                  (woredaData.woreda_data?.urban_kebeles !== undefined && 
-                  woredaData.woreda_data?.urban_kebeles !== null)
-                    ? woredaData.woreda_data.urban_kebeles
-                    : "No data",
-              },
-            ];
+    const woredaData = await Woreda_Data(id);
+    const dataRows = [
+        {
+            label: "Female Population",
+            value: woredaData.woreda_data?.female_population !== undefined && woredaData.woreda_data?.female_population !== null ? woredaData.woreda_data.female_population : "No data",
+        },
+        {
+            label: "Male Population",
+            value: woredaData.woreda_data?.male_population !== undefined && woredaData.woreda_data?.male_population !== null ? woredaData.woreda_data.male_population : "No data",
+        },
+        {
+            label: "Rural Kebeles",
+            value: woredaData.woreda_data?.rural_kebeles !== undefined && woredaData.woreda_data?.rural_kebeles !== null ? woredaData.woreda_data.rural_kebeles : "No data",
+        },
+        {
+            label: "Urban Kebeles",
+            value: woredaData.woreda_data?.urban_kebeles !== undefined && woredaData.woreda_data?.urban_kebeles !== null ? woredaData.woreda_data.urban_kebeles : "No data",
+        },
+    ];
 
-            content = `
-                <h4>${woredaData.woreda_name}</h4>
-                <hr />
-                <table class="table-auto w-full">
-                    <tbody>${renderTableRows([
-                      {
-                        label: "Woreda Name",
-                        value:
-                         ( woredaData.woreda_name !== undefined &&
-                         woredaData.woreda_name !== null
-                         )
-                            ? woredaData.woreda_name
-                            : "No data",
-                      },
-                      {
-                        label: "Woreda Code",
-                        value:
-                          (woredaData.woreda_code !== undefined
-                            && woredaData.woreda_code !== null
-                          )
-                            ? woredaData.woreda_code
-                            : "No data",
-                      },
-                      {
-                        label: "Region Name",
-                        value:
-                          (woredaData.region_name !== undefined &&
-                          woredaData.region_name !== null
-                          )
-                            ? woredaData.region_name
-                            : "No data",
-                      },
-                      {
-                        label: "Zone Name",
-                        value:
-                          (woredaData.zone_name !== undefined &&
-                          woredaData.zone_name !== null
-                          )
-                            ? woredaData.zone_name
-                            : "No data",
-                      },
-                    ])}</tbody>
-                </table>
-                <hr/>
-                <h6>Woreda Data</h6>
-                <hr/>
-                <table class="table-auto w-full">
-                    <tbody>${renderTableRows(dataRows)}</tbody>
-                </table>
-                <hr />
-                <h4>Woreda Resource</h4>
-                <hr />
-                ${
-                  woredaData.woreda_resource.length !== 0
-                    ? resourceTables(woredaData.woreda_resource?.LAND, "LAND")
-                    : ""
-                }
-                ${
-                  woredaData.woreda_resource.length !== 0
-                    ? resourceTables(woredaData.woreda_resource?.ROAD, "ROAD")
-                    : ""
-                }
-                ${
-                  woredaData.woreda_institution.length !== 0
-                    ? resourceTables(
-                        woredaData.woreda_institution?.SCHOOL,
-                        "School"
-                      )
-                    : ""
-                }
-                ${
-                  woredaData.woreda_institution.length !== 0
-                    ? resourceTables(
-                        woredaData.woreda_institution?.HEALTH_FACILITY,
-                        "Health Facility"
-                      )
-                    : ""
-                }
-            `;
-          } else if (type === "site") {
-            const siteData = await Site_Data(id);
-            const coordinates = await Get_Coordinates(siteData.geojson);
+    content = `
+        <h4>${woredaData.woreda_name}</h4>
+        <hr />
+        <table class="table-auto w-full">
+            <tbody>${renderTableRows([
+                {
+                    label: "Woreda Name",
+                    value: woredaData.woreda_name !== undefined && woredaData.woreda_name !== null ? woredaData.woreda_name : "No data",
+                },
+                {
+                    label: "Woreda Code",
+                    value: woredaData.woreda_code !== undefined && woredaData.woreda_code !== null ? woredaData.woreda_code : "No data",
+                },
+                {
+                    label: "Region Name",
+                    value: woredaData.region_name !== undefined && woredaData.region_name !== null ? woredaData.region_name : "No data",
+                },
+                {
+                    label: "Zone Name",
+                    value: woredaData.zone_name !== undefined && woredaData.zone_name !== null ? woredaData.zone_name : "No data",
+                },
+            ])}</tbody>
+        </table>
+        <hr/>
+        <h6>Woreda Data</h6>
+        <hr/>
+        <table class="table-auto w-full">
+            <tbody>${renderTableRows(dataRows)}</tbody>
+        </table>
+        <hr />
+        <h4>Woreda Resource</h4>
+        <hr />
+        ${woredaData.woreda_resource.length !== 0 ? `
+            ${woredaData.woreda_resource?.LAND ? resourceTables(woredaData.woreda_resource.LAND, "LAND") : ""}
+            ${woredaData.woreda_resource?.ROAD ? resourceTables(woredaData.woreda_resource.ROAD, "ROAD") : ""}
+        ` : "<p>No Resource data</p>"}
+        <hr />
+        <h4>Woreda Institution</h4>
+        <hr />
+        ${woredaData.woreda_institution.length !== 0 ? `
+            ${woredaData.woreda_institution?.SCHOOL ? resourceTables(woredaData.woreda_institution.SCHOOL, "School") : ""}
+            ${woredaData.woreda_institution?.HEALTH_FACILITY ? resourceTables(woredaData.woreda_institution.HEALTH_FACILITY, "Health Facility") : ""}
+        ` : "<p>No Institution data</p>"}
+    `;
+}
+else if (type === "site") {
+    const siteData = await Site_Data(id);
+    const coordinates = await Get_Coordinates(siteData.geojson);
+    content = `
+        <h4>${siteData.site_name}</h4>
+        <hr />
+        <h6>Site Information</h6>
+        <p><strong>Size in Ha.: </strong> ${
+          siteData.size_ha !== undefined && siteData.size_ha !== null ? siteData.size_ha : "No data"
+        }</p>
+        <p><strong>Watershed: </strong> ${
+          siteData.watershed_name !== undefined && siteData.watershed_name !== null ? siteData.watershed_name : "No data"
+        }</p>
+        <p><strong>Kebele: </strong> ${
+          siteData.kebele_name !== undefined && siteData.kebele_name !== null ? siteData.kebele_name : "No data"
+        }</p>
+        <p><strong>Woreda: </strong> ${siteData.woreda_name || "No data"}</p>
+        <p><strong>Zone: </strong> ${siteData.zone_name || "N/A"}</p>
+                 <h4>Site Resource</h4>
+            <hr/>   
+        ${(siteData.resources !== undefined && siteData.resources.length !== 0) ? `
 
-            content = `
-                <h4>${siteData.site_name}</h4>
-                <hr />
-                <h6>Site Information</h6>
-                <p><strong>Size in Ha.: </strong> ${
-                  (siteData.size_ha !== undefined &&
-                   siteData.size_ha !== null) ? siteData.size_ha : "No data"
-                }</p>
-                <p><strong>Watershed: </strong> ${
-                  (siteData.watershed_name !== undefined &&
-                  siteData.watershed_name !== null
-                  )
-                    ? siteData.watershed_name
-                    : "No data"
-                }</p>
-                <p><strong>Kebele: </strong> ${
-                  (siteData.kebele_name !== undefined &&
-                  siteData.kebele_name !== null
-                  )
-                    ? siteData.kebele_name
-                    : "No data"
-                }</p>
-                <p><strong>Woreda: </strong> ${
-                  siteData.woreda_name || "No data"
-                }</p>
-                <p><strong>Zone: </strong> ${siteData.zone_name || "N/A"}</p>
-                <h4>Site Resource</h4>
-                <hr />
-                <strong>Current land use</strong>
-                <hr />
-                ${siteData.resources
-                  ?.map((resource) =>
-                    resource.LAND?.map(
-                      (item) => `
-                    <div key=${item.index}>
+            <strong>Current land use</strong>
+            <hr />
+            ${siteData.resources.map(resource =>
+                resource.LAND?.map((item, index) => `
+                    <div key=${index}>
                         <p class="border px-4 py-2 font-bold">${item.value}</p>
                     </div>
-                `
-                    ).join("")
-                  )
-                  .join("")}
-                <strong class = "text-xl">TREE</strong>
-                <hr />
-                <p class="font-bold">Indigenous Tree</p>
-                ${siteData.resources
-                  ?.map((resource) =>
-                    resource.TREE?.filter((tree) => tree.indigenous === 1)
-                      .map(
-                        (item) => `
-                    <div key=${item.index}>
+                `).join("")
+            ).join("")}
+            <strong class="text-xl">TREE</strong>
+            <hr />
+            <p class="font-bold">Indigenous Tree</p>
+            ${siteData.resources.map(resource =>
+                resource.TREE?.filter(tree => tree.indigenous === 1)
+                    .map((item, index) => `
+                        <div key=${index}>
+                            <p class="border px-4 py-2 font-bold">${item.value}</p>
+                        </div>
+                    `).join("")
+            ).join("")}
+            <p class="font-bold">Exotic Tree</p>
+            <hr />
+            ${siteData.resources.map(resource =>
+                resource.TREE?.filter(tree => !tree.hasOwnProperty("indigenous"))
+                    .map((item, index) => `
+                        <div key=${index}>
+                            <p class="border px-4 py-2 font-bold">${item.value}</p>
+                        </div>
+                    `).join("")
+            ).join("")}
+            <strong>LIVESTOCK</strong>
+            <hr />
+            ${siteData.resources.map(resource =>
+                resource.LIVESTOCK?.map((item, index) => `
+                    <div key=${index}>
                         <p class="border px-4 py-2 font-bold">${item.value}</p>
                     </div>
-                `
-                      )
-                      .join("")
-                  )
-                  .join("")}
-                <p class="font-bold ">Exotic Tree</p>
-                <hr />
-                ${siteData.resources
-                  ?.map((resource) =>
-                    resource.TREE?.filter(
-                      (tree) => !tree.hasOwnProperty("indigenous")
-                    )
-                      .map(
-                        (item) => `
-                    <div key=${item.index}>
+                `).join("")
+            ).join("")}
+            <strong>FORAGE</strong>
+            <hr />
+            ${siteData.resources.map(resource =>
+                resource.FORAGE?.map((item, index) => `
+                    <div key=${index}>
                         <p class="border px-4 py-2 font-bold">${item.value}</p>
                     </div>
-                `
-                      )
-                      .join("")
-                  )
-                  .join("")}
-                <strong>LIVESTOCK</strong>
-                <hr />
-                ${siteData.resources
-                  ?.map((resource) =>
-                    resource.LIVESTOCK?.map(
-                      (item) => `
-                    <div key=${item.index}>
-                        <p class="border px-4 py-2 font-bold">${item.value}</p>
-                    </div>
-                `
-                    ).join("")
-                  )
-                  .join("")}
-                <strong>FORAGE</strong>
-                <hr />
-${siteData.resources
-    ?.map(resource =>
-      resource.FORAGE?.map(
-        item => `
-        <div key=${item.index}>
-          <p class="border px-4 py-2 font-bold">${item.value}</p>
-        </div>
-      `
-      ).join("")
-    ).join("")
-  }
-  <strong>Coordinates</strong>
-  <hr/>
-  ${coordinates === "No Coordinate" ? `
-    <p class="border px-4 py-2 font-bold">No Coordinate</p>
-  ` : `
-    <table class="table-auto w-full">
-      <thead>
-        <tr>
-          <th>Latitude</th>
-          <th>Longitude</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${coordinates
-          .map(
-            (coords, index) => `
-            <tr key=${index}>
-              <td class="border px-4 py-2 font-bold">${coords[0]}</td>
-              <td class="border px-4 py-2">${coords[1]}</td>
-            </tr>
-          `
-          ).join("")
-        }
-      </tbody>
-    </table>
-  `}
-`;
+                `).join("")
+            ).join("")}
+        ` : "<p>No Resource data Entered</p>"}
+        <hr/>
+        <strong>Coordinates</strong>
+        <hr />
+        ${coordinates === "No Coordinate" ? `
+            <p class="border px-4 py-2 font-bold">No Coordinate</p>
+        ` : `
+            <table class="table-auto w-full">
+                <thead>
+                    <tr>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${coordinates.map((coords, index) => `
+                        <tr key=${index}>
+                            <td class="border px-4 py-2 font-bold">${coords[0]}</td>
+                            <td class="border px-4 py-2">${coords[1]}</td>
+                        </tr>
+                    `).join("")}
+                </tbody>
+            </table>
+        `}
+    `;
+
           } else if (type === "kebele") {
     const kebeleData = await Kebele_Data(id);
 
@@ -1727,8 +1645,8 @@ ${siteData.resources
                     ${livelihoods.map((livelihood, index) => `
                         <tr key=${index}>
                             <td class="border px-4 py-2 font-bold">${livelihood.value}</td>
-                            <td class="border px-4 py-2">${livelihood.male_headed_hh}</td>
-                            <td class="border px-4 py-2">${livelihood.female_headed_hh}</td>
+                            <td class="border px-4 py-2">${livelihood.male_headed_hh || "No data"}</td>
+                            <td class="border px-4 py-2">${livelihood.female_headed_hh || "No data"}</td>
                         </tr>
                     `).join("")}
                 </tbody>
