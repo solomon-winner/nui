@@ -811,7 +811,8 @@
                               woredaData.features.forEach(feature => {
                                  feature.properties.WoredaId = WoredaId;
                                 });
-
+                                console.log("jhsjdgvsgv",woredaData)
+                                var W_List = woredaData
                             Woredas_List.push(woredaData);
                             L.geoJSON(woredaData, {
                               onEachFeature: onEachWoredaFeature,
@@ -837,7 +838,7 @@
 
                 function getLayerByWoredaName(WoredaId) {
                   return Woredas.find(
-                    (layer) => layer.feature.properties.id === WoredaId
+                    (layer) => layer.id === WoredaId
                   );
                 }
 
@@ -881,7 +882,7 @@
                       woredaList.innerHTML += "<p>No Woreda</p>";
                       } else {
                         woredaList.innerHTML = ""
-                    woredaData.data.forEach((Woreda_Data) => {
+                      woredaData.data.forEach((Woreda_Data) => {
                       var listItem = document.createElement("li");
                       listItem.textContent = Woreda_Data.woreda_name;
                       listItem.classList.add("woreda-item");
@@ -901,6 +902,7 @@
                         var W_layer = getLayerByWoredaName(
                           selectedWoredaId.toString()
                         );
+
                         if (W_layer) {
                           map.fitBounds(W_layer.getBounds());
                           W_layer.setStyle({
@@ -923,14 +925,14 @@
                           if (
                             woredaLayer.feature &&
                             woredaLayer.feature.properties.id ===
-                              W_layer.feature.properties.id
+                              W_layer.id
                           ) {
                             woredaLayer.setStyle({
                               color: "black",
                               fillOpacity: mainOpacity,
                               weight: 1,
                             });
-                            // Center map on the selected woreda
+
                             map.fitBounds(woredaLayer.getBounds());
                             woredaLayer.fire("click");
                           }
@@ -961,6 +963,7 @@
 
                   showContainer("woredaContainer", "woredaList");
                 }
+
                 function drawKebelesForWoreda(selectedWoreda) {
                   fetch(
                     `https://tbrr.echnoserve.com/api/geojson/woredas/${selectedWoreda}/kebeles`
@@ -1226,13 +1229,15 @@
 
 
                 function onEachWoredaFeature(feature, layer) {
+                  layer.id = feature.properties.WoredaId
                   Woredas.push(layer);
-
+                  console.log("vkdjfkhvshfgv",Woredas_List)
                   layer.bindTooltip(feature.properties.name, {
                     permanent: false,
                     direction: top,
                     fontSize: "16px",
                   });
+
                   layer.on("click", function () {
                     projectInfo(feature.properties.WoredaId, "woreda");
                     woredaLayerGroup.eachLayer(function (woredaLayer) {
