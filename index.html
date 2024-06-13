@@ -807,14 +807,19 @@
                           fetchData(
                             `https://tbrr.echnoserve.com/${woro_da}`
                           ).then((woredaData) => {
-                             const WoredaId = woro_da.match(/\/([^\/]+)\.geojson$/)[1];
+                             const WoredaId =parseInt( woro_da.match(/\/([^\/]+)\.geojson$/)[1]);
+                             var Woreda_Name;
+                             const woreda = Woredas_List.find(woreda => woreda.id === WoredaId);
+                                    if (woreda) {
+                                      Woreda_Name = woreda.name;
+                                    }
+
                               woredaData.features.forEach(feature => {
                                  feature.properties.WoredaId = WoredaId;
+                                 feature.properties.Woreda_Name = Woreda_Name
                                 });
                                 console.log("jhsjdgvsgv",woredaData)
-                                var W_List = woredaData
-                            Woredas_List.push(woredaData);
-                            L.geoJSON(woredaData, {
+                                L.geoJSON(woredaData, {
                               onEachFeature: onEachWoredaFeature,
                             }).addTo(woredaLayerGroup);
                           });
@@ -837,6 +842,10 @@
                 }
 
                 function getLayerByWoredaName(WoredaId) {
+                  const Clicked_Layer =  Woredas.find(
+                    (layer) => layer.id === WoredaId
+                  );
+                  console.log("sjdhfjhdfgsd",WoredaId, Woredas)
                   return Woredas.find(
                     (layer) => layer.id === WoredaId
                   );
@@ -888,7 +897,12 @@
                       listItem.classList.add("woreda-item");
                       listItem.dataset.woredaId = Woreda_Data.id;
                       woredaList.appendChild(listItem);
-
+                      var w = {
+                        id: Woreda_Data.id,
+                        name: Woreda_Data.woreda_name
+                      } 
+                      Woredas_List.push(w);
+                     
                       listItem.addEventListener("click", function () {
                         if (kebeleList) {
                           kebeleList.style.display = "block";
@@ -898,10 +912,9 @@
                         }
 
                         var selectedWoredaId = parseInt(this.dataset.woredaId);
-
-                        var W_layer = getLayerByWoredaName(
-                          selectedWoredaId.toString()
-                        );
+                        console.log("selectedWoredaId===",typeof(selectedWoredaId))
+                        var W_layer = getLayerByWoredaName(selectedWoredaId);
+                        console.log("selectedWoredaId===",W_layer)
 
                         if (W_layer) {
                           map.fitBounds(W_layer.getBounds());
@@ -937,15 +950,20 @@
                             woredaLayer.fire("click");
                           }
                         });
-                        markSelectedWoredaInList(
+
+                        if (W_layer !==undefined){
+                         markSelectedWoredaInList(
                           W_layer.feature.properties.name
-                        );
-                        kebeleLayerGroup.clearLayers();
+                        ); 
                         drawKebelesForWoreda(W_layer.feature.properties.id);
+      
+                        }
+                        
+                        kebeleLayerGroup.clearLayers();
                       });
                     });
 
-                    // Filter/Search functionality
+                    
                     searchInput.addEventListener("input", function () {
                       var filterValue = searchInput.value.toLowerCase();
                       Array.from(woredaList.getElementsByTagName("li")).forEach(
@@ -959,7 +977,8 @@
                         }
                       );
                     });
-                 } });
+                  } 
+                });
 
                   showContainer("woredaContainer", "woredaList");
                 }
@@ -1230,8 +1249,9 @@
 
                 function onEachWoredaFeature(feature, layer) {
                   layer.id = feature.properties.WoredaId
+                  layer.name = feature.properties.Woreda_Name;
+                  console.log("skdfhsjdg",layer)
                   Woredas.push(layer);
-                  console.log("vkdjfkhvshfgv",Woredas_List)
                   layer.bindTooltip(feature.properties.name, {
                     permanent: false,
                     direction: top,
@@ -1254,7 +1274,7 @@
                     //   weight: 1,
                     // });
 
-                    markSelectedWoredaInList(feature.properties.name);
+                    markSelectedWoredaInList(feature.properties.Woreda_Name);
 
                     // Center map on the selected woreda
                     map.fitBounds(layer.getBounds());
