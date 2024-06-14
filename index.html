@@ -1158,7 +1158,7 @@
 
                     markSelectedSiteInList(feature.site_name);
                     map.fitBounds(layer.getBounds());
-                    // Center map on the selected site
+
                   });
                 }
 
@@ -1196,6 +1196,7 @@
                       console.error("Error:", error);
                     });
                 }
+
                 function updateSiteList(selectedKebele) {
   var siteList = document.getElementById("siteList");
   siteList.innerHTML = "<strong>Sites:</strong>";
@@ -1248,7 +1249,6 @@
                 function onEachWoredaFeature(feature, layer) {
                   layer.id = feature.properties.WoredaId
                   layer.name = feature.properties.Woreda_Name;
-                  console.log("skdfhsjdg",layer)
                   Woredas.push(layer);
                   layer.bindTooltip(feature.properties.name, {
                     permanent: false,
@@ -1274,7 +1274,6 @@
 
                     markSelectedWoredaInList(feature.properties.Woreda_Name);
 
-                    // Center map on the selected woreda
                     map.fitBounds(layer.getBounds());
 
                     kebeleLayerGroup.clearLayers();
@@ -1385,7 +1384,6 @@
         </div>
     `;
 
-        // Set the content to the loading animation
         for (let i = 0; i < projectInfoDiv.length; i++) {
           projectInfoDiv[i].innerHTML = loadingAnimation;
         }
@@ -1505,7 +1503,7 @@ else if (type === "site") {
     const siteData = await Site_Data(id);
     const coordinates = await Get_Coordinates(siteData.geojson);
     content = `
-        <h4>${siteData.site_name}</h4>
+        <h4>${siteData.site_name || siteData.watershed_name}</h4>
         <hr />
         <h6>Site Information</h6>
         <p><strong>Size in Ha.: </strong> ${
