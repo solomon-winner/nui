@@ -807,10 +807,11 @@
                           fetchData(
                             `https://tbrr.echnoserve.com/${woro_da}`
                           ).then((woredaData) => {
-                             const WoredaId =parseInt( woro_da.match(/\/([^\/]+)\.geojson$/)[1]);
+                             const WoredaId = parseInt( woro_da.match(/\/([^\/]+)\.geojson$/)[1]);
                              var Woreda_Name;
                              const woreda = Woredas_List.find(woreda => woreda.id === WoredaId);
-                                    if (woreda) {
+                                  console.log("nskdhf", Woredas_List)
+                             if (woreda) {
                                       Woreda_Name = woreda.name;
                                     }
 
@@ -912,9 +913,7 @@
                         }
 
                         var selectedWoredaId = parseInt(this.dataset.woredaId);
-                        console.log("selectedWoredaId===",typeof(selectedWoredaId))
                         var W_layer = getLayerByWoredaName(selectedWoredaId);
-                        console.log("selectedWoredaId===",W_layer)
 
                         if (W_layer) {
                           map.fitBounds(W_layer.getBounds());
@@ -952,13 +951,12 @@
                         });
 
                         if (W_layer !==undefined){
-                         markSelectedWoredaInList(
-                          W_layer.feature.properties.name
-                        ); 
                        drawKebelesForWoreda(W_layer.feature.properties.id);
-      
-                        }
-                        
+                      } else {
+                        projectInfo(this.dataset.woredaId, "woreda");
+                        updateKebeleList(this.dataset.woredaId);
+                      }
+                         markSelectedWoredaInList(this.textContent);
                         kebeleLayerGroup.clearLayers();
                       });
                     });
@@ -1429,7 +1427,6 @@
             const regionData = await RegionData(id);
             const rows = [
               { label: "Region Name", value: regionData.region_name },
-              { label: "Region Code", value: regionData.region_code },
               { label: "Number of Sites", value: regionData.sites },
               { label: "Number of Kebeles", value: regionData.kebeles.length },
               { label: "Number of Woredas", value: regionData.woredas.length },
@@ -1471,10 +1468,6 @@
                 {
                     label: "Woreda Name",
                     value: woredaData.woreda_name !== undefined && woredaData.woreda_name !== null ? woredaData.woreda_name : "No data",
-                },
-                {
-                    label: "Woreda Code",
-                    value: woredaData.woreda_code !== undefined && woredaData.woreda_code !== null ? woredaData.woreda_code : "No data",
                 },
                 {
                     label: "Region Name",
