@@ -1487,90 +1487,118 @@
         <h4>Woreda Resource</h4>
         <hr />
         ${woredaData.woreda_resource.length !== 0 ? `
-            ${woredaData.woreda_resource?.LAND ? resourceTables(woredaData.woreda_resource.LAND, "LAND") : ""}
-            ${woredaData.woreda_resource?.ROAD ? resourceTables(woredaData.woreda_resource.ROAD, "ROAD") : ""}
+            ${woredaData.woreda_resource?.LAND ? resourceTables(woredaData.woreda_resource.LAND, "LAND") : 
+            `<h4>Land</h4>
+                <hr />
+                <p>No Data</p>`
+            }
+            ${woredaData.woreda_resource?.ROAD ? resourceTables(woredaData.woreda_resource.ROAD, "ROAD") :
+            `<h4>ROAD</h4>
+                <hr />
+                <p>No Data</p>`
+            }
         ` : "<p>No Resource data</p>"}
         <hr />
         <h4>Woreda Institution</h4>
         <hr />
         ${woredaData.woreda_institution.length !== 0 ? `
-            ${woredaData.woreda_institution?.SCHOOL ? resourceTables(woredaData.woreda_institution.SCHOOL, "School") : ""}
-            ${woredaData.woreda_institution?.HEALTH_FACILITY ? resourceTables(woredaData.woreda_institution.HEALTH_FACILITY, "Health Facility") : ""}
+            ${woredaData.woreda_institution?.SCHOOL ? resourceTables(woredaData.woreda_institution.SCHOOL, "School") :
+            
+            `<h4>School</h4>
+                <hr />
+                <p>No Data</p>`}
+            ${woredaData.woreda_institution?.HEALTH_FACILITY ? resourceTables(woredaData.woreda_institution.HEALTH_FACILITY, "Health Facility") :
+            `<h4>Health Facility</h4>
+                <hr />
+                <p>No Data</p>`
+                 }
         ` : "<p>No Institution data</p>"}
     `;
 }
 else if (type === "site") {
     const siteData = await Site_Data(id);
     const coordinates = await Get_Coordinates(siteData.geojson);
+
+    const formatResource = (resourceArray, label) => {
+        if (resourceArray && resourceArray.length > 0) {
+            return resourceArray.map((item, index) => `
+                <div key=${index}>
+                    <p class="border px-4 py-2 font-bold">${item.value}</p>
+                </div>
+            `).join("");
+        }
+        return `<p class="border px-4 py-2">No ${label} data</p>`;
+    };
+
+    const formatTreeResource = (resourceArray, filterCondition, label) => {
+        if (resourceArray && resourceArray.length > 0) {
+            const filteredArray = resourceArray.filter(filterCondition);
+            if (filteredArray.length > 0) {
+                return filteredArray.map((item, index) => `
+                    <div key=${index}>
+                        <p class="border px-4 py-2 font-bold">${item.value}</p>
+                    </div>
+                `).join("");
+            }
+        }
+        return `<p class="border px-4 py-2">No ${label} data</p>`;
+    };
+
+    const renderLandUse = () => {
+        const landData = siteData.resources.find(resource => resource.LAND && resource.LAND.length > 0);
+        return landData ? formatResource(landData.LAND, "land") : `<p class="border px-4 py-2">No land data</p>`;
+    };
+
+    const renderIndigenousTrees = () => {
+        const treeData = siteData.resources.find(resource => resource.TREE && resource.TREE.some(tree => tree.indigenous === 1));
+        return treeData ? formatTreeResource(treeData.TREE, tree => tree.indigenous === 1, "indigenous tree") : `<p class="border px-4 py-2">No indigenous tree data</p>`;
+    };
+
+    const renderExoticTrees = () => {
+        const treeData = siteData.resources.find(resource => resource.TREE && resource.TREE.some(tree => !tree.hasOwnProperty("indigenous")));
+        return treeData ? formatTreeResource(treeData.TREE, tree => !tree.hasOwnProperty("indigenous"), "exotic tree") : `<p class="border px-4 py-2">No exotic tree data</p>`;
+    };
+
+    const renderLivestock = () => {
+        const livestockData = siteData.resources.find(resource => resource.LIVESTOCK && resource.LIVESTOCK.length > 0);
+        return livestockData ? formatResource(livestockData.LIVESTOCK, "livestock") : `<p class="border px-4 py-2">No livestock data</p>`;
+    };
+
+    const renderForage = () => {
+        const forageData = siteData.resources.find(resource => resource.FORAGE && resource.FORAGE.length > 0);
+        return forageData ? formatResource(forageData.FORAGE, "forage") : `<p class="border px-4 py-2">No forage data</p>`;
+    };
+
     content = `
         <h4>${siteData.site_name || siteData.watershed_name}</h4>
         <hr />
         <h6>Site Information</h6>
-        <p><strong>Size in Ha.: </strong> ${
-          siteData.size_ha !== undefined && siteData.size_ha !== null ? siteData.size_ha : "No data"
-        }</p>
-        <p><strong>Watershed: </strong> ${
-          siteData.watershed_name !== undefined && siteData.watershed_name !== null ? siteData.watershed_name : "No data"
-        }</p>
-        <p><strong>Kebele: </strong> ${
-          siteData.kebele_name !== undefined && siteData.kebele_name !== null ? siteData.kebele_name : "No data"
-        }</p>
+        <p><strong>Size in Ha.: </strong> ${siteData.size_ha ?? "No data"}</p>
+        <p><strong>Watershed: </strong> ${siteData.watershed_name ?? "No data"}</p>
+        <p><strong>Kebele: </strong> ${siteData.kebele_name ?? "No data"}</p>
         <p><strong>Woreda: </strong> ${siteData.woreda_name || "No data"}</p>
         <p><strong>Zone: </strong> ${siteData.zone_name || "N/A"}</p>
-                 <h4>Site Resource</h4>
-            <hr/>   
-        ${(siteData.resources !== undefined && siteData.resources.length !== 0) ? `
-
+        <h4>Site Resource</h4>
+        <hr />
+        ${siteData.resources && siteData.resources.length > 0 ? `
             <strong>Current land use</strong>
             <hr />
-            ${siteData.resources.map(resource =>
-                resource.LAND?.map((item, index) => `
-                    <div key=${index}>
-                        <p class="border px-4 py-2 font-bold">${item.value}</p>
-                    </div>
-                `).join("")
-            ).join("")}
+            ${renderLandUse()}
             <strong class="text-xl">TREE</strong>
             <hr />
             <p class="font-bold">Indigenous Tree</p>
-            ${siteData.resources.map(resource =>
-                resource.TREE?.filter(tree => tree.indigenous === 1)
-                    .map((item, index) => `
-                        <div key=${index}>
-                            <p class="border px-4 py-2 font-bold">${item.value}</p>
-                        </div>
-                    `).join("")
-            ).join("")}
+            ${renderIndigenousTrees()}
             <p class="font-bold">Exotic Tree</p>
             <hr />
-            ${siteData.resources.map(resource =>
-                resource.TREE?.filter(tree => !tree.hasOwnProperty("indigenous"))
-                    .map((item, index) => `
-                        <div key=${index}>
-                            <p class="border px-4 py-2 font-bold">${item.value}</p>
-                        </div>
-                    `).join("")
-            ).join("")}
+            ${renderExoticTrees()}
             <strong>LIVESTOCK</strong>
             <hr />
-            ${siteData.resources.map(resource =>
-                resource.LIVESTOCK?.map((item, index) => `
-                    <div key=${index}>
-                        <p class="border px-4 py-2 font-bold">${item.value}</p>
-                    </div>
-                `).join("")
-            ).join("")}
+            ${renderLivestock()}
             <strong>FORAGE</strong>
             <hr />
-            ${siteData.resources.map(resource =>
-                resource.FORAGE?.map((item, index) => `
-                    <div key=${index}>
-                        <p class="border px-4 py-2 font-bold">${item.value}</p>
-                    </div>
-                `).join("")
-            ).join("")}
+            ${renderForage()}
         ` : "<p>No Resource data Entered</p>"}
-        <hr/>
+        <hr />
         <strong>Coordinates</strong>
         <hr />
         ${coordinates === "No Coordinate" ? `
@@ -1594,8 +1622,9 @@ else if (type === "site") {
             </table>
         `}
     `;
+}
 
-          } else if (type === "kebele") {
+else if (type === "kebele") {
     const kebeleData = await Kebele_Data(id);
 
     const getDataValue = (data, key) => 
@@ -1613,7 +1642,10 @@ else if (type === "site") {
     ];
 
     const resourceTables = (resources, resourceName) => {
-        if (!Array.isArray(resources)) return "";
+        if (!Array.isArray(resources) || resources.length === 0) return `
+             <h4>${resourceName}</h4>
+            <hr />
+        <p>No ${resourceName} data</p>`;
 
         const hasAmount = resources.some(resource => resource.amount !== undefined);
         const hasCapacity = resources.some(resource => resource.capacity !== undefined);
@@ -1644,7 +1676,12 @@ else if (type === "site") {
     };
 
     const livelihoodTable = (livelihoods) => {
-        if (!Array.isArray(livelihoods)) return "";
+        if (!Array.isArray(livelihoods) || livelihoods.length === 0) {
+            return `
+                        <h4>Livelihoods</h4>
+            <hr />
+            <p class="border px-4 py-2">No livelihoods data</p>`;
+        }
 
         return `
             <h4>Livelihoods</h4>
@@ -1672,7 +1709,12 @@ else if (type === "site") {
     };
 
     const energyResourcesTable = (energy_resources) => {
-        if (!Array.isArray(energy_resources)) return "";
+        if (!Array.isArray(energy_resources) || energy_resources.length === 0) {
+            return `
+           <h4>Energy Resources</h4>
+            <hr />
+            <p class="border px-4 py-2">No energy resources data</p>`;
+        }
 
         return `
             <h4>Energy Resources</h4>
