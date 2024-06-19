@@ -671,10 +671,12 @@
                     Sites = [];
 
                     if (kebeleList) {
+                      kebeleList.innerHTML = ""
                       kebeleList.style.display = "none";
                     }
 
                     if (siteList) {
+                      kebeleList.innerHTML = ""
                       siteList.style.display = "none";
                     }
 
@@ -705,51 +707,50 @@
                 });
 
                 all_Site = [];
-                function onEachSiteLayer(feature, layer) {
-                  //feature.properties.id = parseInt(region.match(/\d+/)[0], 10)
-                  layer.id = feature.id;
-                  console.log("cbsjdgfvs",feature.id,layer.id)
-                  all_Site.push(layer);
-                  var siteIcon = L.icon({
-                    iconUrl: "tbrr public/Main/tbrr/icons/gps.png",
-                    iconSize: [32, 32],
-                    iconAnchor: [16, 16],
-                  });
-                  var coordinates = layer.getBounds().getCenter();
-                  var siteMarker = L.marker(coordinates, {
-                    icon: siteIcon,
-                  }).addTo(map);
+                     function onEachSiteLayer(feature, layer) {
+                      layer.id = feature.id;
+                      all_Site.push(layer);
 
-                  siteMarker.bindTooltip(
-                    feature.properties.Name
-                      ? feature.properties.Name
-                      : feature.properties.watershed,
-                    {
-                      permanent: false,
-                      direction: "top",
+                      var siteIcon = L.icon({
+                        iconUrl: "tbrr public/Main/tbrr/icons/gps.png",
+                        iconSize: [32, 32],
+                        iconAnchor: [16, 16],
+                      });
+
+                      var coordinates = layer.getBounds().getCenter();
+                      var siteMarker = L.marker(coordinates, {
+                        icon: siteIcon,
+                      }).addTo(map);
+
+                      siteMarker.bindTooltip(
+                        feature.properties.Name
+                          ? feature.properties.Name
+                          : feature.properties.watershed,
+                        {
+                          permanent: false,
+                          direction: "top",
+                        }
+                      );
+
+                      var SITE_ID = feature.id;
+
+                      siteMarker.on("click", function () {
+                        var THE_SITE = all_Site.find(
+                          (LAYER) => LAYER.id === SITE_ID
+                        );
+
+                          THE_SITE.setStyle({
+                            color: "#ffd790",
+                            fillOpacity: secondaryOpacity,
+                            weight: 1,
+                          });
+                        
+
+                        map.fitBounds(THE_SITE.getBounds());
+                        projectInfo(SITE_ID, "site");
+                      });
                     }
-                  );
 
-                  var SITE_ID = feature.id;
-
-                  siteMarker.on("click", function () {
-                    var THE_SITE = all_Site.find(
-                      (LAYER) => LAYER.id === SITE_ID
-                    );
-
-                    THE_SITE.setStyle({
-                      color: "#ffd790",
-                      fillOpacity: secondaryOpacity,
-                      weight: 1,
-                    });
-
-
-/////
-                    event.target.setAttribute('stroke', 'black');
-                    map.fitBounds(THE_SITE.getBounds());
-                    projectInfo(SITE_ID, "site");
-                  });
-                }
                 ///////////////
                 fetch("https://tbrr.echnoserve.com/api/geojson/sites")
                   .then((response) => response.json())
@@ -768,11 +769,7 @@
                             10
                           );
 
-                          var siteLayer = L.geoJSON(data.features, {
-                            onEachFeature: onEachSiteLayer,
-                          });
-                          // all_Site.push(siteLayer);
-
+ 
                           allSiteLayerGroup = L.geoJSON(data, {
                             style: {
                               fillColor: "#803d00",
@@ -781,11 +778,18 @@
                               weight: 3,
                             },
                           }).addTo(map);
+
+                          var siteLayer = L.geoJSON(data.features, {
+                            onEachFeature: onEachSiteLayer,
+                          });
                         })
                         .catch((error) =>
                           console.error("Error fetching site data:", error)
                         );
                     });
+                 
+                
+                  
                   })
                   .catch((error) => {
                     console.error("Error:", error);
@@ -871,7 +875,6 @@
                 }
 
                 function getLayerByKebeleName(KebeleId) {
-                  console.log("skdfhsdkhf",typeof(Kebeles[0].id),typeof(KebeleId))
 
                   return Kebeles.find(
                     (layer) => layer.id === KebeleId
@@ -880,7 +883,7 @@
 
                 function getLayerBySiteName(SiteId) {
                   var THE_SITE = all_Site.find(
-                    (LAYER) => LAYER.feature.properties.id === SiteId
+                    (LAYER) => LAYER.id === SiteId
                   );
                   return THE_SITE;
                 }
@@ -926,9 +929,11 @@
                      
                       listItem.addEventListener("click", function () {
                         if (kebeleList) {
+                          
                           kebeleList.style.display = "block";
                         }
                         if (siteList) {
+                          siteList.innerHTML = ""
                           siteList.style.display = "none";
                         }
 
@@ -1113,7 +1118,7 @@
                         var selectedKebeleId = parseInt(this.dataset.kebeleId);
                         console.log(this,"csdjch",this.dataset.kebeleId)
                         var K_layer = getLayerByKebeleName(selectedKebeleId);
-                        console.log("hcshdgcvs",K_layer)
+
                         if (K_layer) {
                           map.fitBounds(K_layer.getBounds());
                           // K_layer.setStyle({
