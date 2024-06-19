@@ -207,6 +207,13 @@
       .loading-spinner {
         margin-bottom: 20px;
       }
+      .render-label {
+        font-weight: bold;
+        font-size: 12px;
+      }
+      .render-value {
+        font-size: 12px;
+      }
     </style>
   </head>
   <body
@@ -1434,15 +1441,15 @@
             .map(
               (row) => `
         <tr>
-            <td class="border px-4 py-2 font-bold">${row.label}</td>
-            <td class="border px-4 py-2">${row.value}</td>
+            <td class="border px-4 py-2 font-bold render-label">${row.label}</td>
+            <td class="border px-4 py-2 render-value">${row.value}</td>
         </tr>
     `
             )
             .join("");
 
         const resourceTables = (resources, resourceName) => `
-                <h4>${resourceName}</h4>
+                <p class = "render-label">${resourceName}</p>
                 <hr />
 
                 <table class="table-auto w-full">
@@ -1450,8 +1457,8 @@
                       .map(
                         (resource, index) => `
                         <tr key=${index}>
-                            <td class="border px-4 py-2 font-bold">${resource.value}</td>
-                            <td class="border px-4 py-2">${resource.amount}</td>
+                            <td class="border px-4 py-2 font-bold render-label">${resource.value}</td>
+                            <td class="border px-4 py-2 render-value">${resource.amount}</td>
                         </tr>
                     `
                       )
@@ -1480,7 +1487,6 @@
             `;
           } else if (type === "woreda") {
     const woredaData = await Woreda_Data(id);
-    console.log("djksdjfnskhfbafvnkf",woredaData.geojson)
     if (woredaData.geojson) {
       GEO.innerHTML = ""
     }
@@ -1526,41 +1532,41 @@
             ])}</tbody>
         </table>
         <hr/>
-        <h6>Woreda Data</h6>
+        <p class = "render-label">Woreda Data</p>
         <hr/>
         <table class="table-auto w-full">
             <tbody>${renderTableRows(dataRows)}</tbody>
         </table>
         <hr />
-        <h4>Woreda Resource</h4>
+        <p class = "render-label">Woreda Resource</p>
         <hr />
         ${woredaData.woreda_resource.length !== 0 ? `
             ${woredaData.woreda_resource?.LAND ? resourceTables(woredaData.woreda_resource.LAND, "LAND") : 
-            `<h4>Land</h4>
+            `<p class = "render-label">Land</p>
                 <hr />
-                <p>No Data</p>`
+                <p class = 'render-value'>No Data</p>`
             }
             ${woredaData.woreda_resource?.ROAD ? resourceTables(woredaData.woreda_resource.ROAD, "ROAD") :
-            `<h4>ROAD</h4>
+            `<p class = "render-label">ROAD</p>
                 <hr />
-                <p>No Data</p>`
+                <p class = 'render-value'>No Data</p>`
             }
-        ` : "<p>No Resource data</p>"}
+        ` : "<p class = 'render-value'>No Resource data</p>"}
         <hr />
-        <h4>Woreda Institution</h4>
+        <p class = "render-label">Woreda Institution</p>
         <hr />
         ${woredaData.woreda_institution.length !== 0 ? `
             ${woredaData.woreda_institution?.SCHOOL ? resourceTables(woredaData.woreda_institution.SCHOOL, "School") :
             
-            `<h4>School</h4>
+            `<p class = "render-label">School</p>
                 <hr />
-                <p>No Data</p>`}
+                <p class = 'render-value'>No Data</p>`}
             ${woredaData.woreda_institution?.HEALTH_FACILITY ? resourceTables(woredaData.woreda_institution.HEALTH_FACILITY, "Health Facility") :
-            `<h4>Health Facility</h4>
+            `<p class = "render-label">Health Facility</p>
                 <hr />
-                <p>No Data</p>`
+                <p class = 'render-value'>No Data</p>`
                  }
-        ` : "<p>No Institution data</p>"}
+        ` : "<p class = 'render-value'>No Institution data</p>"}
     `;
 }
 else if (type === "site") {
@@ -1577,11 +1583,11 @@ else if (type === "site") {
         if (resourceArray && resourceArray.length > 0) {
             return resourceArray.map((item, index) => `
                 <div key=${index}>
-                    <p class="border px-4 py-2 font-bold">${item.value}</p>
+                    <p class="border px-4 py-2 font-bold render-value">${item.value}</p>
                 </div>
             `).join("");
         }
-        return `<p class="border px-4 py-2">No ${label} data</p>`;
+        return `<p class="border px-4 py-2 render-value">No ${label} data</p>`;
     };
 
     const formatTreeResource = (resourceArray, filterCondition, label) => {
@@ -1590,49 +1596,49 @@ else if (type === "site") {
             if (filteredArray.length > 0) {
                 return filteredArray.map((item, index) => `
                     <div key=${index}>
-                        <p class="border px-4 py-2 font-bold">${item.value}</p>
+                        <p class="border px-4 py-2 font-bold render-value">${item.value}</p>
                     </div>
                 `).join("");
             }
         }
-        return `<p class="border px-4 py-2">No ${label} data</p>`;
+        return `<p class="border px-4 py-2 render-value">No ${label} data</p>`;
     };
 
     const renderLandUse = () => {
         const landData = siteData.resources.find(resource => resource.LAND && resource.LAND.length > 0);
-        return landData ? formatResource(landData.LAND, "land") : `<p class="border px-4 py-2">No land data</p>`;
+        return landData ? formatResource(landData.LAND, "land") : `<p class="border px-4 py-2 render-value">No land data</p>`;
     };
 
     const renderIndigenousTrees = () => {
         const treeData = siteData.resources.find(resource => resource.TREE && resource.TREE.some(tree => tree.indigenous === 1));
-        return treeData ? formatTreeResource(treeData.TREE, tree => tree.indigenous === 1, "indigenous tree") : `<p class="border px-4 py-2">No indigenous tree data</p>`;
+        return treeData ? formatTreeResource(treeData.TREE, tree => tree.indigenous === 1, "indigenous tree") : `<p class="border px-4 py-2 render-value">No indigenous tree data</p>`;
     };
 
     const renderExoticTrees = () => {
         const treeData = siteData.resources.find(resource => resource.TREE && resource.TREE.some(tree => !tree.hasOwnProperty("indigenous")));
-        return treeData ? formatTreeResource(treeData.TREE, tree => !tree.hasOwnProperty("indigenous"), "exotic tree") : `<p class="border px-4 py-2">No exotic tree data</p>`;
+        return treeData ? formatTreeResource(treeData.TREE, tree => !tree.hasOwnProperty("indigenous"), "exotic tree") : `<p class="border px-4 py-2 render-value">No exotic tree data</p>`;
     };
 
     const renderLivestock = () => {
         const livestockData = siteData.resources.find(resource => resource.LIVESTOCK && resource.LIVESTOCK.length > 0);
-        return livestockData ? formatResource(livestockData.LIVESTOCK, "livestock") : `<p class="border px-4 py-2">No livestock data</p>`;
+        return livestockData ? formatResource(livestockData.LIVESTOCK, "livestock") : `<p class="border px-4 py-2 render-value">No livestock data</p>`;
     };
 
     const renderForage = () => {
         const forageData = siteData.resources.find(resource => resource.FORAGE && resource.FORAGE.length > 0);
-        return forageData ? formatResource(forageData.FORAGE, "forage") : `<p class="border px-4 py-2">No forage data</p>`;
+        return forageData ? formatResource(forageData.FORAGE, "forage") : `<p class="border px-4 py-2 render-value">No forage data</p>`;
     };
 
     content = `
         <h4>${siteData.site_name || siteData.watershed_name}</h4>
         <hr />
-        <h6>Site Information</h6>
-        <p><strong>Size in Ha.: </strong> ${siteData.size_ha ?? "No data"}</p>
-        <p><strong>Watershed: </strong> ${siteData.watershed_name ?? "No data"}</p>
-        <p><strong>Kebele: </strong> ${siteData.kebele_name ?? "No data"}</p>
-        <p><strong>Woreda: </strong> ${siteData.woreda_name || "No data"}</p>
-        <p><strong>Zone: </strong> ${siteData.zone_name || "N/A"}</p>
-        <h4>Site Resource</h4>
+        <p class = "render-label">Site Information</p>
+        <p class = "render-value"><strong class = "render-label">Size in Ha.: </strong> ${siteData.size_ha ?? "No data"}</p>
+        <p class = "render-value"><strong class = "render-label">Watershed: </strong> ${siteData.watershed_name ?? "No data"}</p>
+        <p class = "render-value"><strong class = "render-label">Kebele: </strong> ${siteData.kebele_name ?? "No data"}</p>
+        <p class = "render-value"><strong class = "render-label">Woreda: </strong> ${siteData.woreda_name || "No data"}</p>
+        <p class = "render-value"><strong class = "render-label">Zone: </strong> ${siteData.zone_name || "N/A"}</p>
+        <p class = "render-label">Site Resource</h4>
         <hr />
         ${siteData.resources && siteData.resources.length > 0 ? `
             <strong>Current land use</strong>
@@ -1651,25 +1657,25 @@ else if (type === "site") {
             <strong>FORAGE</strong>
             <hr />
             ${renderForage()}
-        ` : "<p>No Resource data Entered</p>"}
+        ` : "<p class = 'render-value'>No Resource data Entered</p>"}
         <hr />
         <strong>Coordinates</strong>
         <hr />
         ${coordinates === "No Coordinate" ? `
-            <p class="border px-4 py-2 font-bold">No Coordinate</p>
+            <p class="border px-4 py-2 font-bold render-value">No Coordinate</p>
         ` : `
             <table class="table-auto w-full">
                 <thead>
                     <tr>
-                        <th>Latitude</th>
-                        <th>Longitude</th>
+                        <th class = "render-label">Latitude</th>
+                        <th class = "render-label">Longitude</th>
                     </tr>
                 </thead>
                 <tbody>
                     ${coordinates.map((coords, index) => `
                         <tr key=${index}>
-                            <td class="border px-4 py-2 font-bold">${coords[0]}</td>
-                            <td class="border px-4 py-2">${coords[1]}</td>
+                            <td class="border px-4 py-2 font-bold render-value">${coords[0]}</td>
+                            <td class="border px-4 py-2 render-value">${coords[1]}</td>
                         </tr>
                     `).join("")}
                 </tbody>
@@ -1703,7 +1709,7 @@ else if (type === "kebele") {
 
     const resourceTables = (resources, resourceName) => {
         if (!Array.isArray(resources) || resources.length === 0) return `
-             <h4>${resourceName}</h4>
+             <p class = "render-label">${resourceName}</p>
             <hr />
         <p>No ${resourceName} data</p>`;
 
@@ -1711,22 +1717,22 @@ else if (type === "kebele") {
         const hasCapacity = resources.some(resource => resource.capacity !== undefined);
 
         return `
-            <h4>${resourceName}</h4>
+            <p class = "render-label">${resourceName}</p>
             <hr />
             <table class="table-auto w-full">
                 <thead>
                     <tr>
                         <th class="px-4 py-2"></th>
-                        ${hasAmount ? '<th class="px-4 py-2 font-bold text-lg">Amount</th>' : ""}
-                        ${hasCapacity ? '<th class="px-4 py-2 font-bold text-lg">Capacity</th>' : ""}
+                        ${hasAmount ? '<th class="px-4 py-2 font-bold text-lg render-label">Amount</th>' : ""}
+                        ${hasCapacity ? '<th class="px-4 py-2 font-bold text-lg render-label">Capacity</th>' : ""}
                     </tr>
                 </thead>
                 <tbody>
                     ${resources.map((resource, index) => `
                         <tr key=${index}>
-                            <td class="border px-4 py-2 font-bold">${resource.value}</td>
-                            ${hasAmount ? `<td class="border px-4 py-2">${resource.amount || "No data"}</td>` : ""}
-                            ${hasCapacity ? `<td class="border px-4 py-2">${resource.capacity || "No data"}</td>` : ""}
+                            <td class="border px-4 py-2 font-bold render-label">${resource.value}</td>
+                            ${hasAmount ? `<td class="border px-4 py-2 render-value">${resource.amount || "No data"}</td>` : ""}
+                            ${hasCapacity ? `<td class="border px-4 py-2 render-value">${resource.capacity || "No data"}</td>` : ""}
                         </tr>
                     `).join("")}
                 </tbody>
@@ -1738,28 +1744,28 @@ else if (type === "kebele") {
     const livelihoodTable = (livelihoods) => {
         if (!Array.isArray(livelihoods) || livelihoods.length === 0) {
             return `
-                        <h4>Livelihoods</h4>
+                        <p class = "render-label">Livelihoods<p>
             <hr />
-            <p class="border px-4 py-2">No livelihoods data</p>`;
+            <p class="border px-4 py-2 render-value">No livelihoods data</p>`;
         }
 
         return `
-            <h4>Livelihoods</h4>
+            <p class = "render-label">Livelihoods</p>
             <hr />
             <table class="table-auto w-full">
                 <thead>
                     <tr>
-                        <th class=" px-4 py-2 font-bold text-lg">Type</th>
-                        <th class=" px-4 py-2 font-bold text-lg">Male Headed HH</th>
-                        <th class=" px-4 py-2 font-bold text-lg">Female Headed HH</th>
+                        <th class=" px-4 py-2 font-bold text-lg render-label">Type</th>
+                        <th class=" px-4 py-2 font-bold text-lg render-label">Male Headed HH</th>
+                        <th class=" px-4 py-2 font-bold text-lg render-label">Female Headed HH</th>
                     </tr>
                 </thead>
                 <tbody>
                     ${livelihoods.map((livelihood, index) => `
                         <tr key=${index}>
-                            <td class="border px-4 py-2 font-bold">${livelihood.value}</td>
-                            <td class="border px-4 py-2">${livelihood.male_headed_hh || "No data"}</td>
-                            <td class="border px-4 py-2">${livelihood.female_headed_hh || "No data"}</td>
+                            <td class="border px-4 py-2 render-value font-bold">${livelihood.value}</td>
+                            <td class="border px-4 py-2 render-value">${livelihood.male_headed_hh || "No data"}</td>
+                            <td class="border px-4 py-2 render-value">${livelihood.female_headed_hh || "No data"}</td>
                         </tr>
                     `).join("")}
                 </tbody>
@@ -1771,26 +1777,26 @@ else if (type === "kebele") {
     const energyResourcesTable = (energy_resources) => {
         if (!Array.isArray(energy_resources) || energy_resources.length === 0) {
             return `
-           <h4>Energy Resources</h4>
+           <p class = "render-label">Energy Resources</p>
             <hr />
-            <p class="border px-4 py-2">No energy resources data</p>`;
+            <p class="border px-4 py-2 render-value">No energy resources data</p>`;
         }
 
         return `
-            <h4>Energy Resources</h4>
+            <p class = "render-label">Energy Resources</p>
             <hr />
             <table class="table-auto w-full">
                 <thead>
                     <tr>
-                        <th class="px-4 py-2 font-bold text-lg">Type</th>
-                        <th class="px-4 py-2 font-bold text-lg">Access Level</th>
+                        <th class="px-4 py-2 font-bold text-lg render-label">Type</th>
+                        <th class="px-4 py-2 font-bold text-lg render-label">Access Level</th>
                     </tr>
                 </thead>
                 <tbody>
                     ${energy_resources.map((resource, index) => `
                         <tr key=${index}>
-                            <td class="border px-4 py-2 font-bold">${resource.value}</td>
-                            <td class="border px-4 py-2">${resource.access_level}</td>
+                            <td class="border px-4 py-2 font-bold render-label">${resource.value}</td>
+                            <td class="border px-4 py-2 render-value">${resource.access_level}</td>
                         </tr>
                     `).join("")}
                 </tbody>
@@ -1820,8 +1826,8 @@ else if (type === "kebele") {
     const renderTableRows = (rows) => {
         return rows.map(row => `
             <tr>
-                <td class="border px-4 py-2 font-bold">${row.label}</td>
-                <td class="border px-4 py-2">${row.value}</td>
+                <td class="border px-4 py-2 font-bold render-label">${row.label}</td>
+                <td class="border px-4 py-2 render-value">${row.value}</td>
             </tr>
         `).join("");
     };
@@ -1839,7 +1845,7 @@ else if (type === "kebele") {
             </tbody>
         </table>
         <hr/>
-        <h6>Kebele Data</h6>
+        <p class = "render-label">Kebele Data</p>
         <hr/>
         <table class="table-auto w-full">
             <tbody>${renderTableRows(dataRows)}</tbody>
