@@ -10,11 +10,16 @@
 
     <title>TBRR</title>
 
-    <link
+    <!-- <link
       rel="stylesheet"
       id="combined-css"
-      href="tbrr public/Main/tbrr/css/combined.min662c.css?ver=2024.22.02.01"
+      href="tbrr public\Main\tbrr\css\combined.min662c.css"
       media="all"
+    /> -->
+    <link 
+    rel="stylesheet"
+    href="tbrr public\Main\tbrr\tbrr custom.css"
+    media="all"
     />
     <link
       rel="stylesheet"
@@ -398,7 +403,10 @@
               </div>
               <br />
             </div>
-            <br />
+<div style="display: flex;">
+  <div id="geo" style="margin-left: auto; margin-right: 20px;"></div>
+</div>
+          <br />
             <div class="container project-container">
               <div class="card">
                 <div class="card-header">
@@ -573,7 +581,7 @@
       window.addEventListener("load", function () {
         document.body.classList.remove("loading");
       });
-
+      const GEO = document.getElementById("geo");
       const thirdOpacity = 0.1;
       const secondaryOpacity = 0.4;
       const mainOpacity = 0.0;
@@ -699,7 +707,8 @@
                 all_Site = [];
                 function onEachSiteLayer(feature, layer) {
                   //feature.properties.id = parseInt(region.match(/\d+/)[0], 10)
-
+                  layer.id = feature.id;
+                  console.log("cbsjdgfvs",feature.id,layer.id)
                   all_Site.push(layer);
                   var siteIcon = L.icon({
                     iconUrl: "tbrr public/Main/tbrr/icons/gps.png",
@@ -721,16 +730,22 @@
                     }
                   );
 
-                  var SITE_ID = feature.properties.id;
+                  var SITE_ID = feature.id;
 
                   siteMarker.on("click", function () {
-                    // map.setView(coordinates, 14);
                     var THE_SITE = all_Site.find(
-                      (LAYER) => LAYER.feature.properties.id === SITE_ID
+                      (LAYER) => LAYER.id === SITE_ID
                     );
 
-                    
-                    THE_SITE.setStyle({ color: "black" });
+                    THE_SITE.setStyle({
+                      color: "#ffd790",
+                      fillOpacity: secondaryOpacity,
+                      weight: 1,
+                    });
+
+
+/////
+                    event.target.setAttribute('stroke', 'black');
                     map.fitBounds(THE_SITE.getBounds());
                     projectInfo(SITE_ID, "site");
                   });
@@ -745,6 +760,10 @@
                         .then((response) => response.json())
                         .then((data) => {
                           data.features[0].properties.id = parseInt(
+                            site_Url.match(/\d+/)[0],
+                            10
+                          );
+                          data.features[0].id = parseInt(
                             site_Url.match(/\d+/)[0],
                             10
                           );
@@ -786,7 +805,7 @@
                     projectInfo(feature.properties.id, "region");
                     regionLayer.resetStyle();
                     event.target.setStyle({
-                      color: "black",
+                      color: "#b0d129",
                       fillOpacity: mainOpacity,
                       weight: 5,
                     });
@@ -846,15 +865,16 @@
                   const Clicked_Layer =  Woredas.find(
                     (layer) => layer.id === WoredaId
                   );
-                  console.log("sjdhfjhdfgsd",WoredaId, Woredas)
                   return Woredas.find(
                     (layer) => layer.id === WoredaId
                   );
                 }
 
-                function getLayerByKebeleName(KebeleName) {
+                function getLayerByKebeleName(KebeleId) {
+                  console.log("skdfhsdkhf",typeof(Kebeles[0].id),typeof(KebeleId))
+
                   return Kebeles.find(
-                    (layer) => layer.feature.properties.name === KebeleName
+                    (layer) => layer.id === KebeleId
                   );
                 }
 
@@ -918,21 +938,21 @@
                         if (W_layer) {
                           map.fitBounds(W_layer.getBounds());
                           W_layer.setStyle({
-                            color: "black",
+                            color: "#65c9e1",
                             fillOpacity: 0,
                             weight: 3,
                           });
                           W_layer.fire("click");
                         }
 
-                        woredaLayerGroup.eachLayer(function (woredaLayer) {
-                          woredaLayer.setStyle({
-                            color: "black",
-                            fillOpacity: 0,
-                            weight: 1,
-                          });
-                        });
-
+                        // woredaLayerGroup.eachLayer(function (woredaLayer) {
+                        //   woredaLayer.setStyle({
+                        //     color: "black",
+                        //     fillOpacity: 0,
+                        //     weight: 1,
+                        //   });
+                        // });
+                        //  W_layer.setAttribute('stroke', '#65c9e1');
                         woredaLayerGroup.eachLayer(function (woredaLayer) {
                           if (
                             woredaLayer.feature &&
@@ -940,13 +960,13 @@
                               W_layer.id
                           ) {
                             woredaLayer.setStyle({
-                              color: "black",
+                              color: "#65c9e1",
                               fillOpacity: mainOpacity,
                               weight: 1,
                             });
 
                             map.fitBounds(woredaLayer.getBounds());
-                            woredaLayer.fire("click");
+                            // woredaLayer.fire("click");
                           }
                         });
 
@@ -991,16 +1011,24 @@
                       Woroda_Kebeles.forEach(function (KEBELE) {
                         fetchData(`https://tbrr.echnoserve.com${KEBELE}`).then(
                           (woredaData) => {
+                            woredaData.id = parseInt(
+                                KEBELE.match(/\d+/)[0],
+                                10
+                              );
                             woredaData.features.forEach((feature) => {
                               feature.properties.id = parseInt(
                                 KEBELE.match(/\d+/)[0],
                                 10
                               );
+                              feature.id = parseInt(
+                                KEBELE.match(/\d+/)[0],
+                                10
+                              );
                             });
-
                             L.geoJSON(woredaData, {
                               onEachFeature: onEachKebeleFeature,
                             }).addTo(kebeleLayerGroup);
+
                           }
                         );
                       });
@@ -1011,26 +1039,28 @@
                 }
 
                 function onEachKebeleFeature(feature, layer) {
+                  layer.id = feature.id
                   Kebeles.push(layer);
                   layer.on("click", function () {
                     kebeleLayerGroup.eachLayer(function (kebeleLayer) {
                       kebeleLayer.setStyle({
                         color: "green",
                         fillOpacity: 0,
-                        weight: 4,
+                        weight: 1,
                       });
                     });
+                    console.log("fnsjdfbsjdf",layer)
 
+                    // event.target.setAttribute('stroke', '#e3c172');
                     layer.setStyle({
-                      color: "green",
-                      fillOpacity: 0,
-                      weight: 2,
+                      color: "#e3c172",
+                      fillOpacity: mainOpacity,
+                      weight: 4,
                     });
                     projectInfo(feature.properties.id, "kebele");
 
                     markSelectedKebeleInList(feature.properties.name);
 
-                    // Center map on the selected kebele
                     map.fitBounds(layer.getBounds());
 
                     siteLayerGroup.clearLayers();
@@ -1064,8 +1094,8 @@
                       kebeleList.innerHTML = ""
                       kebeleList.innerHTML += "<p>No Keble</p>";
       } else {
-                   kebeleList.innerHTML = ""
-                    kebeleData.data.forEach((feature) => {
+                      kebeleList.innerHTML = ""
+                      kebeleData.data.forEach((feature) => {
                       var listItem = document.createElement("li");
                       listItem.textContent = feature.kebele_name;
                       kebeleList.appendChild(listItem);
@@ -1080,24 +1110,21 @@
                         var selectedKebeleId = parseInt(this.dataset.kebeleId);
                         markSelectedKebeleInList(feature.kebele_name);
 
-                        var selectedKebeleName = this.dataset.kebeleName;
-                        var K_layer = getLayerByKebeleName(selectedKebeleName);
+                        var selectedKebeleId = parseInt(this.dataset.kebeleId);
+                        console.log(this,"csdjch",this.dataset.kebeleId)
+                        var K_layer = getLayerByKebeleName(selectedKebeleId);
+                        console.log("hcshdgcvs",K_layer)
                         if (K_layer) {
                           map.fitBounds(K_layer.getBounds());
-                          K_layer.setStyle({
-                            color: "green",
-                            fillOpacity: secondaryOpacity,
-                            weight: 2,
-                          });
+                          // K_layer.setStyle({
+                          //   color: "green",
+                          //   fillOpacity: secondaryOpacity,
+                          //   weight: 2,
+                          // });
+                           K_layer.fire("click")
                         }
                         projectInfo(selectedKebeleId, "kebele");
-                        kebeleLayerGroup.eachLayer(function (kebeleLayer) {
-                          kebeleLayer.setStyle({
-                            color: "#6c757d",
-                            fillOpacity: mainOpacity,
-                            weight: 1,
-                          });
-                        });
+  
 
                         kebeleLayerGroup.eachLayer(function (kebeleLayer) {
                           if (
@@ -1230,7 +1257,7 @@
               } else {
                 map.fitBounds(siteLayer.getBounds());
                 siteLayer.setStyle({
-                  color: "#ffd700",
+                  color: "#ede99a",
                   fillOpacity: mainOpacity,
                   weight: 1,
                 });
@@ -1262,15 +1289,23 @@
                       woredaLayer.setStyle({
                         color: "black",
                         fillOpacity: thirdOpacity,
-                        weight: 3,
+                        weight: 1,
                       });
-                    });
+                    
+                     });
+                     console.log("event.target",event.target)
+                    event.target.setAttribute('stroke', '#65c9e1');
 
-                    // layer.setStyle({
-                    //   color: "#803d00",
+                    // event.target.setStyle({
+                    //   color: "#b0d129",
                     //   fillOpacity: mainOpacity,
-                    //   weight: 1,
+                    //   weight: 5,
                     // });
+                    layer.setStyle({
+                      color: "#65c9e1",
+                      fillOpacity: mainOpacity,
+                      weight: 3,
+                    });
 
                     markSelectedWoredaInList(feature.properties.Woreda_Name);
 
@@ -1422,6 +1457,7 @@
 
         try {
           if (type === "region") {
+            GEO.innerHTML = ""
             const regionData = await RegionData(id);
             const rows = [
               { label: "Region Name", value: regionData.region_name },
@@ -1439,6 +1475,13 @@
             `;
           } else if (type === "woreda") {
     const woredaData = await Woreda_Data(id);
+    console.log("djksdjfnskhfbafvnkf",woredaData.geojson)
+    if (woredaData.geojson) {
+      GEO.innerHTML = ""
+    }
+    else {
+      GEO.textContent = "No shape file"
+    }
     const dataRows = [
         {
             label: "Female Population",
@@ -1516,9 +1559,15 @@
     `;
 }
 else if (type === "site") {
+  GEO.innerHTML = ""
     const siteData = await Site_Data(id);
     const coordinates = await Get_Coordinates(siteData.geojson);
-
+    if (siteData.geojson) {
+      GEO.innerHTML = ""
+    }
+    else {
+      GEO.textContent = "No shape file"
+    }
     const formatResource = (resourceArray, label) => {
         if (resourceArray && resourceArray.length > 0) {
             return resourceArray.map((item, index) => `
@@ -1627,6 +1676,12 @@ else if (type === "site") {
 else if (type === "kebele") {
     const kebeleData = await Kebele_Data(id);
 
+    if (kebeleData.geojson) {
+      GEO.innerHTML = ""
+    }
+    else {
+      GEO.textContent = "No shape file"
+    }
     const getDataValue = (data, key) => 
         data && data.hasOwnProperty(key) && data[key] !== undefined && data[key] !== null ? data[key] : 'No Data';
 
