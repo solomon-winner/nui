@@ -764,7 +764,7 @@
     );
 
     SiteLayerStyle(THE_SITE)
-
+    // THE_SITE.setAttribute('stroke', '#e3c172');
     map.fitBounds(THE_SITE.getBounds());
     projectInfo(SITE_ID, "site");
   });
@@ -1255,7 +1255,7 @@
         siteList.innerHTML = ""
         siteList.innerHTML += "<p>No Site</p>";
       } else {
-        siteData.data.forEach((feature) => {
+          siteData.data.forEach((feature) => {
           siteList.innerHTML = ""
           var listItem = document.createElement("li");
           listItem.textContent = feature.site_name ?? feature.watershed_name;
