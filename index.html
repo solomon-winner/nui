@@ -1641,25 +1641,25 @@ else if (type === "site") {
         <p class = "render-label">Site Resource</h4>
         <hr />
         ${siteData.resources && siteData.resources.length > 0 ? `
-            <strong>Current land use</strong>
+            <p class = "render-label">Current land use</p>
             <hr />
             ${renderLandUse()}
-            <strong class="text-xl">TREE</strong>
+            <p class="text-xl render-label">TREE</p>
             <hr />
-            <p class="font-bold">Indigenous Tree</p>
+            <p class="font-bold render-label">Indigenous Tree</p>
             ${renderIndigenousTrees()}
-            <p class="font-bold">Exotic Tree</p>
+            <p class="font-bold render-label">Exotic Tree</p>
             <hr />
             ${renderExoticTrees()}
-            <strong>LIVESTOCK</strong>
+            <p class = "render-label">LIVESTOCK</p>
             <hr />
             ${renderLivestock()}
-            <strong>FORAGE</strong>
+            <p class = "render-label">FORAGE</p>
             <hr />
             ${renderForage()}
         ` : "<p class = 'render-value'>No Resource data Entered</p>"}
         <hr />
-        <strong>Coordinates</strong>
+        <p class = "render-label">Coordinates</p>
         <hr />
         ${coordinates === "No Coordinate" ? `
             <p class="border px-4 py-2 font-bold render-value">No Coordinate</p>
