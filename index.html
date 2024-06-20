@@ -646,17 +646,33 @@
       var kebeleList = document.getElementById("kebeleList");
       var siteList = document.getElementById("siteList");
 
-      function SiteMarkerBindToolTip (coordinates,icon) {
+      function SiteMarkerBindToolTip (coordinates,siteIcon, layer, feature, bool) {
+       
+        var coordinates = layer.getBounds().getCenter();
+                      var siteMarker = L.marker(coordinates, {
+                        icon: siteIcon,
+                      }).addTo(map);
+
                     siteMarker.bindTooltip(
                         feature.properties.Name
                           ? feature.properties.Name
                           : feature.properties.watershed,
                         {
-                          permanent: true,
+                          permanent: bool,
                           direction: "top",
                         }
                       );
+                      return siteMarker;
       }
+      function SiteLayerStyle (layer) {
+        layer.setStyle({
+                      color: "#ffd790",
+                      fillOpacity: secondaryOpacity,
+                      weight: 1,
+                    });
+
+      }
+
       fetch("https://tbrr.echnoserve.com/api/geojson/regions")
         .then((response) => response.json())
         .then((data) => {
@@ -725,51 +741,35 @@
                 });
 
                 all_Site = [];
-                     function onEachSiteLayer(feature, layer) {
-                      layer.id = feature.id;
-                      all_Site.push(layer);
 
-                      var siteIcon = L.icon({
-                        iconUrl: "tbrr public/Main/tbrr/icons/gps.png",
-                        iconSize: [32, 32],
-                        iconAnchor: [16, 16],
-                      });
+                function onEachSiteLayer(feature, layer) {
+  layer.id = feature.id;
+  all_Site.push(layer);
 
-                      var coordinates = layer.getBounds().getCenter();
-                      var siteMarker = L.marker(coordinates, {
-                        icon: siteIcon,
-                      }).addTo(map);
+  var siteIcon = L.icon({
+    iconUrl: "tbrr public/Main/tbrr/icons/gps.png",
+    iconSize: [32, 32],
+    iconAnchor: [16, 16],
+  });
 
-                      siteMarker.bindTooltip(
-                        feature.properties.Name
-                          ? feature.properties.Name
-                          : feature.properties.watershed,
-                        {
-                          permanent: false,
-                          direction: "top",
-                        }
-                      );
+  var coordinates = layer.getBounds().getCenter();
+  const siteMarker = SiteMarkerBindToolTip(coordinates, siteIcon, layer, feature, false);
 
-                      var SITE_ID = feature.id;
+  var SITE_ID = feature.id;
 
-                      siteMarker.on("click", function () {
+  siteMarker.on("click", function () {
+  
+    var THE_SITE = all_Site.find(
+      (LAYER) => LAYER.id === SITE_ID
+    );
 
-                        var THE_SITE = all_Site.find(
-                          (LAYER) => LAYER.id === SITE_ID
-                        );
+    SiteLayerStyle(THE_SITE)
 
-                          THE_SITE.setStyle({
-                            color: "#ffd790",
-                            fillOpacity: secondaryOpacity,
-                            weight: 1,
-                          });
-                        
+    map.fitBounds(THE_SITE.getBounds());
+    projectInfo(SITE_ID, "site");
+  });
 
-                        map.fitBounds(THE_SITE.getBounds());
-                        console.log("sdkfmsldj",THE_SITE)
-                        projectInfo(SITE_ID, "site");
-                      });
-                    }
+}
 
                 ///////////////
                 fetch("https://tbrr.echnoserve.com/api/geojson/sites")
@@ -780,10 +780,10 @@
                       return fetch(`https://tbrr.echnoserve.com${site_Url}`)
                         .then((response) => response.json())
                         .then((data) => {
-                          data.features[0].properties.id = parseInt(
-                            site_Url.match(/\d+/)[0],
-                            10
-                          );
+                          // data.features[0].properties.id = parseInt(
+                          //   site_Url.match(/\d+/)[0],
+                          //   10
+                          // );
                           data.features[0].id = parseInt(
                             site_Url.match(/\d+/)[0],
                             10
@@ -797,6 +797,8 @@
                               color: "#803d00",
                               weight: 3,
                             },
+                            onEachFeature: onEachSiteFeature,
+
                           }).addTo(map);
 
                           var siteLayer = L.geoJSON(data.features, {
@@ -1201,13 +1203,8 @@
                         weight: 1,
                       });
                     });
-
-                    layer.setStyle({
-                      color: "#ffd790",
-                      fillOpacity: secondaryOpacity,
-                      weight: 1,
-                    });
-
+                    SiteLayerStyle(layer)
+                   
                     markSelectedSiteInList(feature.site_name);
                     map.fitBounds(layer.getBounds());
 
@@ -1849,7 +1846,6 @@ else if (type === "kebele") {
 
     content = `
         <h4>${kebeleData.kebele_name}</h4>
-        <p class = "render-label">Kebele information:</p>
         <hr />
           <p class = "render-label">Kebele information:</p>
         <table class="table-auto w-full">
