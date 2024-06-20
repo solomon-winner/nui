@@ -646,6 +646,17 @@
       var kebeleList = document.getElementById("kebeleList");
       var siteList = document.getElementById("siteList");
 
+      function SiteMarkerBindToolTip (coordinates,icon) {
+                    siteMarker.bindTooltip(
+                        feature.properties.Name
+                          ? feature.properties.Name
+                          : feature.properties.watershed,
+                        {
+                          permanent: true,
+                          direction: "top",
+                        }
+                      );
+      }
       fetch("https://tbrr.echnoserve.com/api/geojson/regions")
         .then((response) => response.json())
         .then((data) => {
@@ -742,6 +753,7 @@
                       var SITE_ID = feature.id;
 
                       siteMarker.on("click", function () {
+
                         var THE_SITE = all_Site.find(
                           (LAYER) => LAYER.id === SITE_ID
                         );
@@ -754,6 +766,7 @@
                         
 
                         map.fitBounds(THE_SITE.getBounds());
+                        console.log("sdkfmsldj",THE_SITE)
                         projectInfo(SITE_ID, "site");
                       });
                     }
