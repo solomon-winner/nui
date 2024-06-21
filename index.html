@@ -835,6 +835,7 @@
                       fillOpacity: mainOpacity,
                       weight: 5,
                     });
+                    map.fitBounds(layer.getBounds());
                     markSelectedRegionInList(feature.properties.name);
                     woredaLayerGroup.clearLayers();
                     drawWoredasForRegion(feature.properties.id);
