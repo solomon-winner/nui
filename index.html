@@ -743,33 +743,35 @@
                 all_Site = [];
 
                 function onEachSiteLayer(feature, layer) {
-  layer.id = feature.id;
-  all_Site.push(layer);
+                            layer.id = feature.id;
+                            all_Site.push(layer);
 
-  var siteIcon = L.icon({
-    iconUrl: "tbrr public/Main/tbrr/icons/gps.png",
-    iconSize: [32, 32],
-    iconAnchor: [16, 16],
-  });
+                            var siteIcon = L.icon({
+                              iconUrl: "tbrr public/Main/tbrr/icons/gps.png",
+                              iconSize: [32, 32],
+                              iconAnchor: [16, 16],
+                            });
 
-  var coordinates = layer.getBounds().getCenter();
-  const siteMarker = SiteMarkerBindToolTip(coordinates, siteIcon, layer, feature, false);
+                            var coordinates = layer.getBounds().getCenter();
+                            const siteMarker = SiteMarkerBindToolTip(coordinates, siteIcon, layer, feature, false);
 
-  var SITE_ID = feature.id;
+                            var SITE_ID = feature.id;
 
-  siteMarker.on("click", function () {
-  
-    var THE_SITE = all_Site.find(
-      (LAYER) => LAYER.id === SITE_ID
-    );
+                            siteMarker.on("click", function () {
+                            
+                              var THE_SITE = all_Site.find(
+                                (LAYER) => LAYER.id === SITE_ID
+                              );
 
-    SiteLayerStyle(THE_SITE)
-    // THE_SITE.setAttribute('stroke', '#e3c172');
-    map.fitBounds(THE_SITE.getBounds());
-    projectInfo(SITE_ID, "site");
-  });
+                              SiteLayerStyle(THE_SITE)
+                              // THE_SITE.setAttribute('stroke', '#e3c172');
+                              console.log("vskhvbshvbs",feature.properties.Name)
+                              // markSelectedSiteInList(feature.properties.Name);
+                              map.fitBounds(THE_SITE.getBounds());
+                              projectInfo(SITE_ID, "site");
+                            });
 
-}
+                          }
 
                 ///////////////
                 fetch("https://tbrr.echnoserve.com/api/geojson/sites")
@@ -1330,9 +1332,7 @@
                     });
 
                     markSelectedWoredaInList(feature.properties.Woreda_Name);
-
                     map.fitBounds(layer.getBounds());
-
                     kebeleLayerGroup.clearLayers();
                     drawKebelesForWoreda(feature.properties.WoredaId);
                     updateKebeleList(feature.properties.WoredaId);
