@@ -758,15 +758,26 @@
                             var SITE_ID = feature.id;
 
                             siteMarker.on("click", function () {
-                            
+                              allSiteLayerGroup.clearLayers();
+                              allSiteLayerGroup.addLayer(layer);
+
                               var THE_SITE = all_Site.find(
                                 (LAYER) => LAYER.id === SITE_ID
                               );
 
-                              SiteLayerStyle(THE_SITE)
-                              // THE_SITE.setAttribute('stroke', '#e3c172');
-                              console.log("vskhvbshvbs",feature.properties.Name)
-                              // markSelectedSiteInList(feature.properties.Name);
+                              var allSiteLayerStyle = {
+                                    fillColor: "#ffd700",
+                                    fillOpacity: 0,
+                                    color: "#ffd700",
+                                    weight: 3,
+                                  };
+
+                                  allSiteLayerGroup.eachLayer((layer) => {
+                                    layer.setStyle(allSiteLayerStyle);
+                                    console.log("vskhvbshvbs",layer)
+                                  });
+
+
                               map.fitBounds(THE_SITE.getBounds());
                               projectInfo(SITE_ID, "site");
                             });
