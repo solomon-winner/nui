@@ -214,6 +214,55 @@
       .render-value {
         font-size: 12px;
       }
+      .login {
+     cursor: pointer;
+      }
+
+    .login:hover {
+       color: rgb(35, 32, 32);
+       text-decoration: underline;
+      }
+      .legend-title {
+        padding-left: 5%;
+      }
+      .legend-div {
+        margin-right:6%;
+      }
+      .legend-desc {
+        display: flex;
+        align-items: center;
+        padding-left: 8%;
+      }
+      .colors-div {
+        margin-left: 7%;
+        width:15px;
+        height:15px;
+
+      }
+      .site-color {
+        background-color:#ffd790;
+      }
+      .region-color {
+        background-color:#b0d129;
+      }
+      .woreda-color {
+        background-color:#65c9e1;      
+      }
+      .kebele-color {
+        background-color:#AB274F;
+      }
+      .mini-legend {
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between; 
+      }
+      .zoom-legend {
+        display: flex;
+        justify-content:space-between;
+        align-items: center;
+      }
+      
     </style>
   </head>
   <body
@@ -300,6 +349,33 @@
           class="col-12 h-100 px-0 d-flex flex-column flex-nowrap mobile-nav-outer"
         >
           <div class="top-item-wrapper mt-sidebar-5">
+            
+            <!-- <div class="legend-div">
+              <p class="legend-title">Color Legends</p>
+              <div class="legend-desc">
+                <div class="region-legend mini-legend">
+                  region:  
+                  <div class="region-color colors-div"></div>
+
+                </div>
+                <div class="wereda-legend mini-legend">
+                   Woreda:
+                   <div class="woreda-color colors-div"></div>
+
+                </div>
+                <div class="kebele-legend mini-legend">
+                  Kebele:
+                  <div class="kebele-color colors-div"></div>
+
+                </div>
+                <div class="site-legend mini-legend">
+                  Site:
+                  <div class="site-color colors-div"></div>
+                </div>
+
+              </div>
+            </div> -->
+
             <div class="card card-body">
               <div class="row g-1">
                 <div class="col-md-3">
@@ -416,6 +492,7 @@
           <br />
             <div class="container project-container">
               <div class="card">
+                
                 <div class="card-header">
                   <h6 class="card-title">Detailed location Information</h6>
                 </div>
@@ -457,16 +534,50 @@
       <br /><br />
       <div class="row">
         <div class="col-md-9">
-          <img
+   
+          <div class="zoom-legend">
+            <img
             src="tbrr public/Main/tbrr/img/icons/zoom-out.png"
             height="30px"
             id="Zoom_Out"
             alt="Zoom Out Icon"
           />
+            <div class="legend-div">
+              <p class="legend-title">Color Legends</p>
+              <div class="legend-desc">
+                <div class="region-legend mini-legend">
+                  region:  
+                  <div class="region-color colors-div"></div>
+
+                </div>
+                <div class="wereda-legend mini-legend">
+                   Woreda:
+                   <div class="woreda-color colors-div"></div>
+
+                </div>
+                <div class="kebele-legend mini-legend">
+                  Kebele:
+                  <div class="kebele-color colors-div"></div>
+
+                </div>
+                <div class="site-legend mini-legend">
+                  Site:
+                  <div class="site-color colors-div"></div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+         
+
+          
           <div id="map"></div>
         </div>
         <div class="col-md-3 mt-5">
+          
           <div class="container project-container">
+            
             <div class="card">
               <div class="card-header">
                 <h6 class="card-title">Detailed location Information</h6>
@@ -551,6 +662,7 @@
                 <div class="row align-items-center justify-content-between">
                   <div class="col-12">
                     <div class="h4 color-dark-green">Resources</div>
+                    <p class = "login color-dark-green">LogIn to dashboard</p>
                   </div>
                 </div>
               </div>
@@ -633,6 +745,7 @@
       var Woredas = [];
       var Kebeles = [];
       var Sites = [],
+
         Woredas_List = [],
         Kebele_List = [],
         Site_List = [],
@@ -672,29 +785,34 @@
                     });
 
       }
-
-      fetch("https://tbrr.echnoserve.com/api/geojson/regions")
-        .then((response) => response.json())
+      
+      fetch("https://tbrr.echnoserve.com/api/regions")
+      .then((response) => response.json())
         .then((data) => {
           const Region_Array = data.data;
+          
+          const regions = Region_Array.map((region) => ({
+            Name: region.region_name,
+            id: region.id,
+          }));
+
           Region_Array.forEach(function (region) {
-            fetchData(`https://tbrr.echnoserve.com/${region}`).then(
+            if (region.geojson === null) {
+              return;
+               }
+            fetchData(`https://tbrr.echnoserve.com/${region.geojson}`).then(
               (regionData) => {
                 All_Regions.push(regionData);
                 var regionList = document.getElementById("regionList");
                 var searchInput = document.getElementById("searchInput");
-
-                var regions = [];
+                var numberOfListItems = regionList.childElementCount;
 
                 regionData.features.forEach((feature) => {
-                  feature.properties.id = parseInt(region.match(/\d+/)[0], 10);
-                  regions.push({
-                    Name: feature.properties.name,
-                    id: parseInt(region.match(/\d+/)[0], 10),
-                  });
+                  feature.properties.id = parseInt(region.id);
                 });
 
-                regions.forEach((region) => {
+                if (numberOfListItems < 14) {
+                  regions.forEach((region) => {
                   var listItem = document.createElement("li");
                   listItem.textContent = region.Name;
                   regionList.appendChild(listItem);
@@ -722,7 +840,15 @@
                     if (selectedLayer) {
                       map.fitBounds(selectedLayer.getBounds());
                       selectedLayer.fire("click");
+                    } else 
+                    {
+                      markSelectedRegionInList(region.Name);
+                    woredaLayerGroup.clearLayers();
+                    updateWoredaList(region.id);
+                    projectInfo(region.id, "region");
+
                     }
+
                   });
                 });
 
@@ -738,7 +864,9 @@
                       }
                     }
                   );
-                });
+               });
+ 
+                }
 
                 all_Site = [];
 
@@ -1090,11 +1218,10 @@
                         weight: 1,
                       });
                     });
-                    console.log("fnsjdfbsjdf",layer)
 
                     // event.target.setAttribute('stroke', '#e3c172');
                     layer.setStyle({
-                      color: "#e3c172",
+                      color: "#AB274F",
                       fillOpacity: mainOpacity,
                       weight: 4,
                     });
@@ -1152,7 +1279,6 @@
                         markSelectedKebeleInList(feature.kebele_name);
 
                         var selectedKebeleId = parseInt(this.dataset.kebeleId);
-                        console.log(this,"csdjch",this.dataset.kebeleId)
                         var K_layer = getLayerByKebeleName(selectedKebeleId);
 
                         if (K_layer) {
@@ -1489,9 +1615,15 @@
 
         try {
           if (type === "region") {
-            GEO.innerHTML = ""
             const regionData = await RegionData(id);
-            const rows = [
+
+            if (regionData.geojson) {
+           GEO.innerHTML = ""
+             }
+            else {
+             GEO.textContent = "This Region has no Map layer"
+             }       
+             const rows = [
               { label: "Region Name", value: regionData.region_name },
               { label: "Number of Sites", value: regionData.sites },
               { label: "Number of Kebeles", value: regionData.kebeles.length },
@@ -1511,7 +1643,7 @@
       GEO.innerHTML = ""
     }
     else {
-      GEO.textContent = "No shape file"
+      GEO.textContent = "This woreda has no Map layer"
     }
     const dataRows = [
         {
@@ -1599,7 +1731,7 @@ else if (type === "site") {
       GEO.innerHTML = ""
     }
     else {
-      GEO.textContent = "No shape file"
+      GEO.textContent = "This site has no Map layer"
     }
     const formatResource = (resourceArray, label) => {
         if (resourceArray && resourceArray.length > 0) {
@@ -1713,7 +1845,7 @@ else if (type === "kebele") {
       GEO.innerHTML = ""
     }
     else {
-      GEO.textContent = "No shape file"
+      GEO.textContent = "This kebele has no Map layer"
     }
     const getDataValue = (data, key) => 
         data && data.hasOwnProperty(key) && data[key] !== undefined && data[key] !== null ? data[key] : 'No Data';
