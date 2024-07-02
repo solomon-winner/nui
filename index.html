@@ -1621,7 +1621,7 @@
            GEO.innerHTML = ""
              }
             else {
-             GEO.textContent = "This Region has no Map layer"
+             GEO.textContent = "This Region doesn't have Map layer"
              }       
              const rows = [
               { label: "Region Name", value: regionData.region_name },
@@ -1643,7 +1643,7 @@
       GEO.innerHTML = ""
     }
     else {
-      GEO.textContent = "This woreda has no Map layer"
+      GEO.textContent = "This woreda doesn't have Map layer"
     }
     const dataRows = [
         {
@@ -1731,7 +1731,7 @@ else if (type === "site") {
       GEO.innerHTML = ""
     }
     else {
-      GEO.textContent = "This site has no Map layer"
+      GEO.textContent = "This site doesn't have Map layer"
     }
     const formatResource = (resourceArray, label) => {
         if (resourceArray && resourceArray.length > 0) {
@@ -1845,7 +1845,7 @@ else if (type === "kebele") {
       GEO.innerHTML = ""
     }
     else {
-      GEO.textContent = "This kebele has no Map layer"
+      GEO.textContent = "This kebele doesn't have Map layer"
     }
     const getDataValue = (data, key) => 
         data && data.hasOwnProperty(key) && data[key] !== undefined && data[key] !== null ? data[key] : 'No Data';
