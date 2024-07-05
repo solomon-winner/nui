@@ -904,7 +904,6 @@
                           const WoredaId = parseInt(woro_da.match(/\/([^\/]+)\.geojson$/)[1]);
                           var Woreda_Name;
                           const woreda = Woredas_List.find(woreda => woreda.id === WoredaId);
-                          console.log("nskdhf", Woredas_List)
                           if (woreda) {
                             Woreda_Name = woreda.name;
                           }
@@ -913,7 +912,6 @@
                             feature.properties.WoredaId = WoredaId;
                             feature.properties.Woreda_Name = Woreda_Name
                           });
-                          console.log("jhsjdgvsgv", woredaData)
                           L.geoJSON(woredaData, {
                             onEachFeature: onEachWoredaFeature,
                           }).addTo(woredaLayerGroup);
